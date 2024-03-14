@@ -1,4 +1,4 @@
 setuptools~=65.5.0
 virtualenv<20.22.0
-
--r src/Generated/requirements.txt
+-r src/generated/requirements.txt
+-r test-requirements.txt
