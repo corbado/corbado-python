@@ -1,4 +1,5 @@
 setuptools~=65.5.0
 virtualenv<20.22.0
--r src/generated/requirements.txt
+flake8
+-r src/corbado_python_sdk/generated/requirements.txt
 -r test-requirements.txt

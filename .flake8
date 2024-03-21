@@ -1,0 +1,4 @@
+[flake8]
+exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,src/corbado_python_sdk/generated,env,.idea,.vscode,scripts, __init__.py
+max-line-length = 120
+
