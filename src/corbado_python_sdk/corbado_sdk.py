@@ -34,10 +34,7 @@ class CorbadoSDK(BaseModel):
         return _config
 
 
-config = Config(
-    project_id="pro-2", api_secret="corbado1_12345"
-)  # from generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInfo
-
+config = Config(project_id="pro-2", api_secret="corbado1_12345")
 sdk = CorbadoSDK(config=config)
 ret: ClientInfo = sdk.create_client_info(remote_address="1234", user_agent=" ")
 print(ret)
