@@ -5,8 +5,7 @@ flake8
 pep8-naming
 flake8-builtins
 flake8-bugbear
-#Tox
-tox
+
 #recursive
 -r src/corbado_python_sdk/generated/requirements.txt
 -r test-requirements.txt
