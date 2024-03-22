@@ -1,11 +1,12 @@
 setuptools~=65.5.0
 virtualenv>20.22.0
-#Flake8 and its plugins
+#Flake8 and its plugins 
+#TODO:move to separate file
 flake8
 pep8-naming
 flake8-builtins
 flake8-bugbear
-
+darglint
 #recursive
 -r src/corbado_python_sdk/generated/requirements.txt
 -r test-requirements.txt

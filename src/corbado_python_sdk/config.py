@@ -19,10 +19,17 @@ class Config(BaseModel):
     @field_validator("project_ID")
     @classmethod
     def project_id_validator(cls, project_id: str) -> str:
-        """
-        * Since project ID and API secret are always needed they must be
-         * passed during initialization.
-         *
+        """Since project ID and API secret are always needed they must be
+          passed during initialization.
+
+        Args:
+            project_id (str): Project ID
+
+        Raises:
+            ValueError: is thrown if project ID does not start with "pro-"
+
+        Returns:
+            str: validated project_id
         """
         if not project_id.startswith("pro-"):
             raise ValueError(
@@ -33,6 +40,7 @@ class Config(BaseModel):
     @field_validator("api_secret")
     @classmethod
     def api_secret_must_start_with_corbado1(cls, api_secret: str) -> str:
+
         if not api_secret.startswith("corbado1_"):
             raise ValueError(
                 f'Invalid API Secret "{api_secret}" given, needs to start with "corbado1_"'
