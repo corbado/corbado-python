@@ -1,5 +1,5 @@
 setuptools~=65.5.0
-virtualenv<20.22.0
+virtualenv>20.22.0
 #Flake8 and its plugins
 flake8
 pep8-naming
