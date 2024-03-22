@@ -26,16 +26,16 @@ class CorbadoSDK(BaseModel):
 
     def create_generated_configuration(self) -> Configuration:
         _config: Configuration = Configuration(
-            host=config.backend_API,
-            username=config.project_ID,
-            password=config.project_ID,
+            host=config.backend_api,
+            username=config.project_id,
+            password=config.project_id,
             access_token=None,
         )
         return _config
 
 
 config = Config(
-    project_ID="pro-2", api_secret="corbado1_12345"
+    project_id="pro-2", api_secret="corbado1_12345"
 )  # from generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInforom generated.models.client_info import ClientInfo
 
 sdk = CorbadoSDK(config=config)

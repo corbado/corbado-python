@@ -8,27 +8,27 @@ class Config(BaseModel):
     model_config = ConfigDict(validate_assignment=True)
 
     # Fields
-    project_ID: str
+    project_id: str
     api_secret: str
     test_p: str = ""
-    frontend_API: str = ""
-    backend_API: str = "https://backendapi.corbado.io"
+    frontend_api: str = ""
+    backend_api: str = "https://backendapi.corbado.io"
     short_session_cookie_name: str = "cbo_short_session"
 
     # Field Validators
     @field_validator("project_ID")
     @classmethod
-    def project_id_validator(cls, project_ID: str) -> str:
+    def project_id_validator(cls, project_id: str) -> str:
         """
         * Since project ID and API secret are always needed they must be
          * passed during initialization.
          *
         """
-        if not project_ID.startswith("pro-"):
+        if not project_id.startswith("pro-"):
             raise ValueError(
-                f'Invalid project ID "{project_ID}" given, needs to start with "pro-"'
+                f'Invalid project ID "{project_id}" given, needs to start with "pro-"'
             )
-        return project_ID
+        return project_id
 
     @field_validator("api_secret")
     @classmethod
@@ -52,7 +52,7 @@ class Config(BaseModel):
 
 # Example for error parsing:
 try:
-    config = Config(project_ID="213 2", api_secret="123", test_p="te1")
+    config = Config(project_id="213 2", api_secret="123", test_p="te1")
 except ValidationError as exc:
     errors: list[ErrorDetails] = exc.errors()
     for errs in errors:
