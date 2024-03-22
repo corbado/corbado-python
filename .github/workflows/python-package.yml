@@ -38,6 +38,6 @@ jobs:
         flake8 . --count --show-source --statistics
         # exit-zero treats all errors as warnings.
         #flake8 . --count --exit-zero --max-complexity=10 --statistics
-    - name: Test with pytest
+    - name: Test with tox
       run: |
-        pytest
+        tox

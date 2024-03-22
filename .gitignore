@@ -3,3 +3,4 @@ scripts/.gen
 tests/__pycache__
 .vscode
 env
+.tox-info.json
