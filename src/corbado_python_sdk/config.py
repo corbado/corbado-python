@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict, field_validator, ValidationError
+from pydantic import BaseModel, ConfigDict, ValidationError, field_validator
 from pydantic_core import ErrorDetails
 
 

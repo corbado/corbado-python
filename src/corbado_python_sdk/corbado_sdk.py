@@ -1,9 +1,9 @@
 from typing import Annotated
-from pydantic import BaseModel, Field, validate_call
+
 from config import Config
 from generated.configuration import Configuration
-
 from generated.models.client_info import ClientInfo
+from pydantic import BaseModel, Field, validate_call
 
 VERSION: str = "3.0.1"
 
