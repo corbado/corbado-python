@@ -1,5 +1,6 @@
 setuptools~=65.5.0
 virtualenv<20.22.0
 flake8
+pep8-naming
 -r src/corbado_python_sdk/generated/requirements.txt
 -r test-requirements.txt
