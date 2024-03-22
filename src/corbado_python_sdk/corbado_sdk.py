@@ -38,7 +38,3 @@ config = Config(project_id="pro-2", api_secret="corbado1_12345")
 sdk = CorbadoSDK(config=config)
 ret: ClientInfo = sdk.create_client_info(remote_address="1234", user_agent=" ")
 print(ret)
-
-
-def func(list):
-    print(list)
