@@ -49,11 +49,11 @@ class Config(BaseModel):
         return api_secret
 
     # ------------ End validators --------------#
-
     def set_assignment_validation(self, validate: bool) -> None:
         """Only use it if you know what you do. Sets assignment validation.
+
         Args:
-            assign (bool): Enable/disable validation
+            validate (bool): Enable/disable validation
         """
         self.model_config["validate_assignment"] = validate
 
