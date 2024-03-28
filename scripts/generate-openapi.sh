@@ -19,6 +19,6 @@ cp -r $GENERATED_PACKAGE_NAME/* ../../src/corbado_python_sdk/$GENERATED_PACKAGE_
 cp -r requirements.txt ../../src/corbado_python_sdk/$GENERATED_PACKAGE_NAME
 
 cd ..
-#rm -rf .gen
+rm -rf .gen
 
 echo " done!"
