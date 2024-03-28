@@ -23,43 +23,31 @@ from typing import Any, ClassVar, Dict, List
 from generated.models.status import Status
 from generated.models.user_email import UserEmail
 from generated.models.user_phone_number import UserPhoneNumber
+from generated.models.user_username import UserUsername
 from typing import Optional, Set
 from typing_extensions import Self
-
 
 class FullUser(BaseModel):
     """
     User entry with emails and phone numbers
-    """  # noqa: E501
-
+    """ # noqa: E501
     id: StrictStr = Field(description="ID of the user", alias="ID")
     name: StrictStr
     full_name: StrictStr = Field(alias="fullName")
-    created: StrictStr = Field(
-        description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format"
-    )
-    updated: StrictStr = Field(
-        description="Timestamp of when the entity was last updated in yyyy-MM-dd'T'HH:mm:ss format"
-    )
+    created: StrictStr = Field(description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format")
+    updated: StrictStr = Field(description="Timestamp of when the entity was last updated in yyyy-MM-dd'T'HH:mm:ss format")
     status: Status
     emails: List[UserEmail]
     phone_numbers: List[UserPhoneNumber] = Field(alias="phoneNumbers")
-    __properties: ClassVar[List[str]] = [
-        "ID",
-        "name",
-        "fullName",
-        "created",
-        "updated",
-        "status",
-        "emails",
-        "phoneNumbers",
-    ]
+    usernames: List[UserUsername]
+    __properties: ClassVar[List[str]] = ["ID", "name", "fullName", "created", "updated", "status", "emails", "phoneNumbers", "usernames"]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
+
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -85,7 +73,8 @@ class FullUser(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([])
+        excluded_fields: Set[str] = set([
+        ])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -98,14 +87,21 @@ class FullUser(BaseModel):
             for _item in self.emails:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["emails"] = _items
+            _dict['emails'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in phone_numbers (list)
         _items = []
         if self.phone_numbers:
             for _item in self.phone_numbers:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict["phoneNumbers"] = _items
+            _dict['phoneNumbers'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in usernames (list)
+        _items = []
+        if self.usernames:
+            for _item in self.usernames:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['usernames'] = _items
         return _dict
 
     @classmethod
@@ -117,24 +113,17 @@ class FullUser(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate(
-            {
-                "ID": obj.get("ID"),
-                "name": obj.get("name"),
-                "fullName": obj.get("fullName"),
-                "created": obj.get("created"),
-                "updated": obj.get("updated"),
-                "status": obj.get("status"),
-                "emails": (
-                    [UserEmail.from_dict(_item) for _item in obj["emails"]]
-                    if obj.get("emails") is not None
-                    else None
-                ),
-                "phoneNumbers": (
-                    [UserPhoneNumber.from_dict(_item) for _item in obj["phoneNumbers"]]
-                    if obj.get("phoneNumbers") is not None
-                    else None
-                ),
-            }
-        )
+        _obj = cls.model_validate({
+            "ID": obj.get("ID"),
+            "name": obj.get("name"),
+            "fullName": obj.get("fullName"),
+            "created": obj.get("created"),
+            "updated": obj.get("updated"),
+            "status": obj.get("status"),
+            "emails": [UserEmail.from_dict(_item) for _item in obj["emails"]] if obj.get("emails") is not None else None,
+            "phoneNumbers": [UserPhoneNumber.from_dict(_item) for _item in obj["phoneNumbers"]] if obj.get("phoneNumbers") is not None else None,
+            "usernames": [UserUsername.from_dict(_item) for _item in obj["usernames"]] if obj.get("usernames") is not None else None
+        })
         return _obj
+
+

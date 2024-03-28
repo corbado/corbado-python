@@ -32,6 +32,7 @@ class ProjectConfig(BaseModel):
     external_name: StrictStr = Field(alias="externalName")
     app_type: AppType = Field(alias="appType")
     product_key: StrictStr = Field(alias="productKey")
+    project_subscription_id: StrictStr = Field(alias="projectSubscriptionID")
     email_from: StrictStr = Field(alias="emailFrom")
     sms_from: StrictStr = Field(alias="smsFrom")
     external_application_protocol_version: StrictStr = Field(alias="externalApplicationProtocolVersion")
@@ -85,7 +86,7 @@ class ProjectConfig(BaseModel):
     created: StrictStr = Field(description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format")
     updated: StrictStr = Field(description="Timestamp of when the entity was last updated in yyyy-MM-dd'T'HH:mm:ss format")
     status: StrictStr
-    __properties: ClassVar[List[str]] = ["projectID", "externalName", "appType", "productKey", "emailFrom", "smsFrom", "externalApplicationProtocolVersion", "webhookURL", "webhookUsername", "webhookPassword", "webhookTestInvalidUsername", "webhookTestValidUsername", "webhookTestValidPassword", "externalApplicationUsername", "externalApplicationPassword", "legacyAuthMethodsUrl", "passwordVerifyUrl", "authSuccessRedirectUrl", "passwordResetUrl", "allowUserRegistration", "allowIPStickiness", "passkeyAppendInterval", "cliSecret", "fallbackLanguage", "autoDetectLanguage", "hasExistingUsers", "hasVerifiedSession", "hasGeneratedSession", "hasStartedUsingPasskeys", "hasStartedUsingSessions", "environment", "frontendFramework", "backendLanguage", "backendAPIUrl", "frontendAPIUrl", "applicationUrl", "useCli", "doubleOptIn", "userFullNameRequired", "webauthnRPID", "domain", "cname", "webComponentDebug", "smtpUseCustom", "smtpHost", "smtpPort", "smtpUsername", "smtpPassword", "supportEmail", "webhookActions", "signupFlow", "signupFlowOptions", "loginFlow", "loginFlowOptions", "created", "updated", "status"]
+    __properties: ClassVar[List[str]] = ["projectID", "externalName", "appType", "productKey", "projectSubscriptionID", "emailFrom", "smsFrom", "externalApplicationProtocolVersion", "webhookURL", "webhookUsername", "webhookPassword", "webhookTestInvalidUsername", "webhookTestValidUsername", "webhookTestValidPassword", "externalApplicationUsername", "externalApplicationPassword", "legacyAuthMethodsUrl", "passwordVerifyUrl", "authSuccessRedirectUrl", "passwordResetUrl", "allowUserRegistration", "allowIPStickiness", "passkeyAppendInterval", "cliSecret", "fallbackLanguage", "autoDetectLanguage", "hasExistingUsers", "hasVerifiedSession", "hasGeneratedSession", "hasStartedUsingPasskeys", "hasStartedUsingSessions", "environment", "frontendFramework", "backendLanguage", "backendAPIUrl", "frontendAPIUrl", "applicationUrl", "useCli", "doubleOptIn", "userFullNameRequired", "webauthnRPID", "domain", "cname", "webComponentDebug", "smtpUseCustom", "smtpHost", "smtpPort", "smtpUsername", "smtpPassword", "supportEmail", "webhookActions", "signupFlow", "signupFlowOptions", "loginFlow", "loginFlowOptions", "created", "updated", "status"]
 
     @field_validator('passkey_append_interval')
     def passkey_append_interval_validate_enum(cls, value):
@@ -191,6 +192,7 @@ class ProjectConfig(BaseModel):
             "externalName": obj.get("externalName"),
             "appType": obj.get("appType"),
             "productKey": obj.get("productKey"),
+            "projectSubscriptionID": obj.get("projectSubscriptionID"),
             "emailFrom": obj.get("emailFrom"),
             "smsFrom": obj.get("smsFrom"),
             "externalApplicationProtocolVersion": obj.get("externalApplicationProtocolVersion"),

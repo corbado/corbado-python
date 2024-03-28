@@ -180,6 +180,7 @@ from generated.models.user_stats_list_rsp import UserStatsListRsp
 from generated.models.user_stats_list_rsp_all_of_data import UserStatsListRspAllOfData
 from generated.models.user_update_req import UserUpdateReq
 from generated.models.user_update_rsp import UserUpdateRsp
+from generated.models.user_username import UserUsername
 from generated.models.validate_email_req import ValidateEmailReq
 from generated.models.validate_email_rsp import ValidateEmailRsp
 from generated.models.validate_phone_number_req import ValidatePhoneNumberReq

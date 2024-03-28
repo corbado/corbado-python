@@ -19,22 +19,21 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from generated.models.client_info import ClientInfo
+from typing import Any, ClassVar, Dict, List
+from generated.models.status import Status
 from typing import Optional, Set
 from typing_extensions import Self
 
-class UserCreateReq(BaseModel):
+class UserUsername(BaseModel):
     """
-    UserCreateReq
+    User's username
     """ # noqa: E501
-    name: StrictStr
-    full_name: Optional[StrictStr] = Field(default=None, alias="fullName")
-    email: Optional[StrictStr] = None
-    phone_number: Optional[StrictStr] = Field(default=None, alias="phoneNumber")
-    request_id: Optional[StrictStr] = Field(default=None, description="Unique ID of request, you can provide your own while making the request, if not the ID will be randomly generated on server side", alias="requestID")
-    client_info: Optional[ClientInfo] = Field(default=None, alias="clientInfo")
-    __properties: ClassVar[List[str]] = ["name", "fullName", "email", "phoneNumber", "requestID", "clientInfo"]
+    id: StrictStr = Field(description="generic ID", alias="ID")
+    username: StrictStr
+    created: StrictStr = Field(description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format")
+    updated: StrictStr = Field(description="Timestamp of when the entity was last updated in yyyy-MM-dd'T'HH:mm:ss format")
+    status: Status
+    __properties: ClassVar[List[str]] = ["ID", "username", "created", "updated", "status"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +53,7 @@ class UserCreateReq(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UserCreateReq from a JSON string"""
+        """Create an instance of UserUsername from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,14 +74,11 @@ class UserCreateReq(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of client_info
-        if self.client_info:
-            _dict['clientInfo'] = self.client_info.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UserCreateReq from a dict"""
+        """Create an instance of UserUsername from a dict"""
         if obj is None:
             return None
 
@@ -90,12 +86,11 @@ class UserCreateReq(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "name": obj.get("name"),
-            "fullName": obj.get("fullName"),
-            "email": obj.get("email"),
-            "phoneNumber": obj.get("phoneNumber"),
-            "requestID": obj.get("requestID"),
-            "clientInfo": ClientInfo.from_dict(obj["clientInfo"]) if obj.get("clientInfo") is not None else None
+            "ID": obj.get("ID"),
+            "username": obj.get("username"),
+            "created": obj.get("created"),
+            "updated": obj.get("updated"),
+            "status": obj.get("status")
         })
         return _obj
 
