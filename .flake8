@@ -1,4 +1,16 @@
 [flake8]
+strictness=full 
+ #no docstrings for modules
+extend-ignore = DC100
+
 exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,src/corbado_python_sdk/generated,env,.idea,.vscode,scripts,__init__.py,.venv,.tox
+
 max-line-length = 120
 
+per-file-ignores =
+    #exclude some chekcs in test code
+     #allow assert
+    tests/*:S101,
+        #no docstrings
+        DC101,
+        DC102    

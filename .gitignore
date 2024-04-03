@@ -1,6 +1,7 @@
 scripts/.gen
 .idea/
 tests/__pycache__
+**_pycache__**
 .vscode
 env
 .tox-info.json

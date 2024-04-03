@@ -1,5 +1,8 @@
 import unittest
 
+from src.corbado_python_sdk.corbado_sdk import CorbadoSDK
+from tests.utils import TestUtils
+
 
 class TestAuthMethod(unittest.TestCase):
     print("First Test")
@@ -7,8 +10,5 @@ class TestAuthMethod(unittest.TestCase):
 
 
 def test_square_positive_number():
-    assert 2 * 2 == 4
-
-
-if __name__ == "__main__":
-    unittest.main()
+    sdk: CorbadoSDK = TestUtils.instantiate_sdk()
+    assert sdk is not None
