@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Optional
+from typing import List, Optional
 
 from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.user_create_req import UserCreateReq
@@ -54,10 +54,10 @@ class UserInterface(ABC):
     @abstractmethod
     def list_users(
         self,
-        remote_addr: str,
-        user_agent: str,
-        sort: str,
-        filter_args: list[str],
+        remote_addr: Optional[str] = None,
+        user_agent: Optional[str] = None,
+        sort: Optional[str] = None,
+        filter_args: Optional[List[str]] = None,
         page: Optional[int] = 1,
         page_size: Optional[int] = 10,
     ) -> UserListRsp:
@@ -67,7 +67,7 @@ class UserInterface(ABC):
             remote_addr (str): Remote address
             user_agent (str): User agent
             sort (str): sort
-            filter_args (list[str]): Filter arguments
+            filter_args (List[str]): Filter arguments
             page (int, optional): Page. Defaults to 1.
             page_size (int, optional): Page Size. Defaults to 10.
 

@@ -1,6 +1,6 @@
-from typing import Optional
+from typing import List, Optional
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from corbado_python_sdk.generated.api.user_api import UserApi
 from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
@@ -19,6 +19,9 @@ class UserService(
 ):
     """Service for managing users"""
 
+    model_config = ConfigDict(
+        arbitrary_types_allowed=True,
+    )
     client: UserApi
 
     def create(self, request: UserCreateReq) -> UserCreateRsp:
@@ -36,10 +39,10 @@ class UserService(
 
     def list_users(
         self,
-        remote_addr: str,
-        user_agent: str,
-        sort: str,
-        filter_args: list[str],
+        remote_addr: Optional[str] = None,
+        user_agent: Optional[str] = None,
+        sort: Optional[str] = None,
+        filter_args: Optional[List[str]] = None,
         page: Optional[int] = 1,
         page_size: Optional[int] = 10,
     ) -> UserListRsp:
@@ -49,13 +52,15 @@ class UserService(
             remote_addr (str): Remote address
             user_agent (str): User agent
             sort (str): sort
-            filter_args (list[str]): Filter arguments
+            filter_args (List[str]): Filter arguments
             page (int, optional): Page. Defaults to 1.
             page_size (int, optional): Page Size. Defaults to 10.
 
         Returns:
             UserListRsp: Response
         """
+
+        print("listing users")
         return self.client.user_list(
             user_agent=user_agent,
             remote_address=remote_addr,
@@ -65,7 +70,9 @@ class UserService(
             page_size=page_size,
         )
 
-    def get(self, user_id: str, remote_addr: str, user_agent: str) -> UserGetRsp:
+    def get(
+        self, user_id: Optional[str] = None, remote_addr: Optional[str] = None, user_agent: Optional[str] = None
+    ) -> UserGetRsp:
         """Get user
 
         Args:

@@ -5,7 +5,7 @@ extend-ignore = DC100
 
 exclude = .git,__pycache__,docs/source/conf.py,old,build,dist,src/corbado_python_sdk/generated,env,.idea,.vscode,scripts,__init__.py,.venv,.tox,setup.*
 
-max-line-length = 120
+max-line-length = 130
 
 per-file-ignores =
     #exclude some chekcs in test code
