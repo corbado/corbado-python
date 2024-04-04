@@ -17,9 +17,7 @@ docker run -v ${PWD}:/local --user $(id -u):$(id -g) openapitools/openapi-genera
 
 cp -r $SDK_PACKAGE_NAME/$GENERATED_PACKAGE_NAME/* ../../src/$SDK_PACKAGE_NAME/$GENERATED_PACKAGE_NAME
 cp -r requirements.txt ../../src/$SDK_PACKAGE_NAME/$GENERATED_PACKAGE_NAME
-#cp -r setup.cfg ../../src/$SDK_PACKAGE_NAME/$GENERATED_PACKAGE_NAME
-#cp -r setup.py ../../src/$SDK_PACKAGE_NAME/$GENERATED_PACKAGE_NAME
 cd ..
-#rm -rf .gen
+rm -rf .gen
 
 echo " done!"
