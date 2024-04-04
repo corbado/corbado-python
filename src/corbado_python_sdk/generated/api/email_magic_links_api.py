@@ -20,16 +20,16 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from generated.models.email_link_get_rsp import EmailLinkGetRsp
-from generated.models.email_link_send_req import EmailLinkSendReq
-from generated.models.email_link_send_rsp import EmailLinkSendRsp
-from generated.models.email_link_validate_rsp import EmailLinkValidateRsp
-from generated.models.email_links_delete_req import EmailLinksDeleteReq
-from generated.models.email_links_validate_req import EmailLinksValidateReq
+from corbado_python_sdk.generated.models.email_link_get_rsp import EmailLinkGetRsp
+from corbado_python_sdk.generated.models.email_link_send_req import EmailLinkSendReq
+from corbado_python_sdk.generated.models.email_link_send_rsp import EmailLinkSendRsp
+from corbado_python_sdk.generated.models.email_link_validate_rsp import EmailLinkValidateRsp
+from corbado_python_sdk.generated.models.email_links_delete_req import EmailLinksDeleteReq
+from corbado_python_sdk.generated.models.email_links_validate_req import EmailLinksValidateReq
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class EmailMagicLinksApi:

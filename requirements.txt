@@ -1,16 +1,5 @@
 setuptools~=65.5.0
 virtualenv>20.22.0
-#Flake8 and its plugins 
-#TODO:move to separate file
-flake8
-pep8-naming #naming conventions check
-flake8-builtins
-flake8-bugbear
-flake8-isort #check if import is sorted
-darglint 
-flake8-bandit #security check
-flake8-return 
-flake8-docstring-checker #enforce dockstring
 #recursive
 -r src/corbado_python_sdk/generated/requirements.txt
 -r test-requirements.txt

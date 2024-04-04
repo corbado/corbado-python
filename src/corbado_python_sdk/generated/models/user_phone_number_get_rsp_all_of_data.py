@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from generated.models.phone_number import PhoneNumber
+from corbado_python_sdk.generated.models.phone_number import PhoneNumber
 from typing import Optional, Set
 from typing_extensions import Self
 

@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from generated.models.error_rsp_all_of_error_validation import ErrorRspAllOfErrorValidation
+from corbado_python_sdk.generated.models.error_rsp_all_of_error_validation import ErrorRspAllOfErrorValidation
 from typing import Optional, Set
 from typing_extensions import Self
 

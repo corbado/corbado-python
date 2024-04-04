@@ -20,12 +20,12 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from generated.models.request_log_get_rsp import RequestLogGetRsp
-from generated.models.request_logs_list_rsp import RequestLogsListRsp
+from corbado_python_sdk.generated.models.request_log_get_rsp import RequestLogGetRsp
+from corbado_python_sdk.generated.models.request_logs_list_rsp import RequestLogsListRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class RequestLogsApi:

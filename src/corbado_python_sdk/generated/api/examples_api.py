@@ -19,11 +19,11 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr, field_validator
 from typing_extensions import Annotated
-from generated.models.example_get_rsp import ExampleGetRsp
+from corbado_python_sdk.generated.models.example_get_rsp import ExampleGetRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class ExamplesApi:

@@ -19,15 +19,15 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
 from typing_extensions import Annotated
-from generated.models.email_code_get_rsp import EmailCodeGetRsp
-from generated.models.email_code_send_req import EmailCodeSendReq
-from generated.models.email_code_send_rsp import EmailCodeSendRsp
-from generated.models.email_code_validate_req import EmailCodeValidateReq
-from generated.models.email_code_validate_rsp import EmailCodeValidateRsp
+from corbado_python_sdk.generated.models.email_code_get_rsp import EmailCodeGetRsp
+from corbado_python_sdk.generated.models.email_code_send_req import EmailCodeSendReq
+from corbado_python_sdk.generated.models.email_code_send_rsp import EmailCodeSendRsp
+from corbado_python_sdk.generated.models.email_code_validate_req import EmailCodeValidateReq
+from corbado_python_sdk.generated.models.email_code_validate_rsp import EmailCodeValidateRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class EmailOTPApi:

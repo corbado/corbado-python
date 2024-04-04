@@ -5,3 +5,5 @@ tests/__pycache__
 .vscode
 env
 .tox-info.json
+build*
+*egg-info

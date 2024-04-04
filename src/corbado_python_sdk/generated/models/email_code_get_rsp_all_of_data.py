@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from generated.models.email_code import EmailCode
+from corbado_python_sdk.generated.models.email_code import EmailCode
 from typing import Optional, Set
 from typing_extensions import Self
 

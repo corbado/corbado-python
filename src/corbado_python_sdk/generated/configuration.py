@@ -69,7 +69,7 @@ class Configuration:
 
     You can programmatically set the cookie:
 
-conf = generated.Configuration(
+conf = corbado_python_sdk.generated.Configuration(
     api_key={'cookieAuth': 'abc123'}
     api_key_prefix={'cookieAuth': 'JSESSIONID'}
 )
@@ -87,7 +87,7 @@ conf = generated.Configuration(
 
     Configure API client with HTTP basic authentication:
 
-conf = generated.Configuration(
+conf = corbado_python_sdk.generated.Configuration(
     username='the-user',
     password='the-password',
 )
@@ -146,7 +146,7 @@ conf = generated.Configuration(
         self.logger = {}
         """Logging Settings
         """
-        self.logger["package_logger"] = logging.getLogger("generated")
+        self.logger["package_logger"] = logging.getLogger("corbado_python_sdk.generated")
         self.logger["urllib3_logger"] = logging.getLogger("urllib3")
         self.logger_format = '%(asctime)s %(levelname)s %(message)s'
         """Log format

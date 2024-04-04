@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
-from generated.models.status import Status
+from corbado_python_sdk.generated.models.status import Status
 from typing import Optional, Set
 from typing_extensions import Self
 

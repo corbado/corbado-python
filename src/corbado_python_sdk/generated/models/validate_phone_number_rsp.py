@@ -21,8 +21,8 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
 from typing_extensions import Annotated
-from generated.models.phone_number_validation_result import PhoneNumberValidationResult
-from generated.models.request_data import RequestData
+from corbado_python_sdk.generated.models.phone_number_validation_result import PhoneNumberValidationResult
+from corbado_python_sdk.generated.models.request_data import RequestData
 from typing import Optional, Set
 from typing_extensions import Self
 

@@ -19,14 +19,14 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
 from typing_extensions import Annotated
-from generated.models.sms_code_send_req import SmsCodeSendReq
-from generated.models.sms_code_send_rsp import SmsCodeSendRsp
-from generated.models.sms_code_validate_req import SmsCodeValidateReq
-from generated.models.sms_code_validate_rsp import SmsCodeValidateRsp
+from corbado_python_sdk.generated.models.sms_code_send_req import SmsCodeSendReq
+from corbado_python_sdk.generated.models.sms_code_send_rsp import SmsCodeSendRsp
+from corbado_python_sdk.generated.models.sms_code_validate_req import SmsCodeValidateReq
+from corbado_python_sdk.generated.models.sms_code_validate_rsp import SmsCodeValidateRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class SMSOTPApi:

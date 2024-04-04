@@ -26,11 +26,11 @@ from urllib.parse import quote
 from typing import Tuple, Optional, List, Dict, Union
 from pydantic import SecretStr
 
-from generated.configuration import Configuration
-from generated.api_response import ApiResponse, T as ApiResponseT
-import generated.models
-from generated import rest
-from generated.exceptions import (
+from corbado_python_sdk.generated.configuration import Configuration
+from corbado_python_sdk.generated.api_response import ApiResponse, T as ApiResponseT
+import corbado_python_sdk.generated.models
+from corbado_python_sdk.generated import rest
+from corbado_python_sdk.generated.exceptions import (
     ApiValueError,
     ApiException,
     BadRequestException,
@@ -432,7 +432,7 @@ class ApiClient:
             if klass in self.NATIVE_TYPES_MAPPING:
                 klass = self.NATIVE_TYPES_MAPPING[klass]
             else:
-                klass = getattr(generated.models, klass)
+                klass = getattr(corbado_python_sdk.generated.models, klass)
 
         if klass in self.PRIMITIVE_TYPES:
             return self.__deserialize_primitive(data, klass)

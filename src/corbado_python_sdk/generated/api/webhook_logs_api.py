@@ -20,11 +20,11 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from generated.models.webhook_logs_list_rsp import WebhookLogsListRsp
+from corbado_python_sdk.generated.models.webhook_logs_list_rsp import WebhookLogsListRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class WebhookLogsApi:

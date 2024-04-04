@@ -20,17 +20,17 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from generated.models.generic_rsp import GenericRsp
-from generated.models.ios_app_config_delete_req import IOSAppConfigDeleteReq
-from generated.models.ios_app_config_list_rsp import IOSAppConfigListRsp
-from generated.models.ios_app_config_save_req import IOSAppConfigSaveReq
-from generated.models.ios_app_config_save_rsp import IOSAppConfigSaveRsp
-from generated.models.ios_app_config_update_req import IOSAppConfigUpdateReq
-from generated.models.ios_app_config_update_rsp import IOSAppConfigUpdateRsp
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.ios_app_config_delete_req import IOSAppConfigDeleteReq
+from corbado_python_sdk.generated.models.ios_app_config_list_rsp import IOSAppConfigListRsp
+from corbado_python_sdk.generated.models.ios_app_config_save_req import IOSAppConfigSaveReq
+from corbado_python_sdk.generated.models.ios_app_config_save_rsp import IOSAppConfigSaveRsp
+from corbado_python_sdk.generated.models.ios_app_config_update_req import IOSAppConfigUpdateReq
+from corbado_python_sdk.generated.models.ios_app_config_update_rsp import IOSAppConfigUpdateRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class IOSAppConfigApi:

@@ -17,14 +17,14 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from generated.models.validate_email_req import ValidateEmailReq
-from generated.models.validate_email_rsp import ValidateEmailRsp
-from generated.models.validate_phone_number_req import ValidatePhoneNumberReq
-from generated.models.validate_phone_number_rsp import ValidatePhoneNumberRsp
+from corbado_python_sdk.generated.models.validate_email_req import ValidateEmailReq
+from corbado_python_sdk.generated.models.validate_email_rsp import ValidateEmailRsp
+from corbado_python_sdk.generated.models.validate_phone_number_req import ValidatePhoneNumberReq
+from corbado_python_sdk.generated.models.validate_phone_number_rsp import ValidatePhoneNumberRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class ValidationApi:

@@ -19,14 +19,14 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
 from typing_extensions import Annotated
-from generated.models.email_template_create_req import EmailTemplateCreateReq
-from generated.models.email_template_create_rsp import EmailTemplateCreateRsp
-from generated.models.email_template_delete_req import EmailTemplateDeleteReq
-from generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.email_template_create_req import EmailTemplateCreateReq
+from corbado_python_sdk.generated.models.email_template_create_rsp import EmailTemplateCreateRsp
+from corbado_python_sdk.generated.models.email_template_delete_req import EmailTemplateDeleteReq
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class EmailTemplatesApi:

@@ -17,16 +17,16 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from generated.models.empty_req import EmptyReq
-from generated.models.generic_rsp import GenericRsp
-from generated.models.project_config_get_rsp import ProjectConfigGetRsp
-from generated.models.project_config_save_req import ProjectConfigSaveReq
-from generated.models.project_config_webhook_test_req import ProjectConfigWebhookTestReq
-from generated.models.project_config_webhook_test_rsp import ProjectConfigWebhookTestRsp
+from corbado_python_sdk.generated.models.empty_req import EmptyReq
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.project_config_get_rsp import ProjectConfigGetRsp
+from corbado_python_sdk.generated.models.project_config_save_req import ProjectConfigSaveReq
+from corbado_python_sdk.generated.models.project_config_webhook_test_req import ProjectConfigWebhookTestReq
+from corbado_python_sdk.generated.models.project_config_webhook_test_rsp import ProjectConfigWebhookTestRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class ProjectConfigApi:

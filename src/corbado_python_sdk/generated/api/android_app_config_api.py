@@ -20,17 +20,17 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from generated.models.android_app_config_delete_req import AndroidAppConfigDeleteReq
-from generated.models.android_app_config_list_rsp import AndroidAppConfigListRsp
-from generated.models.android_app_config_save_req import AndroidAppConfigSaveReq
-from generated.models.android_app_config_save_rsp import AndroidAppConfigSaveRsp
-from generated.models.android_app_config_update_req import AndroidAppConfigUpdateReq
-from generated.models.android_app_config_update_rsp import AndroidAppConfigUpdateRsp
-from generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.android_app_config_delete_req import AndroidAppConfigDeleteReq
+from corbado_python_sdk.generated.models.android_app_config_list_rsp import AndroidAppConfigListRsp
+from corbado_python_sdk.generated.models.android_app_config_save_req import AndroidAppConfigSaveReq
+from corbado_python_sdk.generated.models.android_app_config_save_rsp import AndroidAppConfigSaveRsp
+from corbado_python_sdk.generated.models.android_app_config_update_req import AndroidAppConfigUpdateReq
+from corbado_python_sdk.generated.models.android_app_config_update_rsp import AndroidAppConfigUpdateRsp
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class AndroidAppConfigApi:

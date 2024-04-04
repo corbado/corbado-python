@@ -20,10 +20,10 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from generated.models.status import Status
-from generated.models.user_email import UserEmail
-from generated.models.user_phone_number import UserPhoneNumber
-from generated.models.user_username import UserUsername
+from corbado_python_sdk.generated.models.status import Status
+from corbado_python_sdk.generated.models.user_email import UserEmail
+from corbado_python_sdk.generated.models.user_phone_number import UserPhoneNumber
+from corbado_python_sdk.generated.models.user_username import UserUsername
 from typing import Optional, Set
 from typing_extensions import Self
 

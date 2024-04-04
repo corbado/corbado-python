@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from generated.models.custom_login_identifier import CustomLoginIdentifier
+from corbado_python_sdk.generated.models.custom_login_identifier import CustomLoginIdentifier
 from typing import Optional, Set
 from typing_extensions import Self
 

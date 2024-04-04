@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from generated.models.full_user import FullUser
+from corbado_python_sdk.generated.models.full_user import FullUser
 from typing import Optional, Set
 from typing_extensions import Self
 

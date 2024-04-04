@@ -1,9 +1,11 @@
 from typing import Annotated
 
-from config import Config
-from generated.configuration import Configuration
-from generated.models.client_info import ClientInfo
 from pydantic import BaseModel, Field, validate_call
+
+from corbado_python_sdk.generated.configuration import Configuration
+from corbado_python_sdk.generated.models.client_info import ClientInfo
+
+from .config import Config
 
 VERSION: str = "3.0.1"
 

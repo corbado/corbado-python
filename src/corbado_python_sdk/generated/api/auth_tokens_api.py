@@ -17,12 +17,12 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from generated.models.auth_token_validate_req import AuthTokenValidateReq
-from generated.models.auth_token_validate_rsp import AuthTokenValidateRsp
+from corbado_python_sdk.generated.models.auth_token_validate_req import AuthTokenValidateReq
+from corbado_python_sdk.generated.models.auth_token_validate_rsp import AuthTokenValidateRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class AuthTokensApi:

@@ -20,15 +20,15 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictStr
 from typing import Optional
 from typing_extensions import Annotated
-from generated.models.generic_rsp import GenericRsp
-from generated.models.project_secret_create_req import ProjectSecretCreateReq
-from generated.models.project_secret_create_rsp import ProjectSecretCreateRsp
-from generated.models.project_secret_delete_req import ProjectSecretDeleteReq
-from generated.models.project_secret_list_rsp import ProjectSecretListRsp
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.project_secret_create_req import ProjectSecretCreateReq
+from corbado_python_sdk.generated.models.project_secret_create_rsp import ProjectSecretCreateRsp
+from corbado_python_sdk.generated.models.project_secret_delete_req import ProjectSecretDeleteReq
+from corbado_python_sdk.generated.models.project_secret_list_rsp import ProjectSecretListRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class APISecretsApi:

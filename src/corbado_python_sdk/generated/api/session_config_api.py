@@ -20,14 +20,14 @@ from typing_extensions import Annotated
 from pydantic import Field
 from typing import Optional
 from typing_extensions import Annotated
-from generated.models.app_type import AppType
-from generated.models.generic_rsp import GenericRsp
-from generated.models.session_config_get_rsp import SessionConfigGetRsp
-from generated.models.session_config_update_req import SessionConfigUpdateReq
+from corbado_python_sdk.generated.models.app_type import AppType
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.session_config_get_rsp import SessionConfigGetRsp
+from corbado_python_sdk.generated.models.session_config_update_req import SessionConfigUpdateReq
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class SessionConfigApi:

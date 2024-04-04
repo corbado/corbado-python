@@ -17,12 +17,12 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from generated.models.association_token_create_req import AssociationTokenCreateReq
-from generated.models.association_token_create_rsp import AssociationTokenCreateRsp
+from corbado_python_sdk.generated.models.association_token_create_req import AssociationTokenCreateReq
+from corbado_python_sdk.generated.models.association_token_create_rsp import AssociationTokenCreateRsp
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class AssociationTokensApi:

@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List, Optional
-from generated.models.validation_phone_number import ValidationPhoneNumber
+from corbado_python_sdk.generated.models.validation_phone_number import ValidationPhoneNumber
 from typing import Optional, Set
 from typing_extensions import Self
 

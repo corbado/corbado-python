@@ -31,17 +31,12 @@ class LongSession(BaseModel):
     user_id: StrictStr = Field(description="ID of the user", alias="userID")
     user_identifier: StrictStr = Field(alias="userIdentifier")
     user_full_name: StrictStr = Field(alias="userFullName")
-    device_id: StrictStr = Field(description="ID of the device", alias="deviceID")
-    browser_name: StrictStr = Field(alias="browserName")
-    browser_version: StrictStr = Field(alias="browserVersion")
-    os_name: StrictStr = Field(alias="osName")
-    os_version: StrictStr = Field(alias="osVersion")
     expires: StrictStr = Field(description="Timestamp of when long session expires in yyyy-MM-dd'T'HH:mm:ss format")
     last_action: StrictStr = Field(description="Timestamp of when last action was done on long session in yyyy-MM-dd'T'HH:mm:ss format", alias="lastAction")
     created: StrictStr = Field(description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format")
     updated: StrictStr = Field(description="Timestamp of when the entity was last updated in yyyy-MM-dd'T'HH:mm:ss format")
     status: StrictStr = Field(description="status values of a long session")
-    __properties: ClassVar[List[str]] = ["ID", "userID", "userIdentifier", "userFullName", "deviceID", "browserName", "browserVersion", "osName", "osVersion", "expires", "lastAction", "created", "updated", "status"]
+    __properties: ClassVar[List[str]] = ["ID", "userID", "userIdentifier", "userFullName", "expires", "lastAction", "created", "updated", "status"]
 
     @field_validator('status')
     def status_validate_enum(cls, value):
@@ -105,11 +100,6 @@ class LongSession(BaseModel):
             "userID": obj.get("userID"),
             "userIdentifier": obj.get("userIdentifier"),
             "userFullName": obj.get("userFullName"),
-            "deviceID": obj.get("deviceID"),
-            "browserName": obj.get("browserName"),
-            "browserVersion": obj.get("browserVersion"),
-            "osName": obj.get("osName"),
-            "osVersion": obj.get("osVersion"),
             "expires": obj.get("expires"),
             "lastAction": obj.get("lastAction"),
             "created": obj.get("created"),

@@ -20,14 +20,14 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from generated.models.generic_rsp import GenericRsp
-from generated.models.long_session_get_rsp import LongSessionGetRsp
-from generated.models.long_session_list_rsp import LongSessionListRsp
-from generated.models.long_session_revoke_req import LongSessionRevokeReq
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.long_session_get_rsp import LongSessionGetRsp
+from corbado_python_sdk.generated.models.long_session_list_rsp import LongSessionListRsp
+from corbado_python_sdk.generated.models.long_session_revoke_req import LongSessionRevokeReq
 
-from generated.api_client import ApiClient, RequestSerialized
-from generated.api_response import ApiResponse
-from generated.rest import RESTResponseType
+from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
+from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.rest import RESTResponseType
 
 
 class LongSessionsApi:

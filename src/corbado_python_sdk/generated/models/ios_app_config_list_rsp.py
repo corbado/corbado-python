@@ -21,9 +21,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
 from typing_extensions import Annotated
-from generated.models.ios_app_config_item import IOSAppConfigItem
-from generated.models.paging import Paging
-from generated.models.request_data import RequestData
+from corbado_python_sdk.generated.models.ios_app_config_item import IOSAppConfigItem
+from corbado_python_sdk.generated.models.paging import Paging
+from corbado_python_sdk.generated.models.request_data import RequestData
 from typing import Optional, Set
 from typing_extensions import Self
 

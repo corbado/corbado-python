@@ -21,9 +21,9 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
 from typing_extensions import Annotated
-from generated.models.paging import Paging
-from generated.models.request_data import RequestData
-from generated.models.webauthn_setting_item import WebauthnSettingItem
+from corbado_python_sdk.generated.models.paging import Paging
+from corbado_python_sdk.generated.models.request_data import RequestData
+from corbado_python_sdk.generated.models.webauthn_setting_item import WebauthnSettingItem
 from typing import Optional, Set
 from typing_extensions import Self
 

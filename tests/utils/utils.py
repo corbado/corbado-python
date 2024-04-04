@@ -1,6 +1,7 @@
 import os
 
-from ...src import *
+from corbado_python_sdk.config import Config
+from corbado_python_sdk.corbado_sdk import CorbadoSDK
 
 
 class TestUtils:
@@ -14,7 +15,3 @@ class TestUtils:
             project_id=os.getenv(key=TestUtils.CORBADO_PROJECT_ID, default="missing CORBADO_PROJECT_ID"),
         )
         return CorbadoSDK(config=config)
-
-
-cf = TestUtils.instantiate_sdk()
-print(cf)

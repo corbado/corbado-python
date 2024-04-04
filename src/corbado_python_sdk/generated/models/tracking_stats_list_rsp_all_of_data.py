@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from generated.models.paging import Paging
-from generated.models.tracking_stats import TrackingStats
+from corbado_python_sdk.generated.models.paging import Paging
+from corbado_python_sdk.generated.models.tracking_stats import TrackingStats
 from typing import Optional, Set
 from typing_extensions import Self
 
