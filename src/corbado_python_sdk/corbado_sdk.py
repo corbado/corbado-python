@@ -1,9 +1,9 @@
-from typing import Annotated
-
 from pydantic import BaseModel, Field, validate_call
+from typing_extensions import Annotated
 
 from corbado_python_sdk.generated.configuration import Configuration
 from corbado_python_sdk.generated.models.client_info import ClientInfo
+from corbado_python_sdk.services.user_service import UserInterface
 
 from .config import Config
 
@@ -13,7 +13,12 @@ VERSION: str = "3.0.1"
 class CorbadoSDK(BaseModel):
     """Entry point for the SDK"""
 
+    user_interface: UserInterface
     config: Config
+
+    def __init__(self, config: Config) -> None:
+        # client =
+        self._config: Config = config
 
     @validate_call
     def create_client_info(
@@ -34,7 +39,7 @@ class CorbadoSDK(BaseModel):
         client: ClientInfo = ClientInfo(remoteAddress=remote_address, userAgent=user_agent)
         return client
 
-    def create_generated_configuration(self) -> Configuration:
+    def _create_generated_configuration(self) -> Configuration:
         """Creates configuration (generated class)
 
         Returns:
@@ -46,3 +51,6 @@ class CorbadoSDK(BaseModel):
             password=self.config.project_id,
             access_token=None,
         )
+
+
+# Services

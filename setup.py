@@ -9,7 +9,7 @@
 """  # noqa: E501
 
 
-from setuptools import find_namespace_packages, find_packages, setup  # noqa: H301
+from setuptools import find_namespace_packages, setup  # noqa: H301
 
 # To install the library, run the following
 #
@@ -20,7 +20,7 @@ from setuptools import find_namespace_packages, find_packages, setup  # noqa: H3
 NAME = "corbado-python-sdk"
 VERSION = "1.0.0"
 PYTHON_REQUIRES = ">=3.8"
-REQUIRES: list[str] = [
+REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
     "pydantic >= 2",
