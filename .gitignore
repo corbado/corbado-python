@@ -8,3 +8,4 @@ env
 build*
 *egg-info
 .tox/
+project.txt
