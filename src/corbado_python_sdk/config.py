@@ -4,8 +4,8 @@ from pydantic import BaseModel, ConfigDict, field_validator
 class Config(BaseModel):
     """Configuration class"""
 
-    # Make sure that field assignments are also validated, use "config.model_config["validate_assignment"] =
-    # False" to be able to use invalid assignments
+    # Make sure that field assignments are also validated, use "set_assignment_validation(False)"
+    # to be able to use invalid assignments
     model_config = ConfigDict(validate_assignment=True)
 
     # Fields

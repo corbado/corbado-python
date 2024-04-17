@@ -1,8 +1,10 @@
 import json
+import logging
 import os
 import unittest
 
-from corbado_python_sdk.corbado_sdk import CorbadoSDK
+from corbado_python_sdk import CorbadoSDK
+from corbado_python_sdk.exceptions import ServerException
 from corbado_python_sdk.generated.api.user_api import UserApi
 from corbado_python_sdk.generated.api_client import ApiClient
 from corbado_python_sdk.generated.configuration import Configuration
@@ -13,22 +15,28 @@ from corbado_python_sdk.generated.models.user_list_rsp import UserListRsp
 from tests.utils import TestUtils
 
 
-class TestAuthMethod(unittest.TestCase):
-    print("First Test")
-    assert 2 * 2 == 4
+class TestBase(unittest.TestCase):
 
-    def test_instantiate_sdk(self) -> None:
-        sdk: CorbadoSDK = TestUtils.instantiate_sdk()
+    @classmethod
+    def setUpClass(cls):
+        cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
+
+
+class TestMisc(TestBase):
+
+    def test_instantiate_sdk_expect_not_none(self) -> None:
+        sdk: CorbadoSDK = self.sdk
         self.assertIsNotNone(obj=sdk)
 
-    def test_list_users(self) -> None:
-        ret: UserListRsp = TestUtils.instantiate_sdk().user_interface.list_users()
+    def test_list_users_expect_not_none(self) -> None:
+        ret: UserListRsp = self.sdk.user_interface.list_users()
         self.assertIsNotNone(ret)
 
-    def test_auth_method_manual_call(self):
+    def test_auth_method_manual_call(self) -> None:
         conf = Configuration(
             username=os.getenv(key=TestUtils.CORBADO_PROJECT_ID, default="missing CORBADO_PROJECT_ID"),
             password=os.getenv(key=TestUtils.CORBADO_API_SECRET, default="missing CORBADO_API_SECRET"),
+            host=os.getenv(key=TestUtils.CORBADO_BACKEND_API, default="missing CORBADO_BACKEND_API"),
         )
         client = ApiClient(
             configuration=conf,
@@ -52,3 +60,32 @@ class TestAuthMethod(unittest.TestCase):
             print("Exception type:", type(e))
             data = json.loads(e.body)
             print(data)
+
+
+class UserCreateTest(TestBase):
+    """
+    Test cases for user creation.
+    """
+
+    def test_user_create_expect_validation_error(self):
+        """
+        Test case for user creation with validation error.
+        """
+
+        try:
+            req: UserCreateReq = UserCreateReq(name="", email="")
+            ret: UserCreateRsp = self.sdk.user_interface.create(request=req)
+            logging.debug(f"Result: {ret}")
+        except ServerException as e:
+            self.assertIsNotNone(e)
+            self.assertEqual(400, e.http_status_code)
+            self.assertCountEqual(["name: cannot be blank"], e.get_validation_messages())
+
+    def test_user_create_expect_success(self):
+        """
+        Test case for successful user creation.
+        """
+
+        req = UserCreateReq(name=TestUtils.create_random_test_name(), email=TestUtils.create_random_test_email())
+        rsp: UserCreateRsp = self.sdk.user_interface.create(request=req)
+        self.assertEqual(200, rsp.http_status_code)

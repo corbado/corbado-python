@@ -13,4 +13,8 @@ per-file-ignores =
     tests/*:S101,
         #no docstrings
         DC101,
-        DC102    
+        DC102,
+        DAR201,
+        DAR101,
+        #ignore random generators
+        S311,
