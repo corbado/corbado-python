@@ -10,7 +10,7 @@ from corbado_python_sdk.generated.models.user_delete_req import UserDeleteReq
 from corbado_python_sdk.generated.models.user_get_rsp import UserGetRsp
 from corbado_python_sdk.generated.models.user_list_rsp import UserListRsp
 
-from .user_interface import UserInterface
+from ..interface.user_interface import UserInterface
 
 
 class UserService(
