@@ -3,16 +3,19 @@ from typing import List, Optional
 from pydantic import BaseModel, ConfigDict
 
 from corbado_python_sdk.exceptions.server_exception import ServerException
-from corbado_python_sdk.generated.api.user_api import UserApi
+from corbado_python_sdk.exceptions.standard_exception import StandardException
+from corbado_python_sdk.generated import ErrorRsp
+from corbado_python_sdk.generated.api import UserApi
 from corbado_python_sdk.generated.exceptions import ApiException
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
-from corbado_python_sdk.generated.models.user_create_req import UserCreateReq
-from corbado_python_sdk.generated.models.user_create_rsp import UserCreateRsp
-from corbado_python_sdk.generated.models.user_delete_req import UserDeleteReq
-from corbado_python_sdk.generated.models.user_get_rsp import UserGetRsp
-from corbado_python_sdk.generated.models.user_list_rsp import UserListRsp
+from corbado_python_sdk.generated.models import (
+    GenericRsp,
+    UserCreateReq,
+    UserCreateRsp,
+    UserDeleteReq,
+    UserGetRsp,
+    UserListRsp,
+)
 from corbado_python_sdk.services.interface.user_interface import UserInterface
-from corbado_python_sdk.utils import Util
 
 
 class UserService(
@@ -34,6 +37,7 @@ class UserService(
 
         Raises:
             ServerException: If any server side error occurs.
+            StandardException: If an unexpected ErrorRsp is received.
 
         Returns:
             UserCreateRsp: Response
@@ -42,8 +46,9 @@ class UserService(
         try:
             response: UserCreateRsp = self.client.user_create(user_create_req=request)
         except ApiException as e:
-            exception: ServerException = Util.convert_to_server_exception(e)
-            raise exception
+            raise ServerException(e)
+        if isinstance(response, ErrorRsp):
+            raise StandardException("Got unexpected ErrorRsp")
 
         return response
 
@@ -68,12 +73,13 @@ class UserService(
 
         Raises:
             ServerException: If any server side error occurs.
+            StandardException: If an unexpected ErrorRsp is received.
 
         Returns:
             UserListRsp: Response
         """
         try:
-            responce = self.client.user_list(
+            response: UserListRsp = self.client.user_list(
                 user_agent=user_agent,
                 remote_address=remote_addr,
                 sort=sort,
@@ -82,10 +88,12 @@ class UserService(
                 page_size=page_size,
             )
         except ApiException as e:
-            exception: ServerException = Util.convert_to_server_exception(e)
-            raise exception
+            raise ServerException(e)
 
-        return responce
+        if isinstance(response, ErrorRsp):
+            raise StandardException("Got unexpected ErrorRsp")
+
+        return response
 
     def get(self, user_id: str, remote_addr: Optional[str] = None, user_agent: Optional[str] = None) -> UserGetRsp:
         """Get user
@@ -97,19 +105,22 @@ class UserService(
 
         Raises:
             ServerException: If any server side error occurs.
+            StandardException: If an unexpected ErrorRsp is received.
 
         Returns:
             UserGetRsp: Response
         """
         try:
-            responce: UserGetRsp = self.client.user_get(
+            response: UserGetRsp = self.client.user_get(
                 remote_address=remote_addr, user_agent=user_agent, user_id=user_id
             )
         except ApiException as e:
-            exception: ServerException = Util.convert_to_server_exception(e)
-            raise exception
+            raise ServerException(e)
 
-        return responce
+        if isinstance(response, ErrorRsp):
+            raise StandardException("Got unexpected ErrorRsp")
+
+        return response
 
     def delete(self, user_id: str, request: UserDeleteReq) -> GenericRsp:
         """Delete user
@@ -118,12 +129,19 @@ class UserService(
             user_id (str): User ID
             request (UserDeleteReq): Request
 
+        Raises:
+            ServerException: If any server side error occurs.
+            StandardException: If an unexpected ErrorRsp is received.
+
         Returns:
             GenericRsp: Response
         """
         try:
-            responce: GenericRsp = self.client.user_delete(user_delete_req=request, user_id=user_id)
+            response: GenericRsp = self.client.user_delete(user_delete_req=request, user_id=user_id)
         except ApiException as e:
-            exception: ServerException = Util.convert_to_server_exception(e)
-            raise exception
-        return responce
+            raise ServerException(e)
+
+        if isinstance(response, ErrorRsp):
+            raise StandardException("Got unexpected ErrorRsp")
+
+        return response

@@ -1,12 +1,39 @@
 from typing import Any, Dict, List, Optional
 
+from corbado_python_sdk.exceptions.standard_exception import StandardException
+from corbado_python_sdk.generated import ApiException
+from corbado_python_sdk.utils import Util
+
 
 class ServerException(Exception):
     """
     Custom exception class for server-related errors.
     """
 
-    def __init__(
+    def __init__(self, e: ApiException) -> None:
+        """
+        Convert ApiException to ServerException.
+
+        Args:
+            e (ApiException): Exception to be converted.
+
+        Raises:
+            StandardException: If response body is not a string.
+
+        """
+        __body = e.body
+        if not isinstance(__body, str):
+            raise StandardException("Response body is not a string")
+        __data: Dict[str, Any] = Util.json_decode(__body)
+        self.__initialize(
+            http_status_code=__data["httpStatusCode"],
+            message=__data["message"],
+            request_data=__data["requestData"],
+            runtime=__data["runtime"],
+            error=__data["error"],
+        )
+
+    def __initialize(
         self,
         http_status_code: int,
         message: str,

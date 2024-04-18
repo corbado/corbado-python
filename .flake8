@@ -18,3 +18,4 @@ per-file-ignores =
         DAR101,
         #ignore random generators
         S311,
+        S106

@@ -1,8 +1,8 @@
 import json
 from typing import Any, Dict
 
-from corbado_python_sdk.exceptions import ServerException, StandardException
-from corbado_python_sdk.generated import ApiException, GenericRsp, RequestData
+from corbado_python_sdk.exceptions.standard_exception import StandardException
+from corbado_python_sdk.generated import GenericRsp, RequestData
 
 
 class Util:
@@ -61,60 +61,6 @@ class Util:
             bool: True if status code indicates an error, False otherwise.
         """
         return status_code >= 300
-
-    @staticmethod
-    def throw_server_exception_old(data: Dict[str, Any]) -> None:
-        """
-        Throw a ServerException based on the provided data.
-
-        Args:
-            data (Dict[str, Any]): Data.
-
-        Raises:
-            StandardException: If required keys are missing in the data.
-            ServerException: Transformed server exception.
-        """
-        # Check for error data, not existent for 404 for example
-        data["error"] = data.get("error", {})
-        keys_to_check: list[str] = ["httpStatusCode", "message", "requestData", "runtime"]
-        for key in keys_to_check:
-            if key not in data:
-                raise StandardException(f"Key '{key}' not found in data")
-        raise ServerException(
-            http_status_code=data["httpStatusCode"],
-            message=data["message"],
-            request_data=data["requestData"],
-            runtime=data["runtime"],
-            error=data["error"],
-        )
-
-    @staticmethod
-    def convert_to_server_exception(e: ApiException) -> ServerException:
-        # TODO: move to server exception constructor
-        """
-        Convert ApiException to ServerException.
-
-        Args:
-            e (ApiException): Exception to be converted.
-
-        Raises:
-            StandardException: If response body is not a string.
-
-        Returns:
-            ServerException: ServerException instance.
-        """
-        print(e)
-        body = e.body
-        if not isinstance(body, str):
-            raise StandardException("Response body is not a string")
-        data: Dict[str, Any] = Util.json_decode(body)
-        return ServerException(
-            http_status_code=data["httpStatusCode"],
-            message=data["message"],
-            request_data=data["requestData"],
-            runtime=data["runtime"],
-            error=data["error"],
-        )
 
     @staticmethod
     def hydrate_request_data(data: Dict[str, Any]) -> RequestData:

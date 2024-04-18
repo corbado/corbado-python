@@ -1,12 +1,14 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional
 
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
-from corbado_python_sdk.generated.models.user_create_req import UserCreateReq
-from corbado_python_sdk.generated.models.user_create_rsp import UserCreateRsp
-from corbado_python_sdk.generated.models.user_delete_req import UserDeleteReq
-from corbado_python_sdk.generated.models.user_get_rsp import UserGetRsp
-from corbado_python_sdk.generated.models.user_list_rsp import UserListRsp
+from corbado_python_sdk.generated.models import (
+    GenericRsp,
+    UserCreateReq,
+    UserCreateRsp,
+    UserDeleteReq,
+    UserGetRsp,
+    UserListRsp,
+)
 
 
 class UserInterface(ABC):
@@ -25,7 +27,7 @@ class UserInterface(ABC):
         pass
 
     @abstractmethod
-    def get(self, user_id: str, remote_addr: str, user_agent: str) -> UserGetRsp:
+    def get(self, user_id: str, remote_addr: Optional[str] = None, user_agent: Optional[str] = None) -> UserGetRsp:
         """Get user
 
         Args:
@@ -52,6 +54,7 @@ class UserInterface(ABC):
         pass
 
     @abstractmethod
+    # name 'list()' would shadow the python's builtin 'list'
     def list_users(
         self,
         remote_addr: Optional[str] = None,
