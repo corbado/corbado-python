@@ -42,7 +42,7 @@ jobs:
         #flake8 . --count --exit-zero --max-complexity=10 --statistics
     - name: Test with tox
       run: |
-        tox
+        tox 
       env:
         CORBADO_BACKEND_API: ${{ secrets.CORBADO_BACKEND_API }}
         CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
