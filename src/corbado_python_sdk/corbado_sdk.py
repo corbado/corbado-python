@@ -65,6 +65,7 @@ class CorbadoSDK(BaseModel):
         if not self._api_client:
             self._api_client = ApiClient(configuration=self._create_generated_configuration())
             python_version: str = platform.python_version()
+
             data: dict[str, str] = {
                 "name": "Python SDK",
                 "sdkVersion": VERSION,
@@ -96,12 +97,6 @@ class CorbadoSDK(BaseModel):
         """
         if not self._auth_token_interface:
             self._auth_token_interface = AuthTokenService(client=AuthTokensApi(api_client=self.api_client))
-        self.api_client.set_default_header(  # type: ignore
-            header_name="Authorization",
-            header_value=self._generate_basic_auth_header(
-                username=self.config.project_id, password=self.config.api_secret
-            ),
-        )
         return self._auth_token_interface
 
     @property
@@ -180,6 +175,7 @@ class CorbadoSDK(BaseModel):
             username=self.config.project_id,
             password=self.config.api_secret,
             access_token=None,
+            api_key={"projectID": self.config.project_id},
         )
 
     def _generate_basic_auth_header(self, username: str, password: str) -> str:
@@ -190,7 +186,7 @@ class CorbadoSDK(BaseModel):
             password (str): API Secret
 
         Returns:
-            str: base64 encoded header value for basic authentification
+            str: base64 encoded header value for basic authentication
         """
         credentials: str = f"{username}:{password}"
         encoded_credentials: str = base64.b64encode(credentials.encode()).decode()
