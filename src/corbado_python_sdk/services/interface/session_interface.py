@@ -8,19 +8,8 @@ class SessionInterface(ABC):
     SessionInterface for managing sessions.
     """
 
-    # EmailOTPService
     @abstractmethod
-    def get_short_session_value(self) -> str:
-        """
-        Returns the short-term session value from the cookie or the Authorization header.
-
-        Returns:
-            str: The short-term session value.
-        """
-        pass
-
-    @abstractmethod
-    def validate_short_session_value(self, value: str):
+    def validate_short_session_value(self, short_session: str) -> UserEntity:
         """
         Validates the given short-term session value.
 
@@ -33,17 +22,7 @@ class SessionInterface(ABC):
         pass
 
     @abstractmethod
-    def get_last_short_session_validation_result(self) -> str:
-        """
-        Returns the last short-term session validation result.
-
-        Returns:
-            str: The last short-term session validation result.
-        """
-        pass
-
-    @abstractmethod
-    def get_current_user(self) -> UserEntity:
+    def get_current_user(self, short_session: str) -> UserEntity:
         """
         Returns the current user from the short-term session.
 

@@ -20,6 +20,7 @@ from corbado_python_sdk.services.implementation import (
     AuthTokenService,
     EmailMagicLinkService,
     EmailOTPService,
+    SessionService,
     SmsOTPService,
     UserService,
     ValidationService,
@@ -28,6 +29,7 @@ from corbado_python_sdk.services.interface import (
     AuthTokenInterface,
     EmailMagicLinkInterface,
     EmailOTPInterface,
+    SessionInterface,
     SmsOTPInterface,
     UserInterface,
     ValidationInterface,
@@ -47,7 +49,7 @@ class CorbadoSDK(BaseModel):
     )
     config: Config
     _api_client: Optional[ApiClient] = None
-
+    _session_interface: Optional[SessionService] = None
     _user_interface: Optional[UserInterface] = None
     _validation_interface: Optional[ValidationInterface] = None
     _sms_otp_interface: Optional[SmsOTPInterface] = None
@@ -87,6 +89,22 @@ class CorbadoSDK(BaseModel):
                 client=EmailMagicLinksApi(api_client=self.api_client)
             )
         return self._email_magic_link_interface
+
+    @property
+    def session_interface(self) -> SessionInterface:
+        """Get user SessionInterface
+
+        Returns:
+            SessionInterface: SessionInterface object.
+        """
+        if not self._session_interface:
+            self._session_interface = SessionService(
+                api_client=self.api_client,
+                short_session_cookie_name=self.config.short_session_cookie_name,
+                issuer=self.config.frontend_api,
+                jwks_uri=f"{self.config.frontend_api}/.well-known/jwks",
+            )  # type: ignore
+        return self._session_interface
 
     @property
     def auth_token_interface(self) -> AuthTokenInterface:

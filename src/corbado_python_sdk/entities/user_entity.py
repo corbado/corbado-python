@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from typing_extensions import Optional
 
 from corbado_python_sdk.exceptions.standard_exception import StandardException
@@ -19,10 +19,10 @@ class UserEntity(BaseModel):
     """
 
     authenticated: bool
-    _user_id: Optional[str] = ""
-    _name: Optional[str] = ""
-    _email: Optional[str] = ""
-    _phone_number: Optional[str] = ""
+    _user_id: str = ""
+    _name: str = ""
+    _email: str = ""
+    _phone_number: str = ""
 
     # Interfaces
     @property
@@ -80,3 +80,25 @@ class UserEntity(BaseModel):
         if not self.authenticated or not self._phone_number:
             raise StandardException(NO_AUTH)
         return self._phone_number
+
+    @classmethod
+    def create_authenticated_user(
+        cls, user_id: str = "", name: str = "", email: str = "", phone_number: str = ""
+    ) -> "UserEntity":
+        """Constructor for authenticated user.
+
+        Args:
+            user_id (str, optional): user_id. Defaults to "".
+            name (str, optional): name. Defaults to "".
+            email (str, optional): email. Defaults to "".
+            phone_number (str, optional): phone_number. Defaults to "".
+
+        Returns:
+            UserEntity: User Entity
+        """
+        user = UserEntity(authenticated=True)
+        user._email = email
+        user._user_id = user_id
+        user._name = name
+        user._phone_number = phone_number
+        return user
