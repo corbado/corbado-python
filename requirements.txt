@@ -1,5 +1,5 @@
 setuptools~=65.5.0
-virtualenv>20.22.0
+#virtualenv>20.22.0
 #recursive
 -r src/corbado_python_sdk/generated/requirements.txt
 -r test-requirements.txt
