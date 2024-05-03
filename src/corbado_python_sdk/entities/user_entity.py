@@ -6,8 +6,7 @@ NO_AUTH = "User is not authenticated"
 
 
 class UserEntity(BaseModel):
-    """
-    Represents a user entity.
+    """Represents a user entity.
 
     Attributes:
         authenticated (bool): Indicates if the user is authenticated.
@@ -85,7 +84,7 @@ class UserEntity(BaseModel):
     def create_authenticated_user(
         cls, user_id: str = "", name: str = "", email: str = "", phone_number: str = ""
     ) -> "UserEntity":
-        """Constructor for authenticated user.
+        """Create authenticated user.
 
         Args:
             user_id (str): user_id. Defaults to "".

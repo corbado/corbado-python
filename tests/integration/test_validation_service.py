@@ -25,10 +25,7 @@ class ValidateEmailTest(TestBase):
     """Test cases for email validation."""
 
     def test_validate_blank_email_validation_error(self) -> None:
-        """
-        Test for email validation error.
-        """
-
+        """Test for email validation error."""
         with self.assertRaises(ServerException) as context:
             req = ValidateEmailReq(email="")
             self.fixture.validate_email(req)
@@ -39,10 +36,7 @@ class ValidateEmailTest(TestBase):
         self.assertListEqual(["email: cannot be blank"], e.get_validation_messages())
 
     def test_validate_email_success(self) -> None:
-        """
-        Test for successful email validation.
-
-        """
+        """Test for successful email validation."""
         req = ValidateEmailReq(email="info@corbado.com")
 
         rsp: ValidateEmailRsp = self.fixture.validate_email(req)
@@ -50,15 +44,10 @@ class ValidateEmailTest(TestBase):
 
 
 class ValidatePhoneNumberTest(TestBase):
-    """
-    Test case for validating phone numbers.
-    """
+    """Test case for validating phone numbers."""
 
     def test_validate_phone_number_validation_error(self):
-        """
-        Test case for validating phone number with empty input.
-        """
-
+        """Test case for validating phone number with empty input."""
         with self.assertRaises(expected_exception=ServerException) as context:
             req = ValidatePhoneNumberReq(phoneNumber="")
             self.fixture.validate_phone_number(req)
@@ -69,10 +58,6 @@ class ValidatePhoneNumberTest(TestBase):
         self.assertCountEqual(["phoneNumber: cannot be blank"], exception.get_validation_messages())
 
     def test_validate_phone_number_success(self):
-        """
-        Test case for validating a valid phone number.
-        """
-
         req = ValidatePhoneNumberReq(phoneNumber="+49 151 12345678")
         rsp: ValidatePhoneNumberRsp = self.fixture.validate_phone_number(req)
         self.assertTrue(rsp.data.is_valid)

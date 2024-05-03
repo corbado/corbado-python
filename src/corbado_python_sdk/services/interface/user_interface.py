@@ -12,11 +12,11 @@ from corbado_python_sdk.generated.models import (
 
 
 class UserInterface(ABC):
-    """Interface containing functions for interaction with users"""
+    """Interface containing functions for interaction with users."""
 
     @abstractmethod
     def create(self, request: UserCreateReq) -> UserCreateRsp:
-        """Creates a user
+        """Create a user.
 
         Args:
             request (UserCreateReq): User create request
@@ -28,7 +28,7 @@ class UserInterface(ABC):
 
     @abstractmethod
     def get(self, user_id: str, remote_addr: Optional[str] = None, user_agent: Optional[str] = None) -> UserGetRsp:
-        """Get user
+        """Get user.
 
         Args:
             user_id (str): User Id
@@ -42,7 +42,7 @@ class UserInterface(ABC):
 
     @abstractmethod
     def delete(self, user_id: str, request: UserDeleteReq) -> GenericRsp:
-        """Delete user
+        """Delete user.
 
         Args:
             user_id (str): User ID
@@ -64,7 +64,7 @@ class UserInterface(ABC):
         page: Optional[int] = 1,
         page_size: Optional[int] = 10,
     ) -> UserListRsp:
-        """List users
+        """List users.
 
         Args:
             remote_addr (str): Remote address

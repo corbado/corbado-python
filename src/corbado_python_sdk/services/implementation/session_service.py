@@ -46,7 +46,7 @@ class SessionService(SessionInterface, BaseModel):
 
     def __init__(self, **kwargs) -> None:  # type: ignore
         """
-        Initializes a new instance of the SessionService class.
+        Initialize a new instance of the SessionService class.
 
         Args:
             **kwargs: Additional keyword arguments to initialize the SessionService.
@@ -67,7 +67,7 @@ class SessionService(SessionInterface, BaseModel):
         )
 
     def get_and_validate_short_session_value(self, short_session: str) -> UserEntity:
-        """Validates the given short-term session (represented as JWT) value
+        """Validate the given short-term session (represented as JWT) value.
 
         Args:
             short_session (str): jwt
@@ -101,7 +101,7 @@ class SessionService(SessionInterface, BaseModel):
             return UserEntity(authenticated=False)
 
     def get_current_user(self, short_session: str) -> UserEntity:
-        """Returns current user for the short session.
+        """Return current user for the short session.
 
         Args:
             short_session (str): Short session.

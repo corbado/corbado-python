@@ -22,7 +22,7 @@ class UserService(
     BaseModel,
     UserInterface,
 ):
-    """Service for managing users"""
+    """Service for managing users."""
 
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
@@ -30,7 +30,7 @@ class UserService(
     client: UserApi
 
     def create(self, request: UserCreateReq) -> UserCreateRsp:
-        """Creates an user
+        """Create an user.
 
         Args:
             request (UserCreateReq): User create request
@@ -42,7 +42,6 @@ class UserService(
         Returns:
             UserCreateRsp: Response
         """
-
         try:
             response: UserCreateRsp = self.client.user_create(user_create_req=request)
         except ApiException as e:
@@ -61,7 +60,7 @@ class UserService(
         page: Optional[int] = 1,
         page_size: Optional[int] = 10,
     ) -> UserListRsp:
-        """List users
+        """List users.
 
         Args:
             remote_addr (str): Remote address
@@ -96,7 +95,7 @@ class UserService(
         return response
 
     def get(self, user_id: str, remote_addr: Optional[str] = None, user_agent: Optional[str] = None) -> UserGetRsp:
-        """Get user
+        """Get user.
 
         Args:
             user_id (str): User Id
@@ -123,7 +122,7 @@ class UserService(
         return response
 
     def delete(self, user_id: str, request: UserDeleteReq) -> GenericRsp:
-        """Delete user
+        """Delete user.
 
         Args:
             user_id (str): User ID

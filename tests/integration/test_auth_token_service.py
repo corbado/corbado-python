@@ -24,10 +24,7 @@ class AuthTokenValidateTest(TestBase):
     """
 
     def test_auth_token_validate_validation_error_empty_token(self) -> None:
-        """
-        Test case for validating authentication token with empty token.
-
-        """
+        """Test case for validating authentication token with empty token."""
         with self.assertRaises(expected_exception=ServerException) as context:
             req = AuthTokenValidateReq(
                 token="",
@@ -41,10 +38,7 @@ class AuthTokenValidateTest(TestBase):
         self.assertCountEqual(["token: cannot be blank"], exception.get_validation_messages())
 
     def test_auth_token_validate_validation_error_invalid_token(self) -> None:
-        """
-        Test case for validating authentication token with invalid token.
-
-        """
+        """Test case for validating authentication token with invalid token."""
         with self.assertRaises(expected_exception=ServerException) as context:
             req = AuthTokenValidateReq(
                 token="x",
@@ -58,10 +52,7 @@ class AuthTokenValidateTest(TestBase):
         self.assertCountEqual(["token: the length must be exactly 64"], exception.get_validation_messages())
 
     def test_auth_token_validate_expect_validation_error_not_existing_token(self) -> None:
-        """
-        Test case for validating non-existing authentication token.
-
-        """
+        """Test case for validating non-existing authentication token."""
         with self.assertRaises(expected_exception=ServerException) as context:
             req = AuthTokenValidateReq(
                 token=TestUtils.generate_string(characters="qwertyuiasdghj", length=64),

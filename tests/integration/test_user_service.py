@@ -34,15 +34,10 @@ class TestMisc(TestBase):
 
 
 class UserCreateTest(TestBase):
-    """
-    Test cases for user creation.
-    """
+    """Test cases for user creation."""
 
     def test_user_create_blank_name_expect_validation_error(self):
-        """
-        Test case for user creation with validation error.
-        """
-
+        """Test case for user creation with validation error."""
         with self.assertRaises(ServerException) as context:
             req: UserCreateReq = UserCreateReq(name="", email="")
             self.fixture.create(request=req)
@@ -53,24 +48,17 @@ class UserCreateTest(TestBase):
         self.assertCountEqual(["name: cannot be blank"], e.get_validation_messages())
 
     def test_user_create_expect_success(self):
-        """
-        Test case for successful user creation.
-        """
-
+        """Test case for successful user creation."""
         req = UserCreateReq(name=TestUtils.create_random_test_name(), email=TestUtils.create_random_test_email())
         rsp: UserCreateRsp = self.fixture.create(request=req)
         self.assertEqual(200, rsp.http_status_code)
 
 
 class TestUserDelete(TestBase):
-    """
-    Tests for the user deletion functionality.
-    """
+    """Tests for the user deletion functionality."""
 
     def test_user_delete_expect_not_found(self) -> None:
-        """
-        Test for deleting a user that does not exist.
-        """
+        """Test for deleting a user that does not exist."""
         with self.assertRaises(ServerException) as context:
             self.fixture.delete(user_id="usr-123456789", request=UserDeleteReq())
 
@@ -80,10 +68,7 @@ class TestUserDelete(TestBase):
         self.assertListEqual(["userID: does not exist"], e.get_validation_messages())
 
     def test_user_delete_expect_success(self) -> None:
-        """
-        Test for successfully deleting a user.
-
-        """
+        """Test for successfully deleting a user."""
         user_id: str = TestUtils.create_user()
 
         rsp: GenericRsp = self.fixture.delete(user_id, UserDeleteReq())
@@ -91,14 +76,10 @@ class TestUserDelete(TestBase):
 
 
 class TestUserGet(TestBase):
-    """
-    Tests for the user retrieval functionality.
-    """
+    """Tests for the user retrieval functionality."""
 
     def test_user_get_expect_not_found(self) -> None:
-        """
-        Test for retrieving a user that does not exist.
-        """
+        """Test for retrieving a user that does not exist."""
         with self.assertRaises(ServerException) as context:
             self.fixture.get(user_id="usr-123456789")
 
@@ -107,10 +88,7 @@ class TestUserGet(TestBase):
         self.assertEqual(404, e.http_status_code)
 
     def test_user_get_expect_success(self) -> None:
-        """
-        Test for successfully retrieving a user.
-
-        """
+        """Test for successfully retrieving a user."""
         user_id: str = TestUtils.create_user()
 
         rsp: UserGetRsp = self.fixture.get(user_id=user_id)
@@ -118,14 +96,10 @@ class TestUserGet(TestBase):
 
 
 class TestUserList(TestBase):
-    """
-    Tests for the user listing functionality.
-    """
+    """Tests for the user listing functionality."""
 
     def test_user_list_invalid_sort_expect_validation_error(self) -> None:
-        """
-        Test for listing users with validation error.
-        """
+        """Test for listing users with validation error."""
         with self.assertRaises(ServerException) as context:
             self.fixture.list_users(remote_addr="", user_agent="", sort="foo:bar")
 
@@ -135,10 +109,7 @@ class TestUserList(TestBase):
         self.assertListEqual(["sort: Invalid order direction 'bar'"], e.get_validation_messages())
 
     def test_user_list_success(self) -> None:
-        """
-        Test for successfully listing users.
-
-        """
+        """Test for successfully listing users."""
         user_id: str = TestUtils.create_user()
         rsp: UserListRsp = self.fixture.list_users(remote_addr="", user_agent="", sort="created:desc")
 

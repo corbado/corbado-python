@@ -20,14 +20,10 @@ class TestBase(unittest.TestCase):
 
 
 class SmsOTPSendTest(TestBase):
-    """
-    Test cases for sending SMS OTP codes.
-    """
+    """Test cases for sending SMS OTP codes."""
 
     def test_sms_otp_send_expect_validation_error(self):
-        """
-        Test case for sending SMS OTP code with validation error.
-        """
+        """Test case for sending SMS OTP code with validation error."""
         try:
             req = SmsCodeSendReq(phoneNumber="", create=True)
             self.fixture.send(req)
@@ -37,23 +33,17 @@ class SmsOTPSendTest(TestBase):
             self.assertCountEqual(["phoneNumber: cannot be blank"], e.get_validation_messages())
 
     def test_sms_otp_send_success(self):
-        """
-        Test case for successful sending of SMS OTP code.
-        """
+        """Test case for successful sending of SMS OTP code."""
         req = SmsCodeSendReq(phoneNumber=TestUtils.create_random_test_phone_number(), create=True)
         rsp: SmsCodeSendRsp = self.fixture.send(req)
         self.assertEqual(200, rsp.http_status_code)
 
 
 class SmsOTPValidateTest(TestBase):
-    """
-    Test cases for validating SMS OTP codes.
-    """
+    """Test cases for validating SMS OTP codes."""
 
     def test_sms_otp_validate_blank_expect_error_empty_code(self):
-        """
-        Test case for validating SMS OTP code with empty code.
-        """
+        """Test case for validating SMS OTP code with empty code."""
         req = SmsCodeValidateReq(smsCode="")
 
         with self.assertRaises(ServerException) as context:
@@ -63,9 +53,7 @@ class SmsOTPValidateTest(TestBase):
         self.assertCountEqual(["smsCode: cannot be blank"], context.exception.get_validation_messages())
 
     def test_sms_otp_validate_invalid_length_expect_error_invalid_code(self):
-        """
-        Test case for validating SMS OTP code with invalid code.
-        """
+        """Test case for validating SMS OTP code with invalid code."""
         req = SmsCodeValidateReq(smsCode="1")
 
         with self.assertRaises(ServerException) as context:
@@ -75,9 +63,7 @@ class SmsOTPValidateTest(TestBase):
         self.assertCountEqual(["smsCode: the length must be exactly 6"], context.exception.get_validation_messages())
 
     def test_sms_otp_validate_invalid_id_expect_error_invalid_id(self):
-        """
-        Test case for validating SMS OTP code with invalid ID.
-        """
+        """Test case for validating SMS OTP code with invalid ID."""
         req = SmsCodeValidateReq(smsCode="123456")
 
         with self.assertRaises(ServerException) as context:
@@ -87,9 +73,7 @@ class SmsOTPValidateTest(TestBase):
         self.assertEqual(404, context.exception.http_status_code)
 
     def test_sms_otp_validate_expect_success(self):
-        """
-        Test case for successful validation of SMS OTP code.
-        """
+        """Test case for successful validation of SMS OTP code."""
         req = SmsCodeSendReq(phoneNumber=TestUtils().create_random_test_phone_number(), create=True)
         rsp: SmsCodeSendRsp = self.fixture.send(req)
         self.assertEqual(200, rsp.http_status_code)

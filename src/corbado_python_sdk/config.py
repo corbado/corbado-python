@@ -7,7 +7,7 @@ from corbado_python_sdk.utils import validators
 
 
 class Config(BaseModel):
-    """Configuration class"""
+    """Configuration class."""
 
     # Make sure that field assignments are also validated, use "set_assignment_validation(False)"
     # to be able to use invalid assignments
@@ -27,7 +27,7 @@ class Config(BaseModel):
     @field_validator("project_id")
     @classmethod
     def project_id_validator(cls, project_id: str) -> str:
-        """Field validator for project_ID
+        """Field validator for project_ID.
 
         Args:
             project_id (str): project ID
@@ -45,7 +45,7 @@ class Config(BaseModel):
     @field_validator("api_secret")
     @classmethod
     def api_secret_must_start_with_corbado1(cls, api_secret: str) -> str:
-        """Field validator for api_secret
+        """Field validator for api_secret.
 
         Args:
             api_secret (str): API secret
@@ -99,7 +99,6 @@ class Config(BaseModel):
         Args:
             frontend_api (str): Frontend API to set.
         """
-
         self._frontend_api = validators.url_validator(url=frontend_api)  # validate url
 
     # ------- Internal --------------#

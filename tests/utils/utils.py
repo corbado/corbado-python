@@ -11,12 +11,15 @@ from corbado_python_sdk.generated.models.user_create_rsp import UserCreateRsp
 
 
 class TestUtils:
+    """Utility class for test."""
+
     CORBADO_API_SECRET: str = "CORBADO_API_SECRET"
     CORBADO_PROJECT_ID: str = "CORBADO_PROJECT_ID"
     CORBADO_BACKEND_API: str = "CORBADO_BACKEND_API"
 
     @classmethod
     def instantiate_sdk(cls) -> CorbadoSDK:
+        """Instantiate SDK with parameters from environment variables."""
         config: Config = Config(
             api_secret=os.getenv(key=TestUtils.CORBADO_API_SECRET, default="missing CORBADO_API_SECRET"),
             project_id=os.getenv(key=TestUtils.CORBADO_PROJECT_ID, default="missing CORBADO_PROJECT_ID"),

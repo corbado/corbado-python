@@ -14,11 +14,17 @@ sdk = CorbadoSDK(config=config)
 
 @app.route("/")
 def index():
+    """Root."""
     return "Hello world!"
 
 
 @app.route("/setCookie")
 def set_cookie() -> Response:
+    """Set Cookie.
+
+    Returns:
+        Response: Response
+    """
     # You'll have to supply your own short session cookie value here.
     # Bear in mind that the short session cookie value is only valid for 15 minutes.
     # If you change the cookie name via config.setShortSessionCookieName, you'll
@@ -42,6 +48,11 @@ def set_cookie() -> Response:
 
 @app.route("/logged-in")
 def logged_in():
+    """Validate short term session.
+
+    Returns:
+        _type_: Response
+    """
     try:
         short_session: str = request.cookies.get(key="cbo_short_session", default="")
         session_interface: SessionInterface = sdk.session_interface

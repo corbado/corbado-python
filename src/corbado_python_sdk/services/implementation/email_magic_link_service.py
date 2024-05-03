@@ -39,7 +39,7 @@ class EmailMagicLinkService(BaseModel, EmailMagicLinkInterface):
 
     def send(self, req: EmailLinkSendReq) -> EmailLinkSendRsp:
         """
-        Sends an email magic link.
+        Send an email magic link.
 
         Args:
             req (EmailLinkSendReq): The request object containing the details of the email magic link.
@@ -68,7 +68,7 @@ class EmailMagicLinkService(BaseModel, EmailMagicLinkInterface):
         req: EmailLinksValidateReq,
     ) -> EmailLinkValidateRsp:
         """
-        Validates an email magic link.
+        Validate an email magic link.
 
         Args:
             email_link_id (str): The ID of the email magic link to validate.

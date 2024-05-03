@@ -21,7 +21,7 @@ TEST_USER_ID = "12345"
 
 
 class TestBase(unittest.TestCase):
-    """Base class for all test using mocking for SessionService
+    """Base class for all test using mocking for SessionService.
 
     Args:
         unittest (_type_): unittest
@@ -58,7 +58,8 @@ class TestBase(unittest.TestCase):
     @classmethod
     def create_session_service(cls) -> SessionService:
         """Create test configuration of SessionService.
-            Warning! You should normally use SessionInterface from CorbadoSDK for non-test purposes.
+
+        Warning! You should normally use SessionInterface from CorbadoSDK for non-test purposes.
 
         Returns:
             SessionService: SessionService instance
@@ -73,7 +74,7 @@ class TestBase(unittest.TestCase):
         self.my_patch.stop()
 
     def _provide_jwts(self):
-        """Provides list of jwts with expected test results"""
+        """Provide list of jwts with expected test results."""
         return [
             # JWT with invalid format
             (False, "invalid"),

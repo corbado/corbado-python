@@ -27,7 +27,7 @@ class ValidationService(
 
     def validate_email(self, req: ValidateEmailReq) -> ValidateEmailRsp:
         """
-        Validates an email address.
+        Validate an email address.
 
         Args:
             req (ValidateEmailReq): The request object for email validation.
@@ -51,7 +51,7 @@ class ValidationService(
 
     def validate_phone_number(self, req: ValidatePhoneNumberReq) -> ValidatePhoneNumberRsp:
         """
-        Validates a phone number.
+        Validate a phone number.
 
         Args:
             req (ValidatePhoneNumberReq): The request object for phone number validation.

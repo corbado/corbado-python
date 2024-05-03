@@ -1,6 +1,4 @@
 class StandardException(Exception):
-    """
-    Custom exception class for standard exceptions.
-    """
+    """Custom exception class for standard exceptions."""
 
     pass

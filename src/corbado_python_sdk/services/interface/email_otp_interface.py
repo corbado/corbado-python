@@ -41,7 +41,6 @@ class EmailOTPInterface(ABC):
             EmailCodeSendRsp: The response object for sending email code.
 
         """
-
         pass
 
     @abstractmethod
@@ -61,3 +60,4 @@ class EmailOTPInterface(ABC):
             EmailCodeValidateRsp: The response object for validating email code.
 
         """
+        pass

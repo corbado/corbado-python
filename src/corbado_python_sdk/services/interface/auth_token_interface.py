@@ -7,9 +7,7 @@ from corbado_python_sdk.generated.models import (
 
 
 class AuthTokenInterface(ABC):
-    """
-    Interface for handling authentication tokens.
-    """
+    """Interface for handling authentication tokens."""
 
     @abstractmethod
     def validate_auth_token(self, req: AuthTokenValidateReq) -> AuthTokenValidateRsp:

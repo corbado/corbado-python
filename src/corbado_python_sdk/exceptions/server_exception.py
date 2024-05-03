@@ -6,13 +6,10 @@ from corbado_python_sdk.utils import Util
 
 
 class ServerException(Exception):
-    """
-    Custom exception class for server-related errors.
-    """
+    """Custom exception class for server-related errors."""
 
     def __init__(self, e: ApiException) -> None:
-        """
-        Convert ApiException to ServerException.
+        """Convert ApiException to ServerException.
 
         Args:
             e (ApiException): Exception to be converted.

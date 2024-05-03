@@ -9,9 +9,7 @@ from corbado_python_sdk.generated.models import (
 
 
 class SmsOTPInterface(ABC):
-    """
-    Service class for sending and validating SMS codes.
-
+    """Service class for sending and validating SMS codes.
 
     Attributes:
         client (SMSOTPApi): The client used for interacting with the SMS OTP service.
@@ -26,7 +24,7 @@ class SmsOTPInterface(ABC):
 
     @abstractmethod
     def send(self, req: SmsCodeSendReq) -> SmsCodeSendRsp:
-        """Sends an SMS code.
+        """Send an SMS code.
 
         Args:
             req (SmsCodeSendReq): The request object containing SMS details.
@@ -38,7 +36,7 @@ class SmsOTPInterface(ABC):
 
     @abstractmethod
     def validate_sms(self, sms_id: str, req: SmsCodeValidateReq) -> SmsCodeValidateRsp:
-        """Validates an SMS code.
+        """Validate an SMS code.
 
         Args:
             sms_id (str): The ID of the SMS code to validate.

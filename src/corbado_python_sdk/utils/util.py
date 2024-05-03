@@ -6,9 +6,7 @@ from corbado_python_sdk.generated import GenericRsp, RequestData
 
 
 class Util:
-    """
-    Helper class containing various utility methods.
-    """
+    """Helper class containing various utility methods."""
 
     @staticmethod
     def json_encode(data: Any) -> str:

@@ -41,7 +41,7 @@ CORBADO_HEADER_NAME = "X-Corbado-SDK"
 
 
 class CorbadoSDK(BaseModel):
-    """Entry point for the SDK"""
+    """Entry point for the SDK."""
 
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
@@ -58,7 +58,7 @@ class CorbadoSDK(BaseModel):
 
     @property
     def api_client(self) -> ApiClient:
-        """Get ApiClient
+        """Get ApiClient.
 
         Returns:
             ApiClient: ApiClient object.
@@ -79,7 +79,7 @@ class CorbadoSDK(BaseModel):
     # --------- Interfaces ---------------#
     @property
     def email_magic_link_interface(self) -> EmailMagicLinkInterface:
-        """Get user EmailMagicLinkInterface
+        """Get user EmailMagicLinkInterface.
 
         Returns:
             EmailMagicLinkInterface: EmailMagicLinkInterface object.
@@ -92,7 +92,7 @@ class CorbadoSDK(BaseModel):
 
     @property
     def session_interface(self) -> SessionInterface:
-        """Get user SessionInterface
+        """Get user SessionInterface.
 
         Returns:
             SessionInterface: SessionInterface object.
@@ -108,7 +108,7 @@ class CorbadoSDK(BaseModel):
 
     @property
     def auth_token_interface(self) -> AuthTokenInterface:
-        """Get user AuthTokenInterface
+        """Get user AuthTokenInterface.
 
         Returns:
             AuthTokenInterface: AuthTokenInterface object.
@@ -119,7 +119,7 @@ class CorbadoSDK(BaseModel):
 
     @property
     def user_interface(self) -> UserInterface:
-        """Get user interface
+        """Get user interface.
 
         Returns:
             UserInterface: UserInterface object.
@@ -131,7 +131,7 @@ class CorbadoSDK(BaseModel):
 
     @property
     def email_otp_interface(self) -> EmailOTPInterface:
-        """Get E-mail OTP interface
+        """Get E-mail OTP interface.
 
         Returns:
             EmailOTPInterface: EmailOTPInterface object.
@@ -142,7 +142,7 @@ class CorbadoSDK(BaseModel):
 
     @property
     def sms_otp_interface(self) -> SmsOTPInterface:
-        """Get SMS OTP interface
+        """Get SMS OTP interface.
 
         Returns:
             SmsOTPInterface: SmsOTPInterface object.
@@ -153,7 +153,7 @@ class CorbadoSDK(BaseModel):
 
     @property
     def validation_interface(self) -> ValidationInterface:
-        """Get validation interface
+        """Get validation interface.
 
         Returns:
             ValidationInterface: ValidationInterface object.
@@ -169,7 +169,7 @@ class CorbadoSDK(BaseModel):
         remote_address: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)],
         user_agent: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)],
     ) -> ClientInfo:
-        """Creates client info
+        """Create client info.
 
         Args:
             remote_address (Annotated[str, Field, optional): Defaults to 1, strict=True)] remote address.
@@ -178,12 +178,11 @@ class CorbadoSDK(BaseModel):
         Returns:
             ClientInfo: ClientInfo object.
         """
-
         client: ClientInfo = ClientInfo(remoteAddress=remote_address, userAgent=user_agent)
         return client
 
     def _create_generated_configuration(self) -> Configuration:
-        """Creates configuration (generated class)
+        """Create configuration (generated class).
 
         Returns:
             Configuration: Configuration object.
@@ -197,7 +196,7 @@ class CorbadoSDK(BaseModel):
         )
 
     def _generate_basic_auth_header(self, username: str, password: str) -> str:
-        """Generate basic auth header
+        """Generate basic auth header.
 
         Args:
             username (str): ProjectId

@@ -53,7 +53,6 @@ class EmailOTPService(BaseModel, EmailOTPInterface):
             ServerException: If a server-side error occurs.
             StandardException: If an unexpected ErrorRsp is received.
         """
-
         try:
             rsp: EmailCodeSendRsp = self.client.email_code_send(email_code_send_req=req)
         except ApiException as e:
@@ -84,7 +83,6 @@ class EmailOTPService(BaseModel, EmailOTPInterface):
             ServerException: If a server-side error occurs.
             StandardException: If an unexpected ErrorRsp is received.
         """
-
         try:
             rsp: EmailCodeValidateRsp = self.client.email_code_validate(
                 email_code_id=email_id, email_code_validate_req=req

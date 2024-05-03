@@ -4,14 +4,11 @@ from corbado_python_sdk.entities.user_entity import UserEntity
 
 
 class SessionInterface(ABC):
-    """
-    SessionInterface for managing sessions.
-    """
+    """SessionInterface for managing sessions."""
 
     @abstractmethod
     def get_and_validate_short_session_value(self, short_session: str) -> UserEntity:
-        """
-        Validates the given short-term session value.
+        """Validate  the given short-term session value.
 
         Args:
             short_session (str): The value (JWT) to validate.
@@ -23,7 +20,7 @@ class SessionInterface(ABC):
 
     @abstractmethod
     def get_current_user(self, short_session: str) -> UserEntity:
-        """Returns current user for the short session.
+        """Return current user for the short session.
 
         Args:
             short_session (str): Short session.

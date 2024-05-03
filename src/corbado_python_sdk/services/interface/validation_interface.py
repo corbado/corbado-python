@@ -9,14 +9,12 @@ from corbado_python_sdk.generated.models import (
 
 
 class ValidationInterface(ABC):
-    """
-    Interface for validation functionality.
-    """
+    """Interface for validation functionality."""
 
     @abstractmethod
     def validate_email(self, req: ValidateEmailReq) -> ValidateEmailRsp:
         """
-        Validates an email address.
+        Validate an email address.
 
         Args:
             req (ValidateEmailReq): The request object for email validation.
@@ -28,8 +26,7 @@ class ValidationInterface(ABC):
 
     @abstractmethod
     def validate_phone_number(self, req: ValidatePhoneNumberReq) -> ValidatePhoneNumberRsp:
-        """
-        Validates a phone number.
+        """Validate a phone number.
 
         Args:
             req (ValidatePhoneNumberReq): The request object for phone number validation.
