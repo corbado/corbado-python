@@ -32,10 +32,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install .[gh]
+        python -m pip install .[test,flake8,tox_gh,tox]
     - name: Test with tox
       run: |
-        tox -e
+        tox run
       env:
         CORBADO_BACKEND_API: ${{ secrets.CORBADO_BACKEND_API }}
         CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
