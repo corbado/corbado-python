@@ -1,6 +1,7 @@
 import base64
 import json
 import platform
+from importlib.metadata import version
 
 from pydantic import BaseModel, ConfigDict, StringConstraints, validate_call
 from typing_extensions import Annotated, Optional
@@ -36,7 +37,6 @@ from corbado_python_sdk.services.interface import (
     ValidationInterface,
 )
 
-VERSION: str = "1.0.0"
 CORBADO_HEADER_NAME = "X-Corbado-SDK"
 
 
@@ -66,13 +66,14 @@ class CorbadoSDK(BaseModel):
         if not self._api_client:
             self._api_client = ApiClient(configuration=self._create_generated_configuration())
             python_version: str = platform.python_version()
-
             data: dict[str, str] = {
                 "name": "Python SDK",
-                "sdkVersion": VERSION,
+                "sdkVersion": version("corbado-python-sdk"),
                 "languageVersion": python_version,
             }
-            self._api_client.set_default_header(header_name=CORBADO_HEADER_NAME, header_value=json.dumps(data))  # type: ignore
+            self._api_client.set_default_header(  # type: ignore
+                header_name=CORBADO_HEADER_NAME, header_value=json.dumps(data)
+            )
         return self._api_client
 
     # --------- Interfaces ---------------#
