@@ -32,6 +32,7 @@ REQUIRES = [
     "python-dateutil",
     "pydantic >= 2",
     "typing-extensions >= 4.7.1",
+    "pyopenssl",
     "PyJWT",
     "flask",
 ]
