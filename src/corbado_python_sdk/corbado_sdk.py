@@ -201,6 +201,7 @@ class CorbadoSDK(BaseModel):
 
         Args:
             username (str): ProjectId
+            password (str): API Secret
 
         Returns:
             str: base64 encoded header value for basic authentication
