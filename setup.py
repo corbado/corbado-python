@@ -42,6 +42,7 @@ CLASSIFIERS = [
 NAME = "corbado-python-sdk"
 VERSION: str = version
 PYTHON_REQUIRES = ">=3.8"
+
 INSTALL_REQUIRES = [
     "urllib3 >= 1.25.3",
     "python-dateutil",  # used in generated code
@@ -51,7 +52,7 @@ INSTALL_REQUIRES = [
     "PyJWT",
     "flask",
 ]
-gh_requires = ["tox-gh>=1.2"]
+tox_requires = ["tox-gh>=1.2"]
 flake8_requires = [
     "flake8",
     "pep8-naming",  # naming conventions check
@@ -63,6 +64,8 @@ flake8_requires = [
     "flake8-return",
     "flake8-docstring-checker",  # enforce docstring
 ]
+
+test_requires = ["pytest~=7.1.3", "pytest-cov>=2.8.1", "pytest-randomly>=3.12.0"]
 
 setup(
     name=NAME,
@@ -76,6 +79,11 @@ setup(
     packages=find_namespace_packages(where="src"),
     package_dir={"": "src"},
     include_package_data=True,
+    extra_requires={
+        "dev": flake8_requires + tox_requires + test_requires,
+        "test": test_requires,
+        "flake8": flake8_requires,
+    },
     classifiers=CLASSIFIERS,
     long_description_content_type="text/markdown",
     long_description=open(os.path.join(base_dir, "README.md"), encoding="utf-8").read(),
