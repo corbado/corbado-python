@@ -52,7 +52,7 @@ INSTALL_REQUIRES = [
     "PyJWT",
     "flask",
 ]
-tox_requires = ["tox"]
+tox_requires = ["tox>=4.0.0"]
 tox_gh_requires = ["tox-gh>=1.2"]
 flake8_requires = [
     "flake8",
