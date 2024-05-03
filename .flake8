@@ -11,9 +11,10 @@ per-file-ignores =
     #exclude some chekcs in test code
      #allow assert
     tests/*:S101,
-        #no docstrings
+        #no docstrings in tests-
         DC101,
         DC102,
+        DC103,
         DAR201,
         DAR101,
         #ignore random generators

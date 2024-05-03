@@ -44,7 +44,6 @@ class TestEmailOTPValidate(TestBase):
         with self.assertRaises(expected_exception=ValidationError) as cm:
             req = EmailCodeValidateReq(code="")
             self.fixture.validate_email("   ", req)
-        print(cm.exception.errors())
         self.assertTrue(any(error.get("type") == "string_too_short" for error in cm.exception.errors()))
 
     def test_email_otp_validate_expect_validation_error_empty_code(self):

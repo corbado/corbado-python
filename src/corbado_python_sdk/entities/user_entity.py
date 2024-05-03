@@ -1,5 +1,4 @@
-from pydantic import BaseModel, Field
-from typing_extensions import Optional
+from pydantic import BaseModel
 
 from corbado_python_sdk.exceptions.standard_exception import StandardException
 
@@ -33,10 +32,11 @@ class UserEntity(BaseModel):
             user_id (str): User id.
 
         Raises:
-            StandardException: If the user is not authenticated.
+            StandardException: If the user is not authenticated or has no user id.
         """
         if not self.authenticated or not self._user_id:
             raise StandardException(NO_AUTH)
+
         return self._user_id
 
     @property
@@ -47,7 +47,7 @@ class UserEntity(BaseModel):
             name (str): User name.
 
         Raises:
-            StandardException: If the user is not authenticated.
+            StandardException: If the user is not authenticated or has no name.
         """
         if not self.authenticated or not self._name:
             raise StandardException(NO_AUTH)
@@ -55,13 +55,13 @@ class UserEntity(BaseModel):
 
     @property
     def email(self) -> str:
-        """Get user E-mail.
+        """Get user E-Mail.
 
         Returns:
-            name (str): User E-mail.
+            name (str): User E-Mail.
 
         Raises:
-            StandardException: If the user is not authenticated.
+            StandardException: If the user is not authenticated or has no E-Mail.
         """
         if not self.authenticated or not self._email:
             raise StandardException(NO_AUTH)
@@ -75,7 +75,7 @@ class UserEntity(BaseModel):
             name (str): User phone number.
 
         Raises:
-            StandardException: If the user is not authenticated.
+            StandardException: If the user is not authenticated or has no phone number.
         """
         if not self.authenticated or not self._phone_number:
             raise StandardException(NO_AUTH)
@@ -88,10 +88,10 @@ class UserEntity(BaseModel):
         """Constructor for authenticated user.
 
         Args:
-            user_id (str, optional): user_id. Defaults to "".
-            name (str, optional): name. Defaults to "".
-            email (str, optional): email. Defaults to "".
-            phone_number (str, optional): phone_number. Defaults to "".
+            user_id (str): user_id. Defaults to "".
+            name (str): name. Defaults to "".
+            email (str): email. Defaults to "".
+            phone_number (str): phone_number. Defaults to "".
 
         Returns:
             UserEntity: User Entity

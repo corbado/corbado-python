@@ -33,11 +33,11 @@ class AuthTokenValidateTest(TestBase):
                 token="",
                 clientInfo=self.sdk.create_client_info(remote_address="124.0.0.1", user_agent="IntegrationTest"),
             )
-
             self.fixture.validate_auth_token(req)
 
         exception: ServerException = context.exception
         self.assertIsNotNone(exception)
+
         self.assertCountEqual(["token: cannot be blank"], exception.get_validation_messages())
 
     def test_auth_token_validate_validation_error_invalid_token(self) -> None:
@@ -57,7 +57,7 @@ class AuthTokenValidateTest(TestBase):
 
         self.assertCountEqual(["token: the length must be exactly 64"], exception.get_validation_messages())
 
-    def test_auth_token_validate_validation_error_not_existing_token(self) -> None:
+    def test_auth_token_validate_expect_validation_error_not_existing_token(self) -> None:
         """
         Test case for validating non-existing authentication token.
 

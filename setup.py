@@ -20,13 +20,14 @@ from setuptools import find_namespace_packages, setup  # noqa: H301
 NAME = "corbado-python-sdk"
 VERSION = "1.0.0"
 PYTHON_REQUIRES = ">=3.8"
-REQUIRES: list[str] = [
+REQUIRES = [
     "urllib3 >= 1.25.3, < 2.1.0",
     "python-dateutil",
     "pydantic >= 2",
     "typing-extensions >= 4.7.1",
     "pyopenssl",
     "PyJWT",
+    "flask",
 ]
 
 setup(

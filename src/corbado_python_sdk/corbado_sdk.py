@@ -5,6 +5,7 @@ import platform
 from pydantic import BaseModel, ConfigDict, StringConstraints, validate_call
 from typing_extensions import Annotated, Optional
 
+from corbado_python_sdk import Config
 from corbado_python_sdk.generated.api import (
     AuthTokensApi,
     EmailMagicLinksApi,
@@ -34,8 +35,6 @@ from corbado_python_sdk.services.interface import (
     UserInterface,
     ValidationInterface,
 )
-
-from .config import Config
 
 VERSION: str = "1.0.0"
 CORBADO_HEADER_NAME = "X-Corbado-SDK"
@@ -99,11 +98,11 @@ class CorbadoSDK(BaseModel):
         """
         if not self._session_interface:
             self._session_interface = SessionService(
-                api_client=self.api_client,
                 short_session_cookie_name=self.config.short_session_cookie_name,
-                issuer=self.config.frontend_api,
-                jwks_uri=f"{self.config.frontend_api}/.well-known/jwks",
+                issuer=self.config.issuer,
+                jwks_uri=self.config.frontend_api + "/.well-known/jwks",
             )  # type: ignore
+
         return self._session_interface
 
     @property
