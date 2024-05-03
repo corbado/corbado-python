@@ -53,7 +53,7 @@ INSTALL_REQUIRES = [
     "flask",
 ]
 tox_requires = ["tox>=4.0.0"]
-tox_gh_requires = ["tox-gh>=1.2"]
+tox_gh_requires = ["tox-gh-actions"]
 flake8_requires = [
     "flake8",
     "pep8-naming",  # naming conventions check

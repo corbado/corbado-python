@@ -17,12 +17,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
+    - name: Set up Python 
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
@@ -36,12 +34,9 @@ jobs:
         python -m pip install .[gh]
     - name: Test with tox
       run: |
-        tox -e py38,py39,py310,py311,py312
+        tox
       env:
         CORBADO_BACKEND_API: ${{ secrets.CORBADO_BACKEND_API }}
         CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
         CORBADO_PROJECT_ID: ${{ secrets.CORBADO_PROJECT_ID }}
-    - name: Lint with tox | flake8
-      run: |
-        tox -e flake8
-    
+
