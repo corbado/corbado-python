@@ -52,7 +52,8 @@ INSTALL_REQUIRES = [
     "PyJWT",
     "flask",
 ]
-tox_requires = ["tox-gh>=1.2"]
+tox_requires = ["tox"]
+tox_gh_requires = ["tox-gh>=1.2"]
 flake8_requires = [
     "flake8",
     "pep8-naming",  # naming conventions check
@@ -80,6 +81,7 @@ setup(
     package_dir={"": "src"},
     include_package_data=True,
     extra_requires={
+        "gh": flake8_requires + tox_requires + test_requires + tox_gh_requires,
         "dev": flake8_requires + tox_requires + test_requires,
         "test": test_requires,
         "flake8": flake8_requires,
