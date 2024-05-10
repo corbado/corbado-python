@@ -9,3 +9,4 @@ build*
 *egg-info
 .tox/
 project.txt
+.python-version

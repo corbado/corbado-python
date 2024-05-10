@@ -9,7 +9,7 @@ target-version = [
 ]
 [tool.pyright]
 include = [
-    "tests"
+    "tests, src"
 ]
 
 [tool.bandit.assert_used]

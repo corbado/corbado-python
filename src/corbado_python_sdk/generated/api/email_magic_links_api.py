@@ -13,22 +13,25 @@
 """  # noqa: E501
 
 import warnings
-from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
-from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
-from typing import Optional
+from pydantic import Field, StrictFloat, StrictInt, StrictStr, validate_call
 from typing_extensions import Annotated
-from corbado_python_sdk.generated.models.email_link_get_rsp import EmailLinkGetRsp
-from corbado_python_sdk.generated.models.email_link_send_req import EmailLinkSendReq
-from corbado_python_sdk.generated.models.email_link_send_rsp import EmailLinkSendRsp
-from corbado_python_sdk.generated.models.email_link_validate_rsp import EmailLinkValidateRsp
-from corbado_python_sdk.generated.models.email_links_delete_req import EmailLinksDeleteReq
-from corbado_python_sdk.generated.models.email_links_validate_req import EmailLinksValidateReq
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
+from corbado_python_sdk.generated.models.email_link_get_rsp import EmailLinkGetRsp
+from corbado_python_sdk.generated.models.email_link_send_req import EmailLinkSendReq
+from corbado_python_sdk.generated.models.email_link_send_rsp import EmailLinkSendRsp
+from corbado_python_sdk.generated.models.email_link_validate_rsp import (
+    EmailLinkValidateRsp,
+)
+from corbado_python_sdk.generated.models.email_links_delete_req import (
+    EmailLinksDeleteReq,
+)
+from corbado_python_sdk.generated.models.email_links_validate_req import (
+    EmailLinksValidateReq,
+)
 from corbado_python_sdk.generated.rest import RESTResponseType
 
 
@@ -44,7 +47,6 @@ class EmailMagicLinksApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     def email_link_delete(
         self,
@@ -53,10 +55,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -91,7 +90,7 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_delete_serialize(
             email_link_id=email_link_id,
@@ -99,22 +98,18 @@ class EmailMagicLinksApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkValidateRsp",
+            "200": "EmailLinkValidateRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     def email_link_delete_with_http_info(
@@ -124,10 +119,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -162,7 +154,7 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_delete_serialize(
             email_link_id=email_link_id,
@@ -170,22 +162,18 @@ class EmailMagicLinksApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkValidateRsp",
+            "200": "EmailLinkValidateRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     def email_link_delete_without_preload_content(
@@ -195,10 +183,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -233,7 +218,7 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_delete_serialize(
             email_link_id=email_link_id,
@@ -241,18 +226,14 @@ class EmailMagicLinksApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkValidateRsp",
+            "200": "EmailLinkValidateRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         return response_data.response
-
 
     def _email_link_delete_serialize(
         self,
@@ -266,8 +247,7 @@ class EmailMagicLinksApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -278,7 +258,7 @@ class EmailMagicLinksApi:
 
         # process the path parameters
         if email_link_id is not None:
-            _path_params['emailLinkID'] = email_link_id
+            _path_params["emailLinkID"] = email_link_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -286,37 +266,23 @@ class EmailMagicLinksApi:
         if email_links_delete_req is not None:
             _body_params = email_links_delete_req
 
-
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
+            _default_content_type = self.api_client.select_header_content_type(["application/json"])
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-            'basicAuth', 
-            'projectID'
-        ]
+        _auth_settings: List[str] = ["basicAuth", "projectID"]
 
         return self.api_client.param_serialize(
-            method='DELETE',
-            resource_path='/v1/emailLinks/{emailLinkID}',
+            method="DELETE",
+            resource_path="/v1/emailLinks/{emailLinkID}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -326,11 +292,8 @@ class EmailMagicLinksApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def email_link_get(
@@ -339,10 +302,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -375,29 +335,25 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_get_serialize(
             email_link_id=email_link_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkGetRsp",
+            "200": "EmailLinkGetRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     def email_link_get_with_http_info(
@@ -406,10 +362,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -442,29 +395,25 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_get_serialize(
             email_link_id=email_link_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkGetRsp",
+            "200": "EmailLinkGetRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     def email_link_get_without_preload_content(
@@ -473,10 +422,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -509,25 +455,21 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_get_serialize(
             email_link_id=email_link_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkGetRsp",
+            "200": "EmailLinkGetRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         return response_data.response
-
 
     def _email_link_get_serialize(
         self,
@@ -540,8 +482,7 @@ class EmailMagicLinksApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -552,30 +493,21 @@ class EmailMagicLinksApi:
 
         # process the path parameters
         if email_link_id is not None:
-            _path_params['emailLinkID'] = email_link_id
+            _path_params["emailLinkID"] = email_link_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
-
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])
 
         # authentication setting
-        _auth_settings: List[str] = [
-            'basicAuth', 
-            'projectID'
-        ]
+        _auth_settings: List[str] = ["basicAuth", "projectID"]
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/v1/emailLinks/{emailLinkID}',
+            method="GET",
+            resource_path="/v1/emailLinks/{emailLinkID}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -585,11 +517,8 @@ class EmailMagicLinksApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def email_link_send(
@@ -598,10 +527,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -634,29 +560,25 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_send_serialize(
             email_link_send_req=email_link_send_req,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkSendRsp",
+            "200": "EmailLinkSendRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     def email_link_send_with_http_info(
@@ -665,10 +587,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -701,29 +620,25 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_send_serialize(
             email_link_send_req=email_link_send_req,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkSendRsp",
+            "200": "EmailLinkSendRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     def email_link_send_without_preload_content(
@@ -732,10 +647,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -768,25 +680,21 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_send_serialize(
             email_link_send_req=email_link_send_req,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkSendRsp",
+            "200": "EmailLinkSendRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         return response_data.response
-
 
     def _email_link_send_serialize(
         self,
@@ -799,8 +707,7 @@ class EmailMagicLinksApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -817,37 +724,23 @@ class EmailMagicLinksApi:
         if email_link_send_req is not None:
             _body_params = email_link_send_req
 
-
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
+            _default_content_type = self.api_client.select_header_content_type(["application/json"])
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-            'basicAuth', 
-            'projectID'
-        ]
+        _auth_settings: List[str] = ["basicAuth", "projectID"]
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/v1/emailLinks',
+            method="POST",
+            resource_path="/v1/emailLinks",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -857,11 +750,8 @@ class EmailMagicLinksApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def email_link_validate(
@@ -871,10 +761,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -909,7 +796,7 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_validate_serialize(
             email_link_id=email_link_id,
@@ -917,22 +804,18 @@ class EmailMagicLinksApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkValidateRsp",
+            "200": "EmailLinkValidateRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         ).data
-
 
     @validate_call
     def email_link_validate_with_http_info(
@@ -942,10 +825,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -980,7 +860,7 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_validate_serialize(
             email_link_id=email_link_id,
@@ -988,22 +868,18 @@ class EmailMagicLinksApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkValidateRsp",
+            "200": "EmailLinkValidateRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         response_data.read()
         return self.api_client.response_deserialize(
             response_data=response_data,
             response_types_map=_response_types_map,
         )
-
 
     @validate_call
     def email_link_validate_without_preload_content(
@@ -1013,10 +889,7 @@ class EmailMagicLinksApi:
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+            Tuple[Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1051,7 +924,7 @@ class EmailMagicLinksApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._email_link_validate_serialize(
             email_link_id=email_link_id,
@@ -1059,18 +932,14 @@ class EmailMagicLinksApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "EmailLinkValidateRsp",
+            "200": "EmailLinkValidateRsp",
         }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
+        response_data = self.api_client.call_api(*_param, _request_timeout=_request_timeout)
         return response_data.response
-
 
     def _email_link_validate_serialize(
         self,
@@ -1084,8 +953,7 @@ class EmailMagicLinksApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -1096,7 +964,7 @@ class EmailMagicLinksApi:
 
         # process the path parameters
         if email_link_id is not None:
-            _path_params['emailLinkID'] = email_link_id
+            _path_params["emailLinkID"] = email_link_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
@@ -1104,37 +972,23 @@ class EmailMagicLinksApi:
         if email_links_validate_req is not None:
             _body_params = email_links_validate_req
 
-
         # set the HTTP header `Accept`
-        _header_params['Accept'] = self.api_client.select_header_accept(
-            [
-                'application/json'
-            ]
-        )
+        _header_params["Accept"] = self.api_client.select_header_accept(["application/json"])
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
+            _default_content_type = self.api_client.select_header_content_type(["application/json"])
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-            'basicAuth', 
-            'projectID'
-        ]
+        _auth_settings: List[str] = ["basicAuth", "projectID"]
 
         return self.api_client.param_serialize(
-            method='PUT',
-            resource_path='/v1/emailLinks/{emailLinkID}/validate',
+            method="PUT",
+            resource_path="/v1/emailLinks/{emailLinkID}/validate",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -1144,7 +998,5 @@ class EmailMagicLinksApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-

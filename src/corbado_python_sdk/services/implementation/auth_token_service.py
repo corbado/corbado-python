@@ -8,7 +8,7 @@ from corbado_python_sdk.generated.models import (
     AuthTokenValidateReq,
     AuthTokenValidateRsp,
 )
-from corbado_python_sdk.services import AuthTokenInterface
+from corbado_python_sdk.services.interface import AuthTokenInterface
 
 
 class AuthTokenService(BaseModel, AuthTokenInterface):

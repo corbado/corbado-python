@@ -15,7 +15,7 @@ from corbado_python_sdk.generated.models import (
     UserGetRsp,
     UserListRsp,
 )
-from corbado_python_sdk.services.interface.user_interface import UserInterface
+from corbado_python_sdk.services.interface import UserInterface
 
 
 class UserService(

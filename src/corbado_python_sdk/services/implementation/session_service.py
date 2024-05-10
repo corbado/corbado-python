@@ -6,7 +6,7 @@ from pydantic import BaseModel, ConfigDict, StringConstraints
 from typing_extensions import Annotated
 
 from corbado_python_sdk.entities.user_entity import UserEntity
-from corbado_python_sdk.services import SessionInterface
+from corbado_python_sdk.services.interface import SessionInterface
 
 DEFAULT_SHORT_SESSION_LENGTH = 300
 

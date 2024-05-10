@@ -19,7 +19,9 @@ from corbado_python_sdk.generated.api_client import ApiClient
 from corbado_python_sdk.generated.configuration import Configuration
 from corbado_python_sdk.generated.models.client_info import ClientInfo
 from corbado_python_sdk.services.implementation import (
-    AuthTokenService,
+    AuthTokenService as AuthTokenService,
+)
+from corbado_python_sdk.services.implementation import (
     EmailMagicLinkService,
     EmailOTPService,
     SessionService,

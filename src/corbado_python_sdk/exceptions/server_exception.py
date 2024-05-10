@@ -2,7 +2,8 @@ from typing import Any, Dict, List, Optional
 
 from corbado_python_sdk.exceptions.standard_exception import StandardException
 from corbado_python_sdk.generated import ApiException
-from corbado_python_sdk.utils import Util
+
+from ..utils.util import Util
 
 
 class ServerException(Exception):

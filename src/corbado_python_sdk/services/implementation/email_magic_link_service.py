@@ -11,7 +11,7 @@ from corbado_python_sdk.generated.models import (
     EmailLinksValidateReq,
     EmailLinkValidateRsp,
 )
-from corbado_python_sdk.services import EmailMagicLinkInterface
+from corbado_python_sdk.services.interface import EmailMagicLinkInterface
 
 
 class EmailMagicLinkService(BaseModel, EmailMagicLinkInterface):

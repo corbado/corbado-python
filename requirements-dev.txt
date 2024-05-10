@@ -1,1 +1,1 @@
--e .[test,flake8,tox]
+-e .[test,flake8,tox,mypy]

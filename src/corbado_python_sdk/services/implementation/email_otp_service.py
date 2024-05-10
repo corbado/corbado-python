@@ -11,7 +11,7 @@ from corbado_python_sdk.generated.models import (
     EmailCodeValidateReq,
     EmailCodeValidateRsp,
 )
-from corbado_python_sdk.services import EmailOTPInterface
+from corbado_python_sdk.services.interface import EmailOTPInterface
 
 
 class EmailOTPService(BaseModel, EmailOTPInterface):
