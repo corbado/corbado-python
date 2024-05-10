@@ -56,6 +56,6 @@ jobs:
             python -m pip install --upgrade pip
             python -m pip install .[mypy,flake8]
       - name: mypy
-        run: mypy -p corbado_python_sdk --exclude src/corbado_python_sdk/generated/ --strict --disable-error-code attr-defined
+        run: mypy -p corbado_python_sdk --exclude generated --strict --disable-error-code attr-defined
       - name: lint with flake8
         run: flake8 .
