@@ -4,7 +4,7 @@ import platform
 from importlib.metadata import version
 
 from pydantic import BaseModel, ConfigDict, StringConstraints, validate_call
-from typing_extensions import Annotated, Optional
+from typing_extensions import Annotated, Dict, Optional
 
 from corbado_python_sdk import Config
 from corbado_python_sdk.generated.api import (
@@ -68,7 +68,7 @@ class CorbadoSDK(BaseModel):
         if not self._api_client:
             self._api_client = ApiClient(configuration=self._create_generated_configuration())
             python_version: str = platform.python_version()
-            data: dict[str, str] = {
+            data: Dict[str, str] = {
                 "name": "Python SDK",
                 "sdkVersion": version("corbado-python-sdk"),
                 "languageVersion": python_version,
@@ -104,7 +104,7 @@ class CorbadoSDK(BaseModel):
                 short_session_cookie_name=self.config.short_session_cookie_name,
                 issuer=self.config.issuer,
                 jwks_uri=self.config.frontend_api + "/.well-known/jwks",
-            )  # type: ignore
+            )
 
         return self._session_interface
 

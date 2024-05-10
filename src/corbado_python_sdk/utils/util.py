@@ -1,5 +1,5 @@
 import json
-from typing import Any, Dict
+from typing import Any, Dict, List
 
 from corbado_python_sdk.exceptions.standard_exception import StandardException
 from corbado_python_sdk.generated import GenericRsp, RequestData
@@ -42,7 +42,7 @@ class Util:
             Dict[str, Any]: Decoded data as a dictionary.
         """
         try:
-            decoded_data = json.loads(data)
+            decoded_data: Dict[str, Any] = json.loads(data)
         except json.JSONDecodeError as e:
             raise StandardException(f"json.loads() failed: {e}")
         return decoded_data
@@ -74,7 +74,7 @@ class Util:
         Returns:
             RequestData: RequestData object.
         """
-        keys_to_check: list[str] = ["requestID", "link"]
+        keys_to_check: List[str] = ["requestID", "link"]
         for key in keys_to_check:
             if key not in data:
                 raise StandardException(f"Key '{key}' not found in data")
@@ -94,7 +94,7 @@ class Util:
         Returns:
             GenericRsp: GenericRsp object.
         """
-        keys_to_check: list[str] = ["httpStatusCode", "message", "requestData", "runtime"]
+        keys_to_check: List[str] = ["httpStatusCode", "message", "requestData", "runtime"]
         for key in keys_to_check:
             if key not in data:
                 raise StandardException(f"Key '{key}' not found in data")

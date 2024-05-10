@@ -47,7 +47,7 @@ jobs:
       - name: Set up Python 3
         uses: actions/setup-python@v5
         with:
-          python-version: "3.8"
+          python-version: "3.8" #Lint againts earliest supported python version. Important for mypy.
           cache: 'pip'
           cache-dependency-path: |
             **/requirements*.txt

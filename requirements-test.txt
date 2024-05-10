@@ -1,1 +1,1 @@
--e .[test,flake8]
+-e .[test]

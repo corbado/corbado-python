@@ -50,7 +50,7 @@ class ServerException(Exception):
         """
         self.http_status_code: int = http_status_code
         self.request_data: Dict[str, Any] = request_data or {}
-        self.runtime: float | None = runtime
+        self.runtime: Optional[float] = runtime
         self.error: Dict[str, Any] = error or {}
 
         validation_messages: List[str] = self.get_validation_messages()
