@@ -12,7 +12,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build and test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -40,8 +40,7 @@ jobs:
         CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
         CORBADO_PROJECT_ID: ${{ secrets.CORBADO_PROJECT_ID }}
         
-    lint:
-    name: Lint & Mypy
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
