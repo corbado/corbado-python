@@ -13,7 +13,6 @@ on:
 
 jobs:
   build and test:
-
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -40,6 +39,7 @@ jobs:
         CORBADO_BACKEND_API: ${{ secrets.CORBADO_BACKEND_API }}
         CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
         CORBADO_PROJECT_ID: ${{ secrets.CORBADO_PROJECT_ID }}
+        
     lint:
     name: Lint & Mypy
     runs-on: ubuntu-latest
@@ -49,8 +49,11 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.8"
+          cache: 'pip'
+          cache-dependency-path: |
+            **/requirements*.txt
       - name: Install dependencies
-          run: |
+        run: |
             python -m pip install --upgrade pip
             python -m pip install .[mypy,flake8]
       - name: mypy
