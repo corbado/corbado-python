@@ -33,7 +33,7 @@ class ValidateEmailTest(TestBase):
         e: ServerException = context.exception
         self.assertIsNotNone(e)
         self.assertEqual(400, e.http_status_code)
-        self.assertListEqual(["email: cannot be blank"], e.get_validation_messages())
+        self.assertListEqual(["email: cannot be blank"], e.validation_messages)
 
     def test_validate_email_success(self) -> None:
         """Test for successful email validation."""
@@ -55,7 +55,7 @@ class ValidatePhoneNumberTest(TestBase):
         exception = context.exception
         self.assertIsNotNone(exception)
         self.assertEqual(400, exception.http_status_code)
-        self.assertCountEqual(["phoneNumber: cannot be blank"], exception.get_validation_messages())
+        self.assertCountEqual(["phoneNumber: cannot be blank"], exception.validation_messages)
 
     def test_validate_phone_number_success(self):
         req = ValidatePhoneNumberReq(phoneNumber="+49 151 12345678")

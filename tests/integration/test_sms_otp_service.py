@@ -30,7 +30,7 @@ class SmsOTPSendTest(TestBase):
             self.fail(msg="Expected an exception")
         except ServerException as e:
             self.assertIsNotNone(e)
-            self.assertCountEqual(["phoneNumber: cannot be blank"], e.get_validation_messages())
+            self.assertCountEqual(["phoneNumber: cannot be blank"], e.validation_messages)
 
     def test_sms_otp_send_success(self):
         """Test case for successful sending of SMS OTP code."""
@@ -50,7 +50,7 @@ class SmsOTPValidateTest(TestBase):
             self.fixture.validate_sms("sms-123456789", req)
 
         self.assertIsNotNone(context.exception)
-        self.assertCountEqual(["smsCode: cannot be blank"], context.exception.get_validation_messages())
+        self.assertCountEqual(["smsCode: cannot be blank"], context.exception.validation_messages)
 
     def test_sms_otp_validate_invalid_length_expect_error_invalid_code(self):
         """Test case for validating SMS OTP code with invalid code."""
@@ -60,7 +60,7 @@ class SmsOTPValidateTest(TestBase):
             self.fixture.validate_sms("sms-123456789", req)
 
         self.assertIsNotNone(context.exception)
-        self.assertCountEqual(["smsCode: the length must be exactly 6"], context.exception.get_validation_messages())
+        self.assertCountEqual(["smsCode: the length must be exactly 6"], context.exception.validation_messages)
 
     def test_sms_otp_validate_invalid_id_expect_error_invalid_id(self):
         """Test case for validating SMS OTP code with invalid ID."""

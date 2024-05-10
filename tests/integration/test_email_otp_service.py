@@ -29,7 +29,7 @@ class EmailOTPSendTest(TestBase):
             self.fixture.send(req)
 
         self.assertIsNotNone(context.exception)
-        self.assertCountEqual(["email: cannot be blank"], context.exception.get_validation_messages())
+        self.assertCountEqual(["email: cannot be blank"], context.exception.validation_messages)
 
     def test_email_otp_send_success(self):
         """Test case to validate the successful sending of email OTP."""
@@ -50,13 +50,13 @@ class TestEmailOTPValidate(TestBase):
         with self.assertRaises(expected_exception=ServerException) as cm:
             req = EmailCodeValidateReq(code="")
             self.fixture.validate_email("emc-123456789", req)
-        self.assertEqual(cm.exception.get_validation_messages(), ["code: cannot be blank"])
+        self.assertEqual(cm.exception.validation_messages, ["code: cannot be blank"])
 
     def test_email_otp_validate_expect_validation_error_invalid_code(self):
         with self.assertRaises(expected_exception=ServerException) as cm:
             req = EmailCodeValidateReq(code="1")
             self.fixture.validate_email("emc-123456789", req)
-        self.assertEqual(cm.exception.get_validation_messages(), ["code: the length must be exactly 6"])
+        self.assertEqual(cm.exception.validation_messages, ["code: the length must be exactly 6"])
 
     def test_email_otp_validate_expect_validation_error_invalid_id(self):
         with self.assertRaises(ServerException) as cm:

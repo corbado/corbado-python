@@ -35,7 +35,7 @@ class AuthTokenValidateTest(TestBase):
         exception: ServerException = context.exception
         self.assertIsNotNone(exception)
 
-        self.assertCountEqual(["token: cannot be blank"], exception.get_validation_messages())
+        self.assertCountEqual(["token: cannot be blank"], exception.validation_messages)
 
     def test_auth_token_validate_validation_error_invalid_token(self) -> None:
         """Test case for validating authentication token with invalid token."""
@@ -49,7 +49,7 @@ class AuthTokenValidateTest(TestBase):
         exception: ServerException = context.exception
         self.assertIsNotNone(exception)
 
-        self.assertCountEqual(["token: the length must be exactly 64"], exception.get_validation_messages())
+        self.assertCountEqual(["token: the length must be exactly 64"], exception.validation_messages)
 
     def test_auth_token_validate_expect_validation_error_not_existing_token(self) -> None:
         """Test case for validating non-existing authentication token."""

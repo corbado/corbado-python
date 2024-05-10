@@ -10,3 +10,5 @@ build*
 .tox/
 project.txt
 .python-version
+*venv_*/
+.coverage

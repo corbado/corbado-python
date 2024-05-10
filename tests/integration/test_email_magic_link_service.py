@@ -27,7 +27,7 @@ class EmailMagicLinkSendTest(TestBase):
             self.fail(msg="Expected an exception")
         except ServerException as e:
             self.assertIsNotNone(e)
-            self.assertCountEqual(["email: cannot be blank", "redirect: cannot be blank"], e.get_validation_messages())
+            self.assertCountEqual(["email: cannot be blank", "redirect: cannot be blank"], e.validation_messages)
 
     def test_email_magic_link_send_success(self) -> None:
         """Test for sending email magic links successfully."""
@@ -46,7 +46,7 @@ class EmailMagicLinkValidateTest(TestBase):
             self.fixture.validate_email_magic_link(email_link_id="eml-123456789", req=req)
 
         exception: ServerException = context.exception
-        self.assertCountEqual(["token: cannot be blank"], exception.get_validation_messages())
+        self.assertCountEqual(["token: cannot be blank"], exception.validation_messages)
 
     def test_email_magic_link_validate_validation_error_invalid_id(self) -> None:
         """Test for validating email magic links with invalid ID."""

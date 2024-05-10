@@ -52,17 +52,30 @@ class ServerException(Exception):
         self.request_data: Dict[str, Any] = request_data or {}
         self.runtime: Optional[float] = runtime
         self.error: Dict[str, Any] = error or {}
+        self.error_type: str = self.error.get("type", "")
 
-        validation_messages: List[str] = self.get_validation_messages()
-        message += f' (HTTP status code: {http_status_code}, validation messages: {"; ".join(validation_messages)})'
+        self.validation_messages: List[str] = self._get_validation_messages()
+        message += (
+            f' (HTTP status code: {http_status_code}, validation messages: {"; ".join(self.validation_messages)})'
+        )
 
         super().__init__(message)
 
-    def get_validation_messages(self) -> List[str]:
+    def _get_validation_messages(self) -> List[str]:
         """Get the validation messages from the error information.
 
         Returns:
             List[str]: List of validation messages
         """
         validation: List[Dict[str, Any]] = self.error.get("validation", [])
+        print(f"res: {self.error}")
         return [f"{item['field']}: {item['message']}" for item in validation]
+
+    @property
+    def request_id(self) -> str:
+        """Get request ID.
+
+        Returns:
+            str: Request ID.
+        """
+        return self.request_data.get("requestID") or ""

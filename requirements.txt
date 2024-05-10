@@ -1,3 +1,0 @@
-#recursive
--r src/corbado_python_sdk/generated/requirements.txt
--r test-requirements.txt
