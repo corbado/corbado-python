@@ -1,0 +1,1 @@
+-e .[flake8,mypy]

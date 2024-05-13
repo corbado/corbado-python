@@ -1,0 +1,1 @@
+-e .[test,flake8,tox_gh,tox,mypy]

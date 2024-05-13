@@ -1,0 +1,2 @@
+include .flake8 CHANGELOG.md LICENSE README.md VERSION tox.ini
+recursive-include tests *.py

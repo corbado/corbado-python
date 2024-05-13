@@ -1,0 +1,14 @@
+scripts/.gen
+.idea/
+tests/__pycache__
+**_pycache__**
+.vscode
+env
+.tox-info.json
+build*
+*egg-info
+.tox/
+project.txt
+.python-version
+*venv_*/
+.coverage
