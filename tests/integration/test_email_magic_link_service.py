@@ -13,7 +13,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
-        cls.fixture: EmailMagicLinkInterface = cls.sdk.email_magic_link_interface
+        cls.fixture: EmailMagicLinkInterface = cls.sdk.email_magic_links
 
 
 class EmailMagicLinkSendTest(TestBase):

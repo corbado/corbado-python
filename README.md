@@ -23,7 +23,7 @@ The [Corbado](https://www.corbado.com) Python SDK provides convenient access to 
 Use the following command to install the Corbado Python SDK:
 
 ```bash
-pip install corbado-python-sdk (Warning: Package is not yet published)
+pip install corbado-python (Warning: Package is not yet published)
 ```
 
 ### Usage
@@ -31,7 +31,7 @@ pip install corbado-python-sdk (Warning: Package is not yet published)
 To create a Corbado Python SDK instance you need to provide your `Project ID` and `API secret` which can be found at the [Developer Panel](https://app.corbado.com).
 
 ```Python
-config: Config = Config(project_id="pro-{your_id}", api_secret="corbado1_{your_secret}")
+config: Config = Config(project_id="{project_id}", api_secret="c{api_secret}")
 sdk = CorbadoSDK(config=config)
 ```
 
@@ -43,18 +43,18 @@ A list of examples can be found in the integration tests [here](tests/integratio
 
 The Corbado Python SDK provides the following services:
 
-- `auth_token_interface` for managing authentication tokens needed for own session management ([examples](tests/integration/test_auth_token_service.py))
-- `email_magic_link_interface` for managing email magic links ([examples](tests/integration/test_email_magic_link_service.py))
-- `email_otp_interface` for managing email OTPs ([examples](tests/integration/test_email_otp_service.py))
-- `session_interface` for managing sessions ([example flask app](tests/utils/session_service_example.py))
-- `sms_otp_interface` for managing SMS OTPs ([examples](tests/integration/test_sms_otp_service.py))
-- `user_interface` for managing users ([examples](tests/integration/test_user_service.py))
-- `validation_interface` for validating email addresses and phone numbers ([examples](tests/integration/test_validation_service.py))
+- `auth_tokens` for managing authentication tokens needed for own session management ([examples](tests/integration/test_auth_token_service.py))
+- `email_magic_links` for managing email magic links ([examples](tests/integration/test_email_magic_link_service.py))
+- `email_otps` for managing email OTPs ([examples](tests/integration/test_email_otp_service.py))
+- `sessions` for managing sessions ([example flask app](tests/utils/session_service_example.py))
+- `sms_otps` for managing SMS OTPs ([examples](tests/integration/test_sms_otp_service.py))
+- `users` for managing users ([examples](tests/integration/test_user_service.py))
+- `validations` for validating email addresses and phone numbers ([examples](tests/integration/test_validation_service.py))
 
-To use a specific service, such as `user_interface`, invoke it as shown below:
+To use a specific service, such as `users`, invoke it as shown below:
 
 ```Python
-user_service: UserInterface = sdk.user_interface
+user_service: UserInterface = sdk.users
 ``` 
 
 ## :books: Advanced
@@ -68,12 +68,12 @@ The Corbado Python SDK throws exceptions for all errors. The following exception
 - `StandardException` for everything else (client side)
 
 If the Backend API returns a HTTP status code other than 200, the Corbado Python SDK throws a `ServerException`. The `ServerException`class provides convenient methods to access all important data:
-  sdk.user_interface.get(user_id="usr-123456789")
+  sdk.users.get(user_id="usr-123456789")
 
 ```Python
         try:
             # Try to get non-existing user with ID 'usr-123456789'
-            sdk.user_interface.get(user_id="usr-123456789")
+            sdk.users.get(user_id="usr-123456789")
         except ServerException as e:
             # Show HTTP status code (404 in this case)
             print(f"Status Code: {e.http_status_code}")

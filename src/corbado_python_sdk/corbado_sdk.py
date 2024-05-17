@@ -50,13 +50,13 @@ class CorbadoSDK(BaseModel):
     )
     config: Config
     _api_client: Optional[ApiClient] = None
-    _session_interface: Optional[SessionService] = None
-    _user_interface: Optional[UserInterface] = None
-    _validation_interface: Optional[ValidationInterface] = None
-    _sms_otp_interface: Optional[SmsOTPInterface] = None
-    _email_otp_interface: Optional[EmailOTPInterface] = None
-    _email_magic_link_interface: Optional[EmailMagicLinkInterface] = None
-    _auth_token_interface: Optional[AuthTokenInterface] = None
+    _sessions: Optional[SessionService] = None
+    _users: Optional[UserInterface] = None
+    _validations: Optional[ValidationInterface] = None
+    _sms_otps: Optional[SmsOTPInterface] = None
+    _email_otps: Optional[EmailOTPInterface] = None
+    _email_magic_links: Optional[EmailMagicLinkInterface] = None
+    _auth_tokens: Optional[AuthTokenInterface] = None
 
     @property
     def api_client(self) -> ApiClient:
@@ -70,7 +70,7 @@ class CorbadoSDK(BaseModel):
             python_version: str = platform.python_version()
             data: Dict[str, str] = {
                 "name": "Python SDK",
-                "sdkVersion": version("corbado-python-sdk"),
+                "sdkVersion": version(distribution_name="corbado-python"),
                 "languageVersion": python_version,
             }
             self._api_client.set_default_header(  # type: ignore
@@ -80,89 +80,87 @@ class CorbadoSDK(BaseModel):
 
     # --------- Interfaces ---------------#
     @property
-    def email_magic_link_interface(self) -> EmailMagicLinkInterface:
+    def email_magic_links(self) -> EmailMagicLinkInterface:
         """Get user EmailMagicLinkInterface.
 
         Returns:
             EmailMagicLinkInterface: EmailMagicLinkInterface object.
         """
-        if not self._email_magic_link_interface:
-            self._email_magic_link_interface = EmailMagicLinkService(
-                client=EmailMagicLinksApi(api_client=self.api_client)
-            )
-        return self._email_magic_link_interface
+        if not self._email_magic_links:
+            self._email_magic_links = EmailMagicLinkService(client=EmailMagicLinksApi(api_client=self.api_client))
+        return self._email_magic_links
 
     @property
-    def session_interface(self) -> SessionInterface:
+    def sessions(self) -> SessionInterface:
         """Get user SessionInterface.
 
         Returns:
             SessionInterface: SessionInterface object.
         """
-        if not self._session_interface:
-            self._session_interface = SessionService(
+        if not self._sessions:
+            self._sessions = SessionService(
                 short_session_cookie_name=self.config.short_session_cookie_name,
                 issuer=self.config.issuer,
                 jwks_uri=self.config.frontend_api + "/.well-known/jwks",
             )
 
-        return self._session_interface
+        return self._sessions
 
     @property
-    def auth_token_interface(self) -> AuthTokenInterface:
+    def auth_tokens(self) -> AuthTokenInterface:
         """Get user AuthTokenInterface.
 
         Returns:
             AuthTokenInterface: AuthTokenInterface object.
         """
-        if not self._auth_token_interface:
-            self._auth_token_interface = AuthTokenService(client=AuthTokensApi(api_client=self.api_client))
-        return self._auth_token_interface
+        if not self._auth_tokens:
+            self._auth_tokens = AuthTokenService(client=AuthTokensApi(api_client=self.api_client))
+        return self._auth_tokens
 
     @property
-    def user_interface(self) -> UserInterface:
+    def users(self) -> UserInterface:
         """Get user interface.
 
         Returns:
             UserInterface: UserInterface object.
         """
-        if not self._user_interface:
-            self._user_interface = UserService(client=UserApi(api_client=self.api_client))
+        if not self._users:
+            self._users = UserService(client=UserApi(api_client=self.api_client))
 
-        return self._user_interface
+        return self._users
 
     @property
-    def email_otp_interface(self) -> EmailOTPInterface:
+    def email_otps(self) -> EmailOTPInterface:
         """Get E-mail OTP interface.
 
         Returns:
             EmailOTPInterface: EmailOTPInterface object.
         """
-        if not self._email_otp_interface:
-            self._email_otp_interface = EmailOTPService(client=EmailOTPApi(api_client=self.api_client))
-        return self._email_otp_interface
+        if not self._email_otps:
+            self._email_otps = EmailOTPService(client=EmailOTPApi(api_client=self.api_client))
+        return self._email_otps
 
     @property
-    def sms_otp_interface(self) -> SmsOTPInterface:
+    def sms_otps(self) -> SmsOTPInterface:
         """Get SMS OTP interface.
 
         Returns:
             SmsOTPInterface: SmsOTPInterface object.
         """
-        if not self._sms_otp_interface:
-            self._sms_otp_interface = SmsOTPService(client=SMSOTPApi(api_client=self.api_client))
-        return self._sms_otp_interface
+        if not self._sms_otps:
+            self._sms_otps = SmsOTPService(client=SMSOTPApi(api_client=self.api_client))
+        return self._sms_otps
 
     @property
-    def validation_interface(self) -> ValidationInterface:
+    def validations(self) -> ValidationInterface:
         """Get validation interface.
 
         Returns:
             ValidationInterface: ValidationInterface object.
         """
-        if not self._validation_interface:
-            self._validation_interface = ValidationService(client=ValidationApi(api_client=self.api_client))
-        return self._validation_interface
+        if not self._validations:
+            self._validations = ValidationService(client=ValidationApi(api_client=self.api_client))
+        return self._validations
 
     # ----------- Functions ----------#
     @validate_call

@@ -16,7 +16,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
-        cls.fixture: SmsOTPInterface = cls.sdk.sms_otp_interface
+        cls.fixture: SmsOTPInterface = cls.sdk.sms_otps
 
 
 class SmsOTPSendTest(TestBase):

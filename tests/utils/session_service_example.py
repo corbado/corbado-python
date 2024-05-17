@@ -55,8 +55,8 @@ def logged_in():
     """
     try:
         short_session: str = request.cookies.get(key="cbo_short_session", default="")
-        session_interface: SessionInterface = sdk.session_interface
-        user: UserEntity = session_interface.get_current_user(short_session=short_session)
+        sessions: SessionInterface = sdk.sessions
+        user: UserEntity = sessions.get_current_user(short_session=short_session)
         if user.authenticated:
             # User is authenticated
             response_data: dict[str, str] = {
@@ -68,7 +68,7 @@ def logged_in():
             }
 
             # Fetch additional user data
-            response: UserGetRsp = sdk.user_interface.get(user_id=user.user_id)
+            response: UserGetRsp = sdk.users.get(user_id=user.user_id)
             response_data["user_created"] = response.data.created
             response_data["user_updated"] = response.data.updated
             response_data["user_status"] = response.data.status

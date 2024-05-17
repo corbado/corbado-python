@@ -54,5 +54,5 @@ class TestUtils:
     def create_user(cls) -> str:
         """Create a user and return the user ID."""
         req = UserCreateReq(name=TestUtils.create_random_test_name(), email=TestUtils.create_random_test_email())
-        rsp: UserCreateRsp = TestUtils.instantiate_sdk().user_interface.create(request=req)
+        rsp: UserCreateRsp = TestUtils.instantiate_sdk().users.create(request=req)
         return rsp.data.user_id

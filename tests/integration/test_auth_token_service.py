@@ -12,7 +12,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
-        cls.fixture: AuthTokenInterface = cls.sdk.auth_token_interface
+        cls.fixture: AuthTokenInterface = cls.sdk.auth_tokens
 
 
 class AuthTokenValidateTest(TestBase):
