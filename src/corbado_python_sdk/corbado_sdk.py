@@ -43,7 +43,23 @@ CORBADO_HEADER_NAME = "X-Corbado-SDK"
 
 
 class CorbadoSDK(BaseModel):
-    """Entry point for the SDK."""
+    """
+    Entry point for the Corbado SDK.
+
+    This class provides various interfaces to interact with the Corbado API,
+    including user management, session handling, validation, and OTP services.
+
+    Attributes:
+        config (Config): The configuration object for the SDK.
+        api_client (ApiClient): The API client used to make requests to the backend API.
+        sessions (SessionService): The session service service.
+        users (UserInterface): The user service.
+        validations (ValidationInterface): The validation service.
+        sms_otps (SmsOTPInterface): The SMS OTP service.
+        email_otps (EmailOTPInterface): The email OTP service.
+        email_magic_links (EmailMagicLinkInterface): The email magic link service.
+        auth_tokens (AuthTokenInterface): The auth token service.
+    """
 
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
@@ -81,10 +97,10 @@ class CorbadoSDK(BaseModel):
     # --------- Interfaces ---------------#
     @property
     def email_magic_links(self) -> EmailMagicLinkInterface:
-        """Get user EmailMagicLinkInterface.
+        """Get user EmailMagicLinkService.
 
         Returns:
-            EmailMagicLinkInterface: EmailMagicLinkInterface object.
+            EmailMagicLinkInterface: EmailMagicLinkService object.
         """
         if not self._email_magic_links:
             self._email_magic_links = EmailMagicLinkService(client=EmailMagicLinksApi(api_client=self.api_client))
@@ -95,7 +111,7 @@ class CorbadoSDK(BaseModel):
         """Get user SessionInterface.
 
         Returns:
-            SessionInterface: SessionInterface object.
+            SessionInterface: SessionService object.
         """
         if not self._sessions:
             self._sessions = SessionService(
@@ -108,10 +124,10 @@ class CorbadoSDK(BaseModel):
 
     @property
     def auth_tokens(self) -> AuthTokenInterface:
-        """Get user AuthTokenInterface.
+        """Get user AuthTokenService.
 
         Returns:
-            AuthTokenInterface: AuthTokenInterface object.
+            AuthTokenInterface: AuthTokenService object.
         """
         if not self._auth_tokens:
             self._auth_tokens = AuthTokenService(client=AuthTokensApi(api_client=self.api_client))
@@ -119,10 +135,10 @@ class CorbadoSDK(BaseModel):
 
     @property
     def users(self) -> UserInterface:
-        """Get user interface.
+        """Get user service.
 
         Returns:
-            UserInterface: UserInterface object.
+            UserInterface: UserService object.
         """
         if not self._users:
             self._users = UserService(client=UserApi(api_client=self.api_client))
@@ -131,10 +147,10 @@ class CorbadoSDK(BaseModel):
 
     @property
     def email_otps(self) -> EmailOTPInterface:
-        """Get E-mail OTP interface.
+        """Get E-mail OTP servcie.
 
         Returns:
-            EmailOTPInterface: EmailOTPInterface object.
+            EmailOTPInterface: EmailOTPService object.
         """
         if not self._email_otps:
             self._email_otps = EmailOTPService(client=EmailOTPApi(api_client=self.api_client))
@@ -142,10 +158,10 @@ class CorbadoSDK(BaseModel):
 
     @property
     def sms_otps(self) -> SmsOTPInterface:
-        """Get SMS OTP interface.
+        """Get SMS OTP service.
 
         Returns:
-            SmsOTPInterface: SmsOTPInterface object.
+            SmsOTPInterface: SmsOTPService object.
         """
         if not self._sms_otps:
             self._sms_otps = SmsOTPService(client=SMSOTPApi(api_client=self.api_client))
@@ -153,10 +169,10 @@ class CorbadoSDK(BaseModel):
 
     @property
     def validations(self) -> ValidationInterface:
-        """Get validation interface.
+        """Get validation service.
 
         Returns:
-            ValidationInterface: ValidationInterface object.
+            ValidationInterface: ValidationService object.
         """
         if not self._validations:
             self._validations = ValidationService(client=ValidationApi(api_client=self.api_client))

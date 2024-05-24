@@ -7,19 +7,33 @@ from corbado_python_sdk.utils import validators
 
 
 class Config(BaseModel):
-    """Configuration class."""
+    """
+    Configuration class for setting up project parameters.
+
+    This class uses Pydantic's `BaseModel` to validate configuration parameters.
+    Field assignments are validated by default to ensure that any new assignments
+    adhere to the defined types and constraints. To disable this validation, set
+    `set_assignment_validation(False)`.
+
+    Attributes:
+        project_id (str): The unique identifier for the project.
+        api_secret (str): The secret key used to authenticate API requests.
+        backend_api (str): The base URL for the backend API. Defaults to "https://backendapi.corbado.io".
+        short_session_cookie_name (str): The name of the cookie used for short session management. Defaults to "cbo_short_session".
+    """
 
     # Make sure that field assignments are also validated, use "set_assignment_validation(False)"
     # to be able to use invalid assignments
     model_config = ConfigDict(validate_assignment=True)
 
     # Fields
-    _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
     project_id: str
     api_secret: str
-    _frontend_api: Optional[str] = None
     backend_api: str = "https://backendapi.corbado.io"
     short_session_cookie_name: str = "cbo_short_session"
+
+    _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
+    _frontend_api: Optional[str] = None
 
     # Field Validators
     _backend_api_validator = field_validator("backend_api")(validators.url_validator)
