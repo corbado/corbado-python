@@ -6,12 +6,9 @@ from unittest.mock import AsyncMock, MagicMock, patch
 
 from jwt import encode
 from pydantic import ValidationError
-from werkzeug.test import TestResponse
 
 from corbado_python_sdk.entities.user_entity import UserEntity
 from corbado_python_sdk.services.implementation import SessionService
-
-from ..utils.session_service_example import app
 
 TEST_NAME = "Test Name"
 TEST_EMAIL = "test@email.com"
