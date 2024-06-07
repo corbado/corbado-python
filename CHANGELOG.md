@@ -1,2 +1,5 @@
-## 1.0.0 - 2024-05-03
-* First version of Corbado Python SDK
+# Changelog
+
+## [1.0.0b1] - 2024-06-07
+### Added
+- Initial beta release.
