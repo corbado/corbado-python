@@ -37,7 +37,6 @@ INSTALL_REQUIRES = [
     "typing-extensions >= 4.7.1",
     "pyopenssl",
     "PyJWT",
-    "flask",
 ]
 
 setup(
