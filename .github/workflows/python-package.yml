@@ -11,10 +11,12 @@ on:
     tags:
       - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
-    branches: [ "main"]
+    branches: [ "main","development"]
+    types: [opened, reopened]
 
 jobs:
-  test:
+  test-and-lint:
+    name: Test and lint package
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -30,17 +32,11 @@ jobs:
         cache: 'pip'
         cache-dependency-path: |
           **/requirements*.txt
+          
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         python -m pip install .[test,tox_gh,tox,mypy,flake8]
-    - name: Test with tox
-      run: |
-        tox run
-      env:
-        CORBADO_BACKEND_API: ${{ secrets.CORBADO_BACKEND_API }}
-        CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
-        CORBADO_PROJECT_ID: ${{ secrets.CORBADO_PROJECT_ID }}
         
     # Linting step only runs for Python 3.8
     - name: mypy
@@ -49,9 +45,19 @@ jobs:
     - name: lint with flake8
       if: matrix.python-version == '3.8'
       run: flake8 .
+      
+    - name: Test with tox
+      run: |
+        tox run
+      env:
+        CORBADO_BACKEND_API: ${{ secrets.CORBADO_BACKEND_API }}
+        CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
+        CORBADO_PROJECT_ID: ${{ secrets.CORBADO_PROJECT_ID }}
+        
         
   build:
-    name: Build distribution package
+    if: startsWith(github.ref, 'refs/tags/v')  # only make separate build and upload for tag pushes 
+    name: Build and upload distribution package 
     runs-on: ubuntu-latest
 
     steps:
@@ -81,7 +87,7 @@ jobs:
     name: >-
       Publish Python distribution package to PyPI
     if: startsWith(github.ref, 'refs/tags/v')  # only publish to PyPI on tag pushes
-    needs: [build,test]                        # Ensure that package was built and tested for all python versions before publishing 
+    needs: [build,test-and-lint]                        # Ensure that package was built and tested for all python versions before publishing 
     runs-on: ubuntu-latest
     environment:
       name: pypi
