@@ -26,7 +26,7 @@ CLASSIFIERS = [
 ]
 
 
-NAME = "corbado-python"
+NAME = "passkeys"
 VERSION: str = version
 PYTHON_REQUIRES = ">=3.8"
 

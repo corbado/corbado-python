@@ -86,7 +86,7 @@ class CorbadoSDK(BaseModel):
             python_version: str = platform.python_version()
             data: Dict[str, str] = {
                 "name": "Python SDK",
-                "sdkVersion": version(distribution_name="corbado-python"),
+                "sdkVersion": version(distribution_name="passkeys"),
                 "languageVersion": python_version,
             }
             self._api_client.set_default_header(  # type: ignore

@@ -23,7 +23,7 @@ The [Corbado](https://www.corbado.com) Python SDK provides convenient access to 
 Use the following command to install the Corbado Python SDK:
 
 ```bash
-pip install corbado-python (Warning: Package is not yet published)
+pip install passkeys (Warning: Package is not yet published)
 ```
 
 ### Usage
