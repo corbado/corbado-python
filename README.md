@@ -31,7 +31,7 @@ pip install passkeys
 To create a Corbado Python SDK instance you need to provide your `Project ID` and `API secret` which can be found at the [Developer Panel](https://app.corbado.com).
 
 ```Python
-config: Config = Config(project_id="{project_id}", api_secret="c{api_secret}")
+config: Config = Config(project_id="{project_id}", api_secret="{api_secret}")
 sdk = CorbadoSDK(config=config)
 ```
 
