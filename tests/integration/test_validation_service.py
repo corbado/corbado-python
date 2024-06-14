@@ -18,7 +18,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
-        cls.fixture: ValidationInterface = cls.sdk.validation_interface
+        cls.fixture: ValidationInterface = cls.sdk.validations
 
 
 class ValidateEmailTest(TestBase):

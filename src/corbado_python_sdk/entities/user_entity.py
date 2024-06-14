@@ -31,9 +31,9 @@ class UserEntity(BaseModel):
             user_id (str): User id.
 
         Raises:
-            StandardException: If the user is not authenticated or has no user id.
+            StandardException: If the user is not authenticated.
         """
-        if not self.authenticated or not self._user_id:
+        if not self.authenticated:
             raise StandardException(NO_AUTH)
 
         return self._user_id
@@ -46,9 +46,9 @@ class UserEntity(BaseModel):
             name (str): User name.
 
         Raises:
-            StandardException: If the user is not authenticated or has no name.
+            StandardException: If the user is not authenticated.
         """
-        if not self.authenticated or not self._name:
+        if not self.authenticated:
             raise StandardException(NO_AUTH)
         return self._name
 
@@ -60,9 +60,9 @@ class UserEntity(BaseModel):
             name (str): User E-Mail.
 
         Raises:
-            StandardException: If the user is not authenticated or has no E-Mail.
+            StandardException: If the user is not authenticated.
         """
-        if not self.authenticated or not self._email:
+        if not self.authenticated:
             raise StandardException(NO_AUTH)
         return self._email
 
@@ -74,9 +74,9 @@ class UserEntity(BaseModel):
             name (str): User phone number.
 
         Raises:
-            StandardException: If the user is not authenticated or has no phone number.
+            StandardException: If the user is not authenticated.
         """
-        if not self.authenticated or not self._phone_number:
+        if not self.authenticated:
             raise StandardException(NO_AUTH)
         return self._phone_number
 

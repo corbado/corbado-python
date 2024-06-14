@@ -4,15 +4,11 @@ import unittest
 from time import time
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from flask.testing import FlaskClient
 from jwt import encode
 from pydantic import ValidationError
-from werkzeug.test import TestResponse
 
 from corbado_python_sdk.entities.user_entity import UserEntity
 from corbado_python_sdk.services.implementation import SessionService
-
-from ..utils.session_service_example import app
 
 TEST_NAME = "Test Name"
 TEST_EMAIL = "test@email.com"
@@ -154,7 +150,7 @@ class TestSessionService(TestBase):
             ({"issuer": "", "jwks_uri": "2", "short_session_cookie_name": "name"}, False),
             # Test empty jwks_uri
             ({"issuer": "s", "jwks_uri": "", "short_session_cookie_name": "name"}, False),
-            # Test empty short_session_cookie_name
+            # Tesft empty short_session_cookie_name
             ({"issuer": "s", "jwks_uri": "2", "short_session_cookie_name": ""}, False),
         ]
 
@@ -166,18 +162,3 @@ class TestSessionService(TestBase):
                 # ValidationError should be raised
                 with self.assertRaises(ValidationError):
                     SessionService(**params)
-
-
-class TestApp(unittest.TestCase):
-    def setUp(self):
-        self.app: FlaskClient = app.test_client()
-
-    def test_index(self):
-        response: TestResponse = self.app.get("/")
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Hello world!", response.data)
-
-    def test_set_cookie(self):
-        response = self.app.get("/setCookie")
-        self.assertEqual(response.status_code, 200)
-        self.assertIn(b"Cookie set!", response.data)

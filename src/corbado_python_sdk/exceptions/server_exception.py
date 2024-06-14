@@ -68,7 +68,6 @@ class ServerException(Exception):
             List[str]: List of validation messages
         """
         validation: List[Dict[str, Any]] = self.error.get("validation", [])
-        print(f"res: {self.error}")
         return [f"{item['field']}: {item['message']}" for item in validation]
 
     @property

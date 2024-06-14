@@ -19,7 +19,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
-        cls.fixture: UserInterface = cls.sdk.user_interface
+        cls.fixture: UserInterface = cls.sdk.users
 
 
 class TestMisc(TestBase):

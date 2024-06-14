@@ -1,22 +1,9 @@
 # coding: utf-8
 
-"""
-Corbado SDK
 
- # TODO: Package docstring
-
-
-"""  # noqa: E501
 import os
 
-from setuptools import find_namespace_packages, setup  # noqa: H301
-
-# To install the library, run the following
-#
-# python setup.py install
-#
-# prerequisite: setuptools
-# http://pypi.python.org/pypi/setuptools
+from setuptools import find_namespace_packages, setup
 
 base_dir: str = os.path.abspath(os.path.dirname(__file__))
 
@@ -39,7 +26,7 @@ CLASSIFIERS = [
 ]
 
 
-NAME = "corbado-python-sdk"
+NAME = "passkeys"
 VERSION: str = version
 PYTHON_REQUIRES = ">=3.8"
 
@@ -50,7 +37,6 @@ INSTALL_REQUIRES = [
     "typing-extensions >= 4.7.1",
     "pyopenssl",
     "PyJWT",
-    "flask",
 ]
 
 setup(
