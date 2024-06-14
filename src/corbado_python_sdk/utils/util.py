@@ -23,7 +23,15 @@ class Util:
         """
         try:
             json_str: str = json.dumps(data)
-        except json.JSONDecodeError as e:
+        except TypeError as e:
+            raise StandardException(f"json.dumps() failed: {e}")
+        except OverflowError as e:
+            raise StandardException(f"json.dumps() failed: {e}")
+        except ValueError as e:
+            raise StandardException(f"json.dumps() failed: {e}")
+        except RecursionError as e:
+            raise StandardException(f"json.dumps() failed: {e}")
+        except Exception as e:
             raise StandardException(f"json.dumps() failed: {e}")
         return json_str
 
@@ -45,6 +53,11 @@ class Util:
             decoded_data: Dict[str, Any] = json.loads(data)
         except json.JSONDecodeError as e:
             raise StandardException(f"json.loads() failed: {e}")
+        except TypeError as e:
+            raise StandardException(f"json.loads() failed: {e}")
+        except Exception as e:
+            raise StandardException(f"json.loads() failed: {e}")
+
         return decoded_data
 
     @staticmethod
