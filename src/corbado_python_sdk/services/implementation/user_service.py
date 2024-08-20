@@ -2,10 +2,11 @@ from typing import List, Optional
 
 from pydantic import BaseModel, ConfigDict
 
+from corbado_python_sdk.entities import UserEntity
 from corbado_python_sdk.exceptions.server_exception import ServerException
 from corbado_python_sdk.exceptions.standard_exception import StandardException
 from corbado_python_sdk.generated import ErrorRsp
-from corbado_python_sdk.generated.api import UserApi
+from corbado_python_sdk.generated.api import UsersApi
 from corbado_python_sdk.generated.exceptions import ApiException
 from corbado_python_sdk.generated.models import (
     GenericRsp,
@@ -15,6 +16,8 @@ from corbado_python_sdk.generated.models import (
     UserGetRsp,
     UserListRsp,
 )
+from corbado_python_sdk.generated.models.user import User
+from corbado_python_sdk.generated.models.user_status import UserStatus
 from corbado_python_sdk.services.interface import UserInterface
 
 
@@ -27,9 +30,9 @@ class UserService(
     model_config = ConfigDict(
         arbitrary_types_allowed=True,
     )
-    client: UserApi
+    client: UsersApi
 
-    def create(self, request: UserCreateReq) -> UserCreateRsp:
+    def create(self, request: UserCreateReq) -> UserEntity:
         """Create an user.
 
         Args:
@@ -37,19 +40,15 @@ class UserService(
 
         Raises:
             ServerException: If any server side error occurs.
-            StandardException: If an unexpected ErrorRsp is received.
-
         Returns:
             UserCreateRsp: Response
         """
         try:
-            response: UserCreateRsp = self.client.user_create(user_create_req=request)
+            user: User = self.client.user_create(user_create_req=request)
         except ApiException as e:
             raise ServerException(e)
-        if isinstance(response, ErrorRsp):
-            raise StandardException("Got unexpected ErrorRsp")
 
-        return response
+        return UserEntity.from_user(user)
 
     def list_users(
         self,
@@ -110,9 +109,7 @@ class UserService(
             UserGetRsp: Response
         """
         try:
-            response: UserGetRsp = self.client.user_get(
-                remote_address=remote_addr, user_agent=user_agent, user_id=user_id
-            )
+            response: UserGetRsp = self.client.user_get(remote_address=remote_addr, user_agent=user_agent, user_id=user_id)
         except ApiException as e:
             raise ServerException(e)
 

@@ -1,13 +1,15 @@
 from abc import ABC, abstractmethod
 
-from corbado_python_sdk.entities.user_entity import UserEntity
+from corbado_python_sdk.entities.session_validation_result import (
+    SessionValidationResult,
+)
 
 
 class SessionInterface(ABC):
     """SessionInterface for managing sessions."""
 
     @abstractmethod
-    def get_and_validate_short_session_value(self, short_session: str) -> UserEntity:
+    def get_and_validate_short_session_value(self, short_session: str) -> SessionValidationResult:
         """Validate  the given short-term session value.
 
         Args:
@@ -19,7 +21,7 @@ class SessionInterface(ABC):
         pass
 
     @abstractmethod
-    def get_current_user(self, short_session: str) -> UserEntity:
+    def get_current_user(self, short_session: str) -> SessionValidationResult:
         """Return current user for the short session.
 
         Args:

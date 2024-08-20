@@ -1,103 +1,27 @@
-from pydantic import BaseModel
+from pydantic import ConfigDict
 
-from corbado_python_sdk.exceptions.standard_exception import StandardException
+from corbado_python_sdk.entities import UserEntity
+from corbado_python_sdk.generated.models.user import User
 
-NO_AUTH = "User is not authenticated"
 
+class UserEntity(User):
+    """Represents a user entity."""
 
-class UserEntity(BaseModel):
-    """Represents a user entity.
-
-    Attributes:
-        authenticated (bool): Indicates if the user is authenticated.
-        id (str): User ID.
-        name (str): User name.
-        email (str): User email.
-        phoneNumber (str): User phone number.
-    """
-
-    authenticated: bool
-    _user_id: str = ""
-    _name: str = ""
-    _email: str = ""
-    _phone_number: str = ""
-
-    # Interfaces
-    @property
-    def user_id(self) -> str:
-        """Get user user_id.
-
-        Returns:
-            user_id (str): User id.
-
-        Raises:
-            StandardException: If the user is not authenticated.
-        """
-        if not self.authenticated:
-            raise StandardException(NO_AUTH)
-
-        return self._user_id
-
-    @property
-    def name(self) -> str:
-        """Get user name.
-
-        Returns:
-            name (str): User name.
-
-        Raises:
-            StandardException: If the user is not authenticated.
-        """
-        if not self.authenticated:
-            raise StandardException(NO_AUTH)
-        return self._name
-
-    @property
-    def email(self) -> str:
-        """Get user E-Mail.
-
-        Returns:
-            name (str): User E-Mail.
-
-        Raises:
-            StandardException: If the user is not authenticated.
-        """
-        if not self.authenticated:
-            raise StandardException(NO_AUTH)
-        return self._email
-
-    @property
-    def phone_number(self) -> str:
-        """Get user phone number.
-
-        Returns:
-            name (str): User phone number.
-
-        Raises:
-            StandardException: If the user is not authenticated.
-        """
-        if not self.authenticated:
-            raise StandardException(NO_AUTH)
-        return self._phone_number
+    model_config = ConfigDict(populate_by_name=True, from_attributes=True)
 
     @classmethod
-    def create_authenticated_user(
-        cls, user_id: str = "", name: str = "", email: str = "", phone_number: str = ""
-    ) -> "UserEntity":
-        """Create authenticated user.
+    def from_user(cls, user: User) -> UserEntity:
+        """Create a UserEntity instance from a User.
 
         Args:
-            user_id (str): user_id. Defaults to "".
-            name (str): name. Defaults to "".
-            email (str): email. Defaults to "".
-            phone_number (str): phone_number. Defaults to "".
+            user (User): User object
 
         Returns:
-            UserEntity: User Entity
+            UserEntity: UserEntity
         """
-        user = UserEntity(authenticated=True)
-        user._email = email
-        user._user_id = user_id
-        user._name = name
-        user._phone_number = phone_number
-        return user
+        return UserEntity(
+            user_id=user.user_id,  # type: ignore
+            status=user.status,
+            explicit_webauthn_id=user.explicit_webauthn_id,  # type: ignore
+            full_name=user.full_name,  # type: ignore
+        )

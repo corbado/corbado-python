@@ -5,7 +5,9 @@ from jwt.jwks_client import PyJWKClient
 from pydantic import BaseModel, ConfigDict, StringConstraints
 from typing_extensions import Annotated
 
-from corbado_python_sdk.entities.user_entity import UserEntity
+from corbado_python_sdk.entities.session_validation_result import (
+    SessionValidationResult,
+)
 from corbado_python_sdk.services.interface import SessionInterface
 
 DEFAULT_SHORT_SESSION_LENGTH = 300
@@ -66,17 +68,17 @@ class SessionService(SessionInterface, BaseModel):
             cache_jwk_set=self.cache_jwk_set,
         )
 
-    def get_and_validate_short_session_value(self, short_session: str) -> UserEntity:
+    def get_and_validate_short_session_value(self, short_session: str) -> SessionValidationResult:
         """Validate the given short-term session (represented as JWT) value.
 
         Args:
             short_session (str): jwt
 
         Returns:
-            UserEntity: UserEntity with authenticated=True on success, otherwise with authenticated=False
+            SessionValidationResult: SessionValidationResult with authenticated=True on success, otherwise with authenticated=False
         """
         if not short_session:
-            return UserEntity(authenticated=False)
+            return SessionValidationResult(authenticated=False)
         try:
             # retrieve signing key
             signing_key: jwt.PyJWK = self._jwk_client.get_signing_key_from_jwt(token=short_session)
@@ -85,34 +87,33 @@ class SessionService(SessionInterface, BaseModel):
 
             # extract information from decoded payload
             sub = payload.get("sub")
-            name = payload.get("name")
-            email = payload.get("email")
-            phone_number = payload.get("phone_number")
+            full_name = payload.get("name")
 
             # check issuer
             if payload.get("iss") and payload["iss"] != self.issuer:
                 self.set_issuer_mismatch_error(issuer=payload["iss"])
                 # return unauthenticated user on issuer mismatch
-                return UserEntity(authenticated=False)
-            return UserEntity.create_authenticated_user(phone_number=phone_number, email=email, name=name, user_id=sub)
+                return SessionValidationResult(authenticated=False)
+            return SessionValidationResult(authenticated=True, user_id=sub, full_name=full_name)
         except PyJWTError as error:
             # return unauthenticated user on error
             self.set_validation_error(error)
-            return UserEntity(authenticated=False)
+            return SessionValidationResult(authenticated=False)
 
-    def get_current_user(self, short_session: str) -> UserEntity:
+    def get_current_user(self, short_session: str) -> SessionValidationResult:
         """Return current user for the short session.
 
         Args:
             short_session (str): Short session.
 
         Returns:
-            UserEntity:  UserEntity with authenticated=True on success, otherwise with authenticated=False.
+            SessionValidationResult:  SessionValidationResult with authenticated=True on success, otherwise with
+                authenticated=False.
         """
         if not short_session:
-            return UserEntity(authenticated=False)
+            return SessionValidationResult(authenticated=False)
 
-        user: UserEntity = self.get_and_validate_short_session_value(short_session)
+        user: SessionValidationResult = self.get_and_validate_short_session_value(short_session)
         return user
 
     def set_issuer_mismatch_error(self, issuer: str) -> None:

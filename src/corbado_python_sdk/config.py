@@ -29,7 +29,7 @@ class Config(BaseModel):
     # Fields
     project_id: str
     api_secret: str
-    backend_api: str = "https://backendapi.corbado.io"
+    backend_api: str = "https://backendapi.cloud.corbado.io/v2"
     short_session_cookie_name: str = "cbo_short_session"
 
     _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
