@@ -1,6 +1,5 @@
-from typing import Optional
-
 from pydantic import BaseModel, Field
+from typing_extensions import Optional
 
 
 class SessionValidationResult(BaseModel):

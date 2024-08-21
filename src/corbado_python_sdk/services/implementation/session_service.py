@@ -75,7 +75,8 @@ class SessionService(SessionInterface, BaseModel):
             short_session (str): jwt
 
         Returns:
-            SessionValidationResult: SessionValidationResult with authenticated=True on success, otherwise with authenticated=False
+            SessionValidationResult: SessionValidationResult with authenticated=True on success,
+            otherwise with authenticated=False
         """
         if not short_session:
             return SessionValidationResult(authenticated=False)

@@ -3,15 +3,23 @@ import json
 import platform
 from importlib.metadata import version
 
-from pydantic import BaseModel, ConfigDict, StringConstraints, validate_call
-from typing_extensions import Annotated, Dict, Optional
+from pydantic import BaseModel, ConfigDict
+from typing_extensions import Dict, Optional
 
 from corbado_python_sdk import Config
-from corbado_python_sdk.generated.api import UsersApi
+from corbado_python_sdk.generated.api import IdentifiersApi, UsersApi
 from corbado_python_sdk.generated.api_client import ApiClient
 from corbado_python_sdk.generated.configuration import Configuration
-from corbado_python_sdk.services.implementation import SessionService, UserService
-from corbado_python_sdk.services.interface import SessionInterface, UserInterface
+from corbado_python_sdk.services.implementation import (
+    IdentifierService,
+    SessionService,
+    UserService,
+)
+from corbado_python_sdk.services.interface import (
+    IdentifierInterface,
+    SessionInterface,
+    UserInterface,
+)
 
 CORBADO_HEADER_NAME = "X-Corbado-SDK"
 
@@ -37,6 +45,7 @@ class CorbadoSDK(BaseModel):
     _api_client: Optional[ApiClient] = None
     _sessions: Optional[SessionService] = None
     _users: Optional[UserInterface] = None
+    _identifiers: Optional[IdentifierInterface] = None
 
     @property
     def api_client(self) -> ApiClient:
@@ -53,9 +62,7 @@ class CorbadoSDK(BaseModel):
                 "sdkVersion": version(distribution_name="passkeys"),
                 "languageVersion": python_version,
             }
-            self._api_client.set_default_header(  # type: ignore
-                header_name=CORBADO_HEADER_NAME, header_value=json.dumps(data)
-            )
+            self._api_client.set_default_header(header_name=CORBADO_HEADER_NAME, header_value=json.dumps(data))  # type: ignore
         return self._api_client
 
     # --------- Interfaces ---------------#
@@ -83,9 +90,25 @@ class CorbadoSDK(BaseModel):
             UserInterface: UserService object.
         """
         if not self._users:
-            self._users = UserService(client=UsersApi(api_client=self.api_client))
+            client = UsersApi(api_client=self.api_client)
+            self._users = UserService(client=client)
 
         return self._users
+
+    @property
+    def identifiers(self) -> IdentifierInterface:
+        """Get identifier service.
+
+        Returns:
+            IdentifierInterface: IdentifierService object.
+        """
+        if not self._identifiers:
+            print("creating identifiers")
+            client = IdentifiersApi(api_client=self.api_client)
+            print(f"client {client}")
+            self._identifiers = IdentifierService(client=client)
+
+        return self._identifiers
 
     # ----------- Functions ----------#
 

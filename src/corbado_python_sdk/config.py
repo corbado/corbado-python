@@ -1,7 +1,5 @@
-from typing import Optional
-
 from pydantic import BaseModel, ConfigDict, StringConstraints, field_validator
-from typing_extensions import Annotated
+from typing_extensions import Annotated, Optional
 
 from corbado_python_sdk.utils import validators
 

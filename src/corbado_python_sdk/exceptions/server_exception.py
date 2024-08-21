@@ -19,7 +19,7 @@ class ServerException(Exception):
             StandardException: If response body is not a string.
 
         """
-        __body = e.body
+        __body = e.body  # type: ignore
         if not isinstance(__body, str):
             raise StandardException("Response body is not a string")
         __data: Dict[str, Any] = Util.json_decode(__body)
@@ -55,9 +55,7 @@ class ServerException(Exception):
         self.error_type: str = self.error.get("type", "")
 
         self.validation_messages: List[str] = self._get_validation_messages()
-        message += (
-            f' (HTTP status code: {http_status_code}, validation messages: {"; ".join(self.validation_messages)})'
-        )
+        message += f' (HTTP status code: {http_status_code}, validation messages: {"; ".join(self.validation_messages)})'
 
         super().__init__(message)
 

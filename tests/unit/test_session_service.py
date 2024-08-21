@@ -99,8 +99,6 @@ class TestBase(unittest.TestCase):
             "nbf": nbf,
             "sub": TEST_USER_ID,
             "name": TEST_NAME,
-            "email": TEST_EMAIL,
-            "phone_number": TEST_PHONE_NUMBER,
         }
 
         private_key_path: str = os.path.join(os.path.dirname(__file__), "test_data", "privateKey.pem")
@@ -121,9 +119,7 @@ class TestSessionService(TestBase):
             self.assertEqual(valid, result.authenticated)
 
             if valid:
-                self.assertEqual(first=TEST_PHONE_NUMBER, second=result.phone_number)
-                self.assertEqual(first=TEST_EMAIL, second=result.email)
-                self.assertEqual(first=TEST_NAME, second=result.name)
+                self.assertEqual(first=TEST_NAME, second=result.full_name)
                 self.assertEqual(TEST_USER_ID, result.user_id)
 
     def test_cache_jwk_set_used_expect_reduced_urlopen_calls(self):

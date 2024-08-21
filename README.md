@@ -109,7 +109,7 @@ Add environment variables for tests (use the test project from secrets repositot
 ``` console
 export CORBADO_API_SECRET=corbado1_123456
 export CORBADO_PROJECT_ID=pro-123456
-export CORBADO_BACKEND_API=https://backendapi.corbado.io
+export CORBADO_BACKEND_API="https://backendapi.cloud.corbado.io/v2"
 ```
 
 # Testing
