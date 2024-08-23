@@ -103,9 +103,7 @@ class CorbadoSDK(BaseModel):
             IdentifierInterface: IdentifierService object.
         """
         if not self._identifiers:
-            print("creating identifiers")
             client = IdentifiersApi(api_client=self.api_client)
-            print(f"client {client}")
             self._identifiers = IdentifierService(client=client)
 
         return self._identifiers

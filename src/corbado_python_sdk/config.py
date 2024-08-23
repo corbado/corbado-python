@@ -27,14 +27,35 @@ class Config(BaseModel):
     # Fields
     project_id: str
     api_secret: str
+
     backend_api: str = "https://backendapi.cloud.corbado.io/v2"
     short_session_cookie_name: str = "cbo_short_session"
 
     _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
     _frontend_api: Optional[str] = None
 
-    # Field Validators
-    _backend_api_validator = field_validator("backend_api")(validators.url_validator)
+    @field_validator("backend_api")
+    @classmethod
+    def validate_backend_api(cls, backend_api: str) -> str:
+        """Validate the backend API URL and ensure it ends with '/v2'.
+
+        Args:
+            backend_api (str): Backend API URL to validate.
+
+        Raises:
+            ValueError: _description_
+
+        Returns:
+            str: Validated backend API URL ending with '/v2'.
+        """
+        if not validators.url_validator(backend_api):
+            raise ValueError(f'Invalid URL "{backend_api}" provided for backend API.')
+
+        # Append '/v2' if not already present
+        if not backend_api.endswith("/v2"):
+            return backend_api.rstrip("/") + "/v2"
+
+        return backend_api
 
     @field_validator("project_id")
     @classmethod

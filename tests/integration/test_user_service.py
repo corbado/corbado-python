@@ -72,27 +72,3 @@ class TestUserGet(TestBase):
 
         rsp: UserEntity = self.fixture.get(user_id=user.user_id)
         self.assertEqual(first=user, second=rsp)
-
-    def test_exception(self) -> None:
-        try:
-            # Try to get non-existing user with ID 'usr-123456789'
-            self.fixture.get(user_id="usr-123456789")
-        except ServerException as e:
-            # Show HTTP status code (404 in this case)
-            print(f"Status Code: {e.http_status_code}")
-
-            # Show request ID (can be used in developer panel to look up the full request
-            # and response, see https://app.corbado.com/app/logs/requests)
-            print(f"Request id: {e.request_id}")
-
-            # Show full request data
-            print(f"Request data: {e.request_data}")
-
-            # Show runtime of request in seconds (server side)
-            print(f"Runtime: {e.runtime}")
-
-            # Show error type - not found
-            print(f"Validation messages: {e.error_type}")
-
-            # Show full error data
-            print(f"Full error: {e.error}")

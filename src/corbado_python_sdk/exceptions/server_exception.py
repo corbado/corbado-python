@@ -55,7 +55,9 @@ class ServerException(Exception):
         self.error_type: str = self.error.get("type", "")
 
         self.validation_messages: List[str] = self._get_validation_messages()
-        message += f' (HTTP status code: {http_status_code}, validation messages: {"; ".join(self.validation_messages)})'
+        message += (
+            f' (HTTP status code: {http_status_code}, validation messages: {"; ".join(self.validation_messages)})'
+        )
 
         super().__init__(message)
 

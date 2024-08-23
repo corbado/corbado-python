@@ -87,7 +87,7 @@ class UserService(
 
         return UserEntity.from_user(user)
 
-    def delete(self, user_id: str):
+    def delete(self, user_id: str) -> None:
         """Delete user. Does not return anything. Throw if any error occurs (Like user not exists).
 
         Args:
