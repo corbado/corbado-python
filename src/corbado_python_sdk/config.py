@@ -16,7 +16,7 @@ class Config(BaseModel):
     Attributes:
         project_id (str): The unique identifier for the project.
         api_secret (str): The secret key used to authenticate API requests.
-        backend_api (str): The base URL for the backend API. Defaults to "https://backendapi.corbado.io".
+        backend_api (str): The base URL for the backend API. Defaults to "https://backendapi.cloud.corbado.io/v2".
         short_session_cookie_name (str): The name of the cookie for short session management. Defaults to "cbo_short_session".
     """
 
