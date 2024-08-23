@@ -1,3 +1,5 @@
+from math import e
+
 from pydantic import ConfigDict
 
 from corbado_python_sdk.generated.models.user import User
@@ -19,8 +21,8 @@ class UserEntity(User):
             UserEntity: UserEntity
         """
         return UserEntity(
-            user_id=user.user_id,  # type: ignore
+            userID=user.user_id,
             status=user.status,
-            explicit_webauthn_id=user.explicit_webauthn_id,  # type: ignore
-            full_name=user.full_name,  # type: ignore
+            explicitWebauthnID=user.explicit_webauthn_id,
+            fullName=user.full_name,
         )
