@@ -38,9 +38,9 @@ jobs:
         python -m pip install --upgrade pip
         python -m pip install .[test,tox_gh,tox,mypy,flake8]
         
-    # Linting step only runs for Python 3.8
+    # Linting step only runs for Python 3.8 and python 3.10
     - name: mypy
-      if: matrix.python-version == '3.8'
+      if: matrix.python-version == '3.10' # mypy has conflicts between 3.8 and older versions.
       run: mypy -p corbado_python_sdk --exclude generated --strict --disable-error-code attr-defined
     - name: lint with flake8
       if: matrix.python-version == '3.8'
