@@ -20,7 +20,6 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Union
-from typing_extensions import Annotated
 from corbado_python_sdk.generated.models.request_data import RequestData
 from typing import Optional, Set
 from typing_extensions import Self
@@ -29,7 +28,7 @@ class GenericRsp(BaseModel):
     """
     GenericRsp
     """ # noqa: E501
-    http_status_code: Annotated[int, Field(le=599, strict=True, ge=200)] = Field(description="HTTP status code of operation", alias="httpStatusCode")
+    http_status_code: StrictInt = Field(description="HTTP status code of operation", alias="httpStatusCode")
     message: StrictStr
     request_data: RequestData = Field(alias="requestData")
     runtime: Union[StrictFloat, StrictInt] = Field(description="Runtime in seconds for this request")
