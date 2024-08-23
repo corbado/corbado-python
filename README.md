@@ -43,13 +43,9 @@ A list of examples can be found in the integration tests [here](tests/integratio
 
 The Corbado Python SDK provides the following services:
 
-- `auth_tokens` for managing authentication tokens needed for own session management ([examples](tests/integration/test_auth_token_service.py))
-- `email_magic_links` for managing email magic links ([examples](tests/integration/test_email_magic_link_service.py))
-- `email_otps` for managing email OTPs ([examples](tests/integration/test_email_otp_service.py))
-- `sessions` for managing sessions ([example flask app](tests/utils/session_service_example.py))
-- `sms_otps` for managing SMS OTPs ([examples](tests/integration/test_sms_otp_service.py))
-- `users` for managing users ([examples](tests/integration/test_user_service.py))
-- `validations` for validating email addresses and phone numbers ([examples](tests/integration/test_validation_service.py))
+- `sessions` for managing sessions ([example flask app](https://github.com/corbado/example-passkeys-python-flask))
+- `users` for managing users ([examples](tests/integration/test_identifier_service.py))
+- `identifiers` for managing login identifiers ([examples](tests/integration/test_user_service.py))
 
 To use a specific service, such as `users`, invoke it as shown below:
 
