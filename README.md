@@ -144,7 +144,7 @@ If you encounter any bugs or have suggestions, please [open an issue](https://gi
 
 Join our Slack channel to discuss questions or ideas with the Corbado team and other developers.
 
-[![Slack](https://img.shields.io/badge/slack-join%20chat-brightgreen.svg)](https://join.slack.com/t/corbado/shared_invite/zt-1b7867yz8-V~Xr~ngmSGbt7IA~g16ZsQ)
+[![Slack](https://img.shields.io/badge/slack-join%20chat-brightgreen.svg)](https://bit.ly/passkeys-community)
 
 ### Email
 
