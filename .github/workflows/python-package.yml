@@ -1,7 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-#TODO: move lint to separate job
-#TODO: coverage tests in separate job
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions. It also publishes to pypi.org on version tags.
 
 name: Python package
 
@@ -88,7 +85,7 @@ jobs:
     name: >-
       Publish Python distribution package to PyPI
     if: startsWith(github.ref, 'refs/tags/v')  # only publish to PyPI on tag pushes
-    #needs: [build,test-and-lint]                        # Ensure that package was built and tested for all python versions before publishing, temporarly disabled until github secrets are updated (backend_api)
+    needs: [build,test-and-lint]                        # Ensure that package was built and tested for all python versions before publishing
     runs-on: ubuntu-latest
     environment:
       name: pypi
