@@ -1,5 +1,3 @@
-from math import e
-
 from pydantic import ConfigDict
 
 from corbado_python_sdk.generated.models.user import User
