@@ -11,7 +11,6 @@ from .generated import (
     UserStatus,
     UserUpdateReq,
 )
-from .services import IdentifierInterface, SessionInterface, UserInterface
 
 __all__ = [
     "IdentifierCreateReq",
@@ -20,12 +19,9 @@ __all__ = [
     "IdentifierType",
     "UserCreateReq",
     "UserUpdateReq",
-    "IdentifierInterface",
     "UserStatus",
     "StandardException",
     "UserEntity",
     "CorbadoSDK",
     "Config",
-    "UserInterface",
-    "SessionInterface",
 ]

@@ -15,11 +15,6 @@ from corbado_python_sdk.services.implementation import (
     SessionService,
     UserService,
 )
-from corbado_python_sdk.services.interface import (
-    IdentifierInterface,
-    SessionInterface,
-    UserInterface,
-)
 
 CORBADO_HEADER_NAME = "X-Corbado-SDK"
 
@@ -35,7 +30,7 @@ class CorbadoSDK(BaseModel):
         config (Config): The configuration object for the SDK.
         api_client (ApiClient): The API client used to make requests to the backend API.
         sessions (SessionService): The session service service.
-        users (UserInterface): The user service.
+        users (UserService): The user service.
     """
 
     model_config = ConfigDict(
@@ -44,8 +39,8 @@ class CorbadoSDK(BaseModel):
     config: Config
     _api_client: Optional[ApiClient] = None
     _sessions: Optional[SessionService] = None
-    _users: Optional[UserInterface] = None
-    _identifiers: Optional[IdentifierInterface] = None
+    _users: Optional[UserService] = None
+    _identifiers: Optional[IdentifierService] = None
 
     @property
     def api_client(self) -> ApiClient:
@@ -65,13 +60,13 @@ class CorbadoSDK(BaseModel):
             self._api_client.set_default_header(header_name=CORBADO_HEADER_NAME, header_value=json.dumps(data))  # type: ignore
         return self._api_client
 
-    # --------- Interfaces ---------------#
+    # --------- Services ---------------#
     @property
-    def sessions(self) -> SessionInterface:
-        """Get user SessionInterface.
+    def sessions(self) -> SessionService:
+        """Get user SessionService.
 
         Returns:
-            SessionInterface: SessionService object.
+            SessionService: SessionService object.
         """
         if not self._sessions:
             self._sessions = SessionService(
@@ -83,11 +78,11 @@ class CorbadoSDK(BaseModel):
         return self._sessions
 
     @property
-    def users(self) -> UserInterface:
+    def users(self) -> UserService:
         """Get user service.
 
         Returns:
-            UserInterface: UserService object.
+            UserService: UserService object.
         """
         if not self._users:
             client = UsersApi(api_client=self.api_client)
@@ -96,11 +91,11 @@ class CorbadoSDK(BaseModel):
         return self._users
 
     @property
-    def identifiers(self) -> IdentifierInterface:
+    def identifiers(self) -> IdentifierService:
         """Get identifier service.
 
         Returns:
-            IdentifierInterface: IdentifierService object.
+            IdentifierService: IdentifierService object.
         """
         if not self._identifiers:
             client = IdentifiersApi(api_client=self.api_client)

@@ -1,9 +1,3 @@
-from .interface import IdentifierInterface as IdentifierInterface
-from .interface import SessionInterface as SessionInterface
-from .interface import UserInterface as UserInterface
+from .implementation import IdentifierService, SessionService, UserService
 
-__all__ = [
-    "IdentifierInterface",
-    "UserInterface",
-    "SessionInterface",
-]
+__all__ = ["IdentifierService", "SessionService", "UserService"]

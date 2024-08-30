@@ -6,7 +6,7 @@ from corbado_python_sdk.generated.models.user import User
 class UserEntity(User):
     """Represents a user entity."""
 
-    model_config = ConfigDict(populate_by_name=True, from_attributes=True)
+    model_config = ConfigDict(populate_by_name=True, from_attributes=True, arbitrary_types_allowed=True)
 
     @classmethod
     def from_user(cls, user: User) -> "UserEntity":

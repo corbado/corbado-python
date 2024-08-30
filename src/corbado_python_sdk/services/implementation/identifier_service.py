@@ -15,12 +15,9 @@ from corbado_python_sdk.generated import (
     IdentifierUpdateReq,
 )
 from corbado_python_sdk.generated.models.paging import Paging
-from corbado_python_sdk.services.interface.identifier_interface import (
-    IdentifierInterface,
-)
 
 
-class IdentifierService(BaseModel, IdentifierInterface):
+class IdentifierService(BaseModel):
     """This class provides functionality for managing login identifiers."""
 
     model_config = ConfigDict(

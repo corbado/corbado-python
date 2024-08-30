@@ -6,7 +6,9 @@ from typing_extensions import List
 from corbado_python_sdk import CorbadoSDK, Identifier, IdentifierStatus, IdentifierType
 from corbado_python_sdk.exceptions import ServerException
 from corbado_python_sdk.generated.models.identifier_list import IdentifierList
-from corbado_python_sdk.services.interface import IdentifierInterface
+from corbado_python_sdk.services.implementation.identifier_service import (
+    IdentifierService,
+)
 from tests.utils import TestUtils
 
 CANNOT_BE_BLANK = "cannot be blank"
@@ -21,7 +23,7 @@ class TestBase(unittest.TestCase):
     def setUpClass(cls):
         """Set up test class with necessary data."""
         cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
-        cls.fixture: IdentifierInterface = cls.sdk.identifiers
+        cls.fixture: IdentifierService = cls.sdk.identifiers
 
         cls.TEST_USER_ID = TestUtils.create_user().user_id
         cls.TEST_USER_EMAIL: str = TestUtils.create_random_test_email()

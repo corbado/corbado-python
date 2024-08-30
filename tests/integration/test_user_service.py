@@ -2,7 +2,7 @@ import unittest
 
 from corbado_python_sdk import CorbadoSDK, UserEntity, UserStatus
 from corbado_python_sdk.exceptions import ServerException
-from corbado_python_sdk.services.interface.user_interface import UserInterface
+from corbado_python_sdk.services.implementation import UserService
 from tests.utils import TestUtils
 
 
@@ -11,7 +11,7 @@ class TestBase(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.sdk: CorbadoSDK = TestUtils.instantiate_sdk()
-        cls.fixture: UserInterface = cls.sdk.users
+        cls.fixture: UserService = cls.sdk.users
 
 
 class TestMisc(TestBase):

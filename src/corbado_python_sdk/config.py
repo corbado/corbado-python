@@ -30,6 +30,7 @@ class Config(BaseModel):
 
     backend_api: str = "https://backendapi.cloud.corbado.io/v2"
     short_session_cookie_name: str = "cbo_short_session"
+    cname: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
 
     _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
     _frontend_api: Optional[str] = None
@@ -102,6 +103,13 @@ class Config(BaseModel):
             str: issuer.
         """
         if not self._issuer:
+            if self.cname:
+                if self.cname.startswith("https://"):
+                    self._issuer = self.cname
+                else:
+                    self._issuer = "https://" + self.cname
+                return self._issuer
+
             self._issuer = self.frontend_api
         return self._issuer
 

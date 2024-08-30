@@ -7,8 +7,9 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from jwt import encode
 from pydantic import ValidationError
 
+from corbado_python_sdk import Config, CorbadoSDK
 from corbado_python_sdk.entities.user_entity import UserEntity
-from corbado_python_sdk.services.implementation import SessionService
+from corbado_python_sdk.services import SessionService
 
 TEST_NAME = "Test Name"
 TEST_EMAIL = "test@email.com"
@@ -55,7 +56,7 @@ class TestBase(unittest.TestCase):
     def create_session_service(cls) -> SessionService:
         """Create test configuration of SessionService.
 
-        Warning! You should normally use SessionInterface from CorbadoSDK for non-test purposes.
+        Warning! You should normally use SessionService from CorbadoSDK for non-test purposes.
 
         Returns:
             SessionService: SessionService instance
@@ -158,3 +159,12 @@ class TestSessionService(TestBase):
                 # ValidationError should be raised
                 with self.assertRaises(ValidationError):
                     SessionService(**params)
+
+
+class TestSessionServiceConfiguration(TestBase):
+    def test_set_cname_expect_issuer_changed(self):
+        test_cname = "cname.test.com"
+        config: Config = Config(api_secret="corbado1_XXX", project_id="pro-55", cname=test_cname)
+        sdk = CorbadoSDK(config=config)
+        sessions: SessionService = sdk.sessions
+        self.assertEqual("https://" + test_cname, sessions.issuer)

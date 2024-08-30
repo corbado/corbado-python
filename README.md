@@ -50,7 +50,7 @@ The Corbado Python SDK provides the following services:
 To use a specific service, such as `users`, invoke it as shown below:
 
 ```Python
-user_service: UserInterface = sdk.users
+user_service: UserService = sdk.users
 ``` 
 
 ## :books: Advanced

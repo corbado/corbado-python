@@ -8,12 +8,10 @@ from corbado_python_sdk.generated.exceptions import ApiException
 from corbado_python_sdk.generated.models import UserCreateReq
 from corbado_python_sdk.generated.models.user import User
 from corbado_python_sdk.generated.models.user_status import UserStatus
-from corbado_python_sdk.services.interface import UserInterface
 
 
 class UserService(
     BaseModel,
-    UserInterface,
 ):
     """Service for managing users."""
 
