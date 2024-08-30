@@ -1,25 +1,14 @@
 # flake8: noqa
 
 # import apis into api package
-from corbado_python_sdk.generated.api.api_secrets_api import APISecretsApi
-from corbado_python_sdk.generated.api.analyzer_api import AnalyzerApi
-from corbado_python_sdk.generated.api.android_app_config_api import AndroidAppConfigApi
-from corbado_python_sdk.generated.api.association_tokens_api import AssociationTokensApi
-from corbado_python_sdk.generated.api.auth_methods_api import AuthMethodsApi
-from corbado_python_sdk.generated.api.auth_tokens_api import AuthTokensApi
-from corbado_python_sdk.generated.api.email_otp_api import EmailOTPApi
-from corbado_python_sdk.generated.api.email_magic_links_api import EmailMagicLinksApi
-from corbado_python_sdk.generated.api.email_templates_api import EmailTemplatesApi
-from corbado_python_sdk.generated.api.examples_api import ExamplesApi
-from corbado_python_sdk.generated.api.long_sessions_api import LongSessionsApi
-from corbado_python_sdk.generated.api.passkeys_biometrics_api import PasskeysBiometricsApi
+from corbado_python_sdk.generated.api.auth_events_api import AuthEventsApi
+from corbado_python_sdk.generated.api.challenges_api import ChallengesApi
+from corbado_python_sdk.generated.api.connect_tokens_api import ConnectTokensApi
+from corbado_python_sdk.generated.api.identifiers_api import IdentifiersApi
+from corbado_python_sdk.generated.api.passkey_challenges_api import PasskeyChallengesApi
+from corbado_python_sdk.generated.api.passkey_events_api import PasskeyEventsApi
+from corbado_python_sdk.generated.api.passkeys_api import PasskeysApi
 from corbado_python_sdk.generated.api.project_config_api import ProjectConfigApi
-from corbado_python_sdk.generated.api.request_logs_api import RequestLogsApi
-from corbado_python_sdk.generated.api.smsotp_api import SMSOTPApi
-from corbado_python_sdk.generated.api.sms_templates_api import SMSTemplatesApi
-from corbado_python_sdk.generated.api.session_config_api import SessionConfigApi
-from corbado_python_sdk.generated.api.user_api import UserApi
-from corbado_python_sdk.generated.api.validation_api import ValidationApi
-from corbado_python_sdk.generated.api.webhook_logs_api import WebhookLogsApi
-from corbado_python_sdk.generated.api.ios_app_config_api import IOSAppConfigApi
+from corbado_python_sdk.generated.api.sessions_api import SessionsApi
+from corbado_python_sdk.generated.api.users_api import UsersApi
 

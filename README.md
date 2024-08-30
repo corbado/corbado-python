@@ -43,29 +43,34 @@ A list of examples can be found in the integration tests [here](tests/integratio
 
 The Corbado Python SDK provides the following services:
 
-- `auth_tokens` for managing authentication tokens needed for own session management ([examples](tests/integration/test_auth_token_service.py))
-- `email_magic_links` for managing email magic links ([examples](tests/integration/test_email_magic_link_service.py))
-- `email_otps` for managing email OTPs ([examples](tests/integration/test_email_otp_service.py))
-- `sessions` for managing sessions ([example flask app](tests/utils/session_service_example.py))
-- `sms_otps` for managing SMS OTPs ([examples](tests/integration/test_sms_otp_service.py))
-- `users` for managing users ([examples](tests/integration/test_user_service.py))
-- `validations` for validating email addresses and phone numbers ([examples](tests/integration/test_validation_service.py))
+- `sessions` for managing sessions ([example flask app](https://github.com/corbado/example-passkeys-python-flask))
+- `users` for managing users ([examples](tests/integration/test_identifier_service.py))
+- `identifiers` for managing login identifiers ([examples](tests/integration/test_user_service.py))
 
 To use a specific service, such as `users`, invoke it as shown below:
 
 ```Python
-user_service: UserInterface = sdk.users
+user_service: UserService = sdk.users
 ``` 
 
 ## :books: Advanced
 
 ### Error handling
 
-The Corbado Python SDK throws exceptions for all errors. The following exceptions are thrown:
+The Corbado Python SDK raises exceptions for all errors except those that occur in the session service during token validation (See example below on how to catch those errors). The following exceptions are thrown:
 
 - `ValidationError` for failed validations (client side)
 - `ServerException` for server errors (server side)
 - `StandardException` for everything else (client side)
+
+'SessionService' returns 'SessionValidationResult' as result of token validation. You can check whether any errors occurred and handle them if needed:
+
+```Python
+result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(short_session=token)
+            if result.error is not None:
+                print(result.error)
+                raise result.error
+```
 
 If the Backend API returns a HTTP status code other than 200, the Corbado Python SDK throws a `ServerException`. The `ServerException`class provides convenient methods to access all important data:
   sdk.users.get(user_id="usr-123456789")
@@ -109,7 +114,7 @@ Add environment variables for tests (use the test project from secrets repositot
 ``` console
 export CORBADO_API_SECRET=corbado1_123456
 export CORBADO_PROJECT_ID=pro-123456
-export CORBADO_BACKEND_API=https://backendapi.corbado.io
+export CORBADO_BACKEND_API="https://backendapi.cloud.corbado.io"
 ```
 
 # Testing
@@ -148,7 +153,7 @@ If you encounter any bugs or have suggestions, please [open an issue](https://gi
 
 Join our Slack channel to discuss questions or ideas with the Corbado team and other developers.
 
-[![Slack](https://img.shields.io/badge/slack-join%20chat-brightgreen.svg)](https://join.slack.com/t/corbado/shared_invite/zt-1b7867yz8-V~Xr~ngmSGbt7IA~g16ZsQ)
+[![Slack](https://img.shields.io/badge/slack-join%20chat-brightgreen.svg)](https://bit.ly/passkeys-community)
 
 ### Email
 

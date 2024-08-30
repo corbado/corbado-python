@@ -30,9 +30,6 @@ def url_validator(url: str) -> str:
     if parts.password:
         raise ValueError("Assert failed: password needs to be empty")
 
-    if parts.path:
-        raise ValueError("Assert failed: path needs to be empty")
-
     if parts.query:
         raise ValueError("Assert failed: querystring needs to be empty")
 

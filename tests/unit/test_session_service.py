@@ -7,8 +7,8 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from jwt import encode
 from pydantic import ValidationError
 
-from corbado_python_sdk.entities.user_entity import UserEntity
-from corbado_python_sdk.services.implementation import SessionService
+from corbado_python_sdk import Config, CorbadoSDK, SessionValidationResult
+from corbado_python_sdk.services import SessionService
 
 TEST_NAME = "Test Name"
 TEST_EMAIL = "test@email.com"
@@ -55,7 +55,7 @@ class TestBase(unittest.TestCase):
     def create_session_service(cls) -> SessionService:
         """Create test configuration of SessionService.
 
-        Warning! You should normally use SessionInterface from CorbadoSDK for non-test purposes.
+        Warning! You should normally use SessionService from CorbadoSDK for non-test purposes.
 
         Returns:
             SessionService: SessionService instance
@@ -99,8 +99,6 @@ class TestBase(unittest.TestCase):
             "nbf": nbf,
             "sub": TEST_USER_ID,
             "name": TEST_NAME,
-            "email": TEST_EMAIL,
-            "phone_number": TEST_PHONE_NUMBER,
         }
 
         private_key_path: str = os.path.join(os.path.dirname(__file__), "test_data", "privateKey.pem")
@@ -116,14 +114,15 @@ class TestBase(unittest.TestCase):
 class TestSessionService(TestBase):
     def test_get_and_validate_short_session_value(self):
         for valid, token in self._provide_jwts():
-            result: UserEntity = self.session_service.get_and_validate_short_session_value(short_session=token)
+            result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(
+                short_session=token
+            )
 
-            self.assertEqual(valid, result.authenticated)
+            self.assertEqual(first=valid, second=result.authenticated)
+            self.assertEqual(first=valid, second=result.error is None)
 
             if valid:
-                self.assertEqual(first=TEST_PHONE_NUMBER, second=result.phone_number)
-                self.assertEqual(first=TEST_EMAIL, second=result.email)
-                self.assertEqual(first=TEST_NAME, second=result.name)
+                self.assertEqual(first=TEST_NAME, second=result.full_name)
                 self.assertEqual(TEST_USER_ID, result.user_id)
 
     def test_cache_jwk_set_used_expect_reduced_urlopen_calls(self):
@@ -162,3 +161,12 @@ class TestSessionService(TestBase):
                 # ValidationError should be raised
                 with self.assertRaises(ValidationError):
                     SessionService(**params)
+
+
+class TestSessionServiceConfiguration(TestBase):
+    def test_set_cname_expect_issuer_changed(self):
+        test_cname = "cname.test.com"
+        config: Config = Config(api_secret="corbado1_XXX", project_id="pro-55", cname=test_cname)
+        sdk = CorbadoSDK(config=config)
+        sessions: SessionService = sdk.sessions
+        self.assertEqual("https://" + test_cname, sessions.issuer)

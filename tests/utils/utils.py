@@ -4,10 +4,10 @@ import string
 
 from typing_extensions import LiteralString
 
-from corbado_python_sdk import CorbadoSDK
+from corbado_python_sdk import CorbadoSDK, UserStatus
 from corbado_python_sdk.config import Config
+from corbado_python_sdk.entities import UserEntity
 from corbado_python_sdk.generated import UserCreateReq
-from corbado_python_sdk.generated.models.user_create_rsp import UserCreateRsp
 
 
 class TestUtils:
@@ -23,7 +23,7 @@ class TestUtils:
         config: Config = Config(
             api_secret=os.getenv(key=TestUtils.CORBADO_API_SECRET, default="missing CORBADO_API_SECRET"),
             project_id=os.getenv(key=TestUtils.CORBADO_PROJECT_ID, default="missing CORBADO_PROJECT_ID"),
-            backend_api=os.getenv(key=TestUtils.CORBADO_BACKEND_API, default="missing CORBADO_BACKEND_API"),
+            backend_api=os.getenv(key=TestUtils.CORBADO_BACKEND_API, default="https://backendapi.cloud.corbado.io/v2"),
         )
         return CorbadoSDK(config=config)
 
@@ -51,8 +51,8 @@ class TestUtils:
         return "+491509" + TestUtils.generate_string(7, string.digits)
 
     @classmethod
-    def create_user(cls) -> str:
+    def create_user(cls) -> UserEntity:
         """Create a user and return the user ID."""
-        req = UserCreateReq(name=TestUtils.create_random_test_name(), email=TestUtils.create_random_test_email())
-        rsp: UserCreateRsp = TestUtils.instantiate_sdk().users.create(request=req)
-        return rsp.data.user_id
+        req = UserCreateReq(fullName=TestUtils.create_random_test_name(), status=UserStatus.ACTIVE)
+        rsp: UserEntity = TestUtils.instantiate_sdk().users.create_from_request(request=req)
+        return rsp
