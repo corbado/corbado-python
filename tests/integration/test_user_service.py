@@ -1,8 +1,7 @@
 import unittest
 
-from corbado_python_sdk import CorbadoSDK, UserEntity, UserStatus
+from corbado_python_sdk import CorbadoSDK, UserEntity, UserService, UserStatus
 from corbado_python_sdk.exceptions import ServerException
-from corbado_python_sdk.services.implementation import UserService
 from tests.utils import TestUtils
 
 

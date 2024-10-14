@@ -7,8 +7,12 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from jwt import encode
 from pydantic import ValidationError
 
-from corbado_python_sdk import Config, CorbadoSDK, SessionValidationResult
-from corbado_python_sdk.services import SessionService
+from corbado_python_sdk import (
+    Config,
+    CorbadoSDK,
+    SessionService,
+    SessionValidationResult,
+)
 
 TEST_NAME = "Test Name"
 TEST_EMAIL = "test@email.com"
@@ -114,9 +118,7 @@ class TestBase(unittest.TestCase):
 class TestSessionService(TestBase):
     def test_get_and_validate_short_session_value(self):
         for valid, token in self._provide_jwts():
-            result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(
-                short_session=token
-            )
+            result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(short_session=token)
 
             self.assertEqual(first=valid, second=result.authenticated)
             self.assertEqual(first=valid, second=result.error is None)

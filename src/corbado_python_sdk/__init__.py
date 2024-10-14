@@ -12,6 +12,7 @@ from .generated import (
     UserStatus,
     UserUpdateReq,
 )
+from .services import IdentifierService, SessionService, UserService
 
 __all__ = [
     "SessionValidationResult",
@@ -26,4 +27,7 @@ __all__ = [
     "UserEntity",
     "CorbadoSDK",
     "Config",
+    "IdentifierService",
+    "SessionService",
+    "UserService",
 ]

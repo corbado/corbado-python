@@ -3,12 +3,15 @@ import unittest
 
 from typing_extensions import List
 
-from corbado_python_sdk import CorbadoSDK, Identifier, IdentifierStatus, IdentifierType
+from corbado_python_sdk import (
+    CorbadoSDK,
+    Identifier,
+    IdentifierService,
+    IdentifierStatus,
+    IdentifierType,
+)
 from corbado_python_sdk.exceptions import ServerException
 from corbado_python_sdk.generated.models.identifier_list import IdentifierList
-from corbado_python_sdk.services.implementation.identifier_service import (
-    IdentifierService,
-)
 from tests.utils import TestUtils
 
 CANNOT_BE_BLANK = "cannot be blank"
