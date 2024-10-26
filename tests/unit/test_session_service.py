@@ -1,5 +1,6 @@
 # type: ignore
 import os
+import test
 import unittest
 from time import time
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -168,7 +169,14 @@ class TestSessionService(TestBase):
 class TestSessionServiceConfiguration(TestBase):
     def test_set_cname_expect_issuer_changed(self):
         test_cname = "cname.test.com"
-        config: Config = Config(api_secret="corbado1_XXX", project_id="pro-55", cname=test_cname)
+        config: Config = Config(
+            api_secret="corbado1_XXX",
+            project_id="pro-55",
+            backend_api="https://backendapi.cloud.corbado.io/",
+            frontend_api="https://test.com/",
+            cname=test_cname,
+        )
+
         sdk = CorbadoSDK(config=config)
         sessions: SessionService = sdk.sessions
         self.assertEqual("https://" + test_cname, sessions.issuer)
