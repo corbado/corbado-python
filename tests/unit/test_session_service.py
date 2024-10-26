@@ -1,6 +1,5 @@
 # type: ignore
 import os
-import test
 import unittest
 from time import time
 from unittest.mock import AsyncMock, MagicMock, patch
@@ -69,6 +68,7 @@ class TestBase(unittest.TestCase):
             issuer="https://auth.acme.com",
             jwks_uri="https://example_uri.com",  # does not matter, url access is mocked
             short_session_cookie_name="cbo_short_session",
+            project_id="pro-55",
         )
 
     def tearDown(self) -> None:
@@ -147,13 +147,13 @@ class TestSessionService(TestBase):
     def test_init_parameters(self):
         test_cases = [
             # Valid session service
-            ({"issuer": "s", "jwks_uri": "2", "short_session_cookie_name": "name"}, True),
+            ({"issuer": "s", "jwks_uri": "2", "short_session_cookie_name": "name", "project_id": "pro-55"}, True),
             # Test empty issuer
-            ({"issuer": "", "jwks_uri": "2", "short_session_cookie_name": "name"}, False),
+            ({"issuer": "", "jwks_uri": "2", "short_session_cookie_name": "name", "project_id": "pro-55"}, False),
             # Test empty jwks_uri
-            ({"issuer": "s", "jwks_uri": "", "short_session_cookie_name": "name"}, False),
+            ({"issuer": "s", "jwks_uri": "", "short_session_cookie_name": "name", "project_id": "pro-55"}, False),
             # Tesft empty short_session_cookie_name
-            ({"issuer": "s", "jwks_uri": "2", "short_session_cookie_name": ""}, False),
+            ({"issuer": "s", "jwks_uri": "2", "short_session_cookie_name": "", "project_id": "pro-55"}, False),
         ]
 
         for params, expected_result in test_cases:
