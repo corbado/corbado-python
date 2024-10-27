@@ -92,6 +92,31 @@ class TestBase(unittest.TestCase):
             project_id="pro-55",
         )
 
+    @classmethod
+    def create_session_service_with_frontend_api_and_cname(
+        cls, cname, frontend_api="https://corbado1_xxx.frontendapi.corbado.io"
+    ) -> SessionService:
+        """Create test configuration of SessionService.
+
+        Warning! You should normally use SessionService from CorbadoSDK for non-test purposes.
+
+        Returns:
+            SessionService: SessionService instance
+        """
+        config = Config(
+            api_secret="corbado1_xxx",
+            backend_api="https://backend.com",
+            frontend_api="https://corbado1_xxx.frontendapi.corbado.io",
+            project_id="pro-55",
+            cname=cname,
+        )
+        return SessionService(
+            session_token_cookie_name=config.session_token_cookie_name,
+            issuer=config.issuer,
+            jwks_uri="https://example_uri.com",  # does not matter, url access is mocked
+            project_id=config.project_id,
+        )
+
     def tearDown(self) -> None:
         self.my_patch.stop()
 
@@ -137,6 +162,13 @@ class TestBase(unittest.TestCase):
                 self._generate_jwt(
                     iss="https://pro-12.frontendapi.cloud.corbado.io", exp=int(time()) + 100, nbf=int(time()) - 100
                 ),
+                None,
+                None,
+            ),
+            # Invalid issuer 2 (false project id)
+            (
+                False,
+                self._generate_jwt(iss="https://pro-12.frontendapi.corbado.io", exp=int(time()) + 100, nbf=int(time()) - 100),
                 None,
                 None,
             ),
