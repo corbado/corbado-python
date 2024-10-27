@@ -7,11 +7,15 @@ class ValidationErrorType(Enum):
     """
     Enum representing types of validation errors.
 
+    This enum categorizes various validation errors that may occur during
+    token validation processes.
+
     Attributes:
-        MISSING_FIELD (str): Indicates a required field is missing.
-        INVALID_FORMAT (str): Indicates an incorrect format in the data.
-        VALUE_OUT_OF_RANGE (str): Indicates a value is outside the acceptable range.
-        UNAUTHORIZED_ACCESS (str): Indicates unauthorized access attempt.
+        INVALID_TOKEN (str): Indicates that the token is invalid. More information in 'original_exception'.
+        SIGNING_KEY_ERROR (str): Indicates that the signing key could not be retrieved. More information in 'original_exception'.
+        EMPTY_SESSION_TOKEN (str): Indicates that the session token is empty.
+        EMPTY_ISSUER (str): Indicates that the issuer is empty.
+        ISSUER_MISSMATCH (str): Indicates that the token issuer does not match the expected issuer.
     """
 
     INVALID_TOKEN = "Invalid token"  # noqa s105

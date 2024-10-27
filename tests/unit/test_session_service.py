@@ -4,10 +4,22 @@ import unittest
 from time import time
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from jwt import encode
+from jwt import (
+    DecodeError,
+    ExpiredSignatureError,
+    ImmatureSignatureError,
+    PyJWKClientError,
+    encode,
+)
 from pydantic import ValidationError
 
-from corbado_python_sdk import Config, CorbadoSDK, SessionService, UserEntity
+from corbado_python_sdk import (
+    Config,
+    CorbadoSDK,
+    SessionService,
+    TokenValidationException,
+    UserEntity,
+)
 
 TEST_NAME = "Test Name"
 TEST_EMAIL = "test@email.com"
@@ -72,8 +84,34 @@ class TestBase(unittest.TestCase):
     def _provide_jwts(self):
         """Provide list of jwts with expected test results."""
         return [
+            # JWT with invalid format
+            (False, "invalid", DecodeError, "Not enough segments"),
+            # JWT signed with wrong algorithm (HS256 instead of RS256)
+            (
+                False,
+                """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6
+                IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.dyt0CoTl4WoVjAHI9Q_CwSKhl6d_9rhM3NrXuJttkao""",
+                PyJWKClientError,
+                'Unable to find a signing key that matches: "None"',
+            ),
+            # Not before (nfb) in future
+            (
+                False,
+                self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) + 100),
+                ImmatureSignatureError,
+                "The token is not yet valid (nbf)",
+            ),
+            # Expired (exp)
+            (
+                False,
+                self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) - 100, nbf=int(time()) - 100),
+                ExpiredSignatureError,
+                "Signature has expired",
+            ),
+            # Invalid issuer (iss)
+            (False, self._generate_jwt(iss="https://invalid.com", exp=int(time()) + 100, nbf=int(time()) - 100), None, None),
             # Success
-            (True, self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100)),
+            (True, self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100), None, None),
         ]
 
     @classmethod
@@ -99,20 +137,22 @@ class TestBase(unittest.TestCase):
 
 class TestSessionService(TestBase):
     def test_validate_token(self):
-        for valid, token in self._provide_jwts():
+        for valid, token, expected_original_error, expected_original_error_message in self._provide_jwts():
             if valid:
                 result: UserEntity = self.session_service.validate_token(session_token=token)
 
                 self.assertEqual(first=TEST_NAME, second=result.full_name)
                 self.assertEqual(first=TEST_USER_ID, second=result.user_id)
             else:
-                with self.assertRaises(ValidationError) as context:
+                with self.assertRaises(TokenValidationException) as context:
                     # Code that should raise the ValidationError
                     self.session_service.validate_token(session_token=token)
-
-                # Optionally, you can check the message or attributes of the exception
-                self.assertEqual(context.exception.message, "Input value is incorrect")
-                # self.assertEqual(context.exception.error_type, ValidationErrorType.INVALID_FORMAT)
+                if expected_original_error:
+                    print(f"type: { print(context.exception.original_exception.__class__)}")
+                    print(f"exception: {context.exception.original_exception}")
+                    print(f"Token: {token}")
+                    self.assertIsInstance(context.exception.original_exception, expected_original_error)
+                    self.assertEqual(str(context.exception.original_exception), expected_original_error_message)
 
     def test_cache_jwk_set_used_expect_reduced_urlopen_calls(self):
         jwt: str = self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100)

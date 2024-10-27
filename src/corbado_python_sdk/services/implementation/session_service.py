@@ -94,7 +94,7 @@ class SessionService(BaseModel):
             self._set_validation_error(error=error)
             raise TokenValidationException(
                 error_type=ValidationErrorType.SIGNING_KEY_ERROR,
-                message=f"Could not retrieve signing key: {session_token}. See  original_exception for further information.",
+                message=f"Could not retrieve signing key: {session_token}. See  original_exception for further information: {str(error)}",
                 original_exception=error,
             )
 
@@ -110,7 +110,7 @@ class SessionService(BaseModel):
             self._set_validation_error(error=error)
             raise TokenValidationException(
                 error_type=ValidationErrorType.INVALID_TOKEN,
-                message=f"Error occured during token decode: {session_token}. See  original_exception for further information.",
+                message=f"Error occured during token decode: {session_token}. See  original_exception for further information: {str(error)}",
                 original_exception=error,
             )
 
