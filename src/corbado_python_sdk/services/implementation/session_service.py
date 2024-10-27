@@ -14,7 +14,7 @@ from corbado_python_sdk.entities.session_validation_result import (
     SessionValidationResult,
 )
 
-DEFAULT_SHORT_SESSION_LENGTH = 300
+DEFAULT_SESSION_TOKEN_LENGTH = 300
 
 
 class SessionService(BaseModel):
@@ -24,11 +24,11 @@ class SessionService(BaseModel):
 
     Attributes:
         model_config (ConfigDict): Configuration dictionary for the model.
-        short_session_cookie_name (str): Name of the short session cookie.
+        session_token_cookie_name (str): Name of the short session cookie.
         issuer (str): Issuer of the session tokens.
         jwks_uri (str): URI of the JSON Web Key Set (JWKS) endpoint.
-        last_short_session_validation_result (str): Result of the last short session validation.
-        short_session_length (int): Length of short session in seconds. Default = 300
+        last_session_token_validation_result (str): Result of the last short session validation.
+        session_token_cookie_length (int): Length of short session in seconds. Default = 300
         _jwk_client (PyJWKClient): JSON Web Key (JWK) client for handling JWKS.
         cache_keys (bool): Flag to cache keys. Default = False.
         cache_jwk_set (bool): Flag to cache jwk_sets. Default = True.
@@ -40,11 +40,11 @@ class SessionService(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True, validate_assignment=True)
 
     # Fields
-    short_session_cookie_name: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
+    session_token_cookie_name: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     issuer: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     jwks_uri: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
-    last_short_session_validation_result: str = ""
-    short_session_length: int = DEFAULT_SHORT_SESSION_LENGTH
+    last_session_token_validation_result: str = ""
+    session_token_cookie_length: int = DEFAULT_SESSION_TOKEN_LENGTH
     cache_keys: bool = False
     cache_jwk_set: bool = True
     project_id: str
@@ -58,8 +58,8 @@ class SessionService(BaseModel):
         Args:
             **kwargs: Additional keyword arguments to initialize the SessionService.
                 These keyword arguments should include values for the attributes defined in the class,
-                such as 'short_session_cookie_name', 'issuer', 'jwks_uri', 'last_short_session_validation_result',
-                'cache_keys',cache_jwk_set and 'short_session_length'.
+                such as 'session_token_cookie_name', 'issuer', 'jwks_uri', 'last_session_token_validation_result',
+                'cache_keys',cache_jwk_set and 'session_token_cookie_length'.
 
         Raises:
             Any errors raised during the initialization process.
@@ -69,29 +69,29 @@ class SessionService(BaseModel):
         self._jwk_client = PyJWKClient(
             uri=self.jwks_uri,
             cache_keys=self.cache_keys,
-            lifespan=self.short_session_length,
+            lifespan=self.session_token_cookie_length,
             cache_jwk_set=self.cache_jwk_set,
         )
 
     # Core methods
-    def get_and_validate_short_session_value(self, short_session: StrictStr) -> SessionValidationResult:
+    def get_and_validate_short_session_value(self, session_token: StrictStr) -> SessionValidationResult:
         """Validate the given short-term session (represented as JWT) value.
 
         Args:
-            short_session (StrictStr): jwt
+            session_token (StrictStr): jwt
 
         Returns:
             SessionValidationResult: SessionValidationResult with authenticated=True on success,
             otherwise with authenticated=False
         """
-        if not short_session:
+        if not session_token:
             return SessionValidationResult(authenticated=False)
         try:
             # retrieve signing key
-            signing_key: jwt.PyJWK = self._jwk_client.get_signing_key_from_jwt(token=short_session)
+            signing_key: jwt.PyJWK = self._jwk_client.get_signing_key_from_jwt(token=session_token)
 
             # decode short session (jwt) with signing key
-            payload = decode(jwt=short_session, key=signing_key.key, algorithms=["RS256"])
+            payload = decode(jwt=session_token, key=signing_key.key, algorithms=["RS256"])
 
             # extract information from decoded payload
             token_issuer: str = payload.get("iss")
@@ -99,7 +99,7 @@ class SessionService(BaseModel):
             full_name: str = payload.get("name")
 
             # validate issuer
-            self._validate_issuer(token_issuer=token_issuer, session_token=short_session)
+            self._validate_issuer(token_issuer=token_issuer, session_token=session_token)
 
             return SessionValidationResult(authenticated=True, user_id=sub, full_name=full_name)
         except Exception as error:
@@ -107,17 +107,17 @@ class SessionService(BaseModel):
             self.set_validation_error(error)
             return SessionValidationResult(authenticated=False, error=error)
 
-    def get_current_user(self, short_session: StrictStr) -> SessionValidationResult:
+    def get_current_user(self, session_token: StrictStr) -> SessionValidationResult:
         """Return current user for the short session.
 
         Args:
-            short_session (StrictStr): Short session.
+            session_token (StrictStr): Short session.
 
         Returns:
             SessionValidationResult:  SessionValidationResult with authenticated=True on success, otherwise with
                 authenticated=False.
         """
-        user: SessionValidationResult = self.get_and_validate_short_session_value(short_session)
+        user: SessionValidationResult = self.get_and_validate_short_session_value(session_token)
         return user
 
     def set_issuer_mismatch_error(self, token_issuer: str) -> None:
@@ -126,7 +126,7 @@ class SessionService(BaseModel):
         Args:
             token_issuer (str): Token issuer.
         """
-        self.last_short_session_validation_result = f"Mismatch in issuer (configured: {self.issuer}, JWT: {token_issuer})"
+        self.last_session_token_validation_result = f"Mismatch in issuer (configured: {self.issuer}, JWT: {token_issuer})"
 
     def set_validation_error(self, error: Exception) -> None:
         """Set validation error.
@@ -134,7 +134,7 @@ class SessionService(BaseModel):
         Args:
             error (Exception): Exception occurred.
         """
-        self.last_short_session_validation_result = f"JWT validation failed: {error}"
+        self.last_session_token_validation_result = f"JWT validation failed: {error}"
 
     # Private methods
     def _validate_issuer(self, token_issuer: str, session_token: str) -> None:

@@ -66,7 +66,7 @@ The Corbado Python SDK raises exceptions for all errors except those that occur 
 'SessionService' returns 'SessionValidationResult' as result of token validation. You can check whether any errors occurred and handle them if needed:
 
 ```Python
-result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(short_session=token)
+result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(session_token=token)
             if result.error is not None:
                 print(result.error)
                 raise result.error

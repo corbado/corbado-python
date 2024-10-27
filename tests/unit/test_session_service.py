@@ -65,9 +65,9 @@ class TestBase(unittest.TestCase):
             SessionService: SessionService instance
         """
         return SessionService(
+            session_token_cookie_name="cbo_session_token",
             issuer="https://auth.acme.com",
             jwks_uri="https://example_uri.com",  # does not matter, url access is mocked
-            short_session_cookie_name="cbo_short_session",
             project_id="pro-55",
         )
 
@@ -119,7 +119,7 @@ class TestBase(unittest.TestCase):
 class TestSessionService(TestBase):
     def test_get_and_validate_short_session_value(self):
         for valid, token in self._provide_jwts():
-            result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(short_session=token)
+            result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(session_token=token)
 
             self.assertEqual(first=valid, second=result.authenticated)
             self.assertEqual(first=valid, second=result.error is None)
@@ -130,10 +130,10 @@ class TestSessionService(TestBase):
 
     def test_cache_jwk_set_used_expect_reduced_urlopen_calls(self):
         jwt: str = self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100)
-        self.session_service.get_and_validate_short_session_value(short_session=jwt)
+        self.session_service.get_and_validate_short_session_value(session_token=jwt)
         num_calls: int = self.mock_urlopen.call_count
         for _i in range(3):
-            self.session_service.get_and_validate_short_session_value(short_session=jwt)
+            self.session_service.get_and_validate_short_session_value(session_token=jwt)
         self.assertEqual(num_calls, self.mock_urlopen.call_count)
 
     def test_generate_jwt(self):
@@ -147,13 +147,13 @@ class TestSessionService(TestBase):
     def test_init_parameters(self):
         test_cases = [
             # Valid session service
-            ({"issuer": "s", "jwks_uri": "2", "short_session_cookie_name": "name", "project_id": "pro-55"}, True),
+            ({"issuer": "s", "jwks_uri": "2", "session_token_cookie_name": "name", "project_id": "pro-55"}, True),
             # Test empty issuer
-            ({"issuer": "", "jwks_uri": "2", "short_session_cookie_name": "name", "project_id": "pro-55"}, False),
+            ({"issuer": "", "jwks_uri": "2", "session_token_cookie_name": "name", "project_id": "pro-55"}, False),
             # Test empty jwks_uri
-            ({"issuer": "s", "jwks_uri": "", "short_session_cookie_name": "name", "project_id": "pro-55"}, False),
-            # Tesft empty short_session_cookie_name
-            ({"issuer": "s", "jwks_uri": "2", "short_session_cookie_name": "", "project_id": "pro-55"}, False),
+            ({"issuer": "s", "jwks_uri": "", "session_token_cookie_name": "name", "project_id": "pro-55"}, False),
+            # Tesft empty session_token_cookie_name
+            ({"issuer": "s", "jwks_uri": "2", "session_token_cookie_name": "", "project_id": "pro-55"}, False),
         ]
 
         for params, expected_result in test_cases:
