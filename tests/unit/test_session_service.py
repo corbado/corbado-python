@@ -8,6 +8,7 @@ from jwt import (
     DecodeError,
     ExpiredSignatureError,
     ImmatureSignatureError,
+    InvalidSignatureError,
     PyJWKClientError,
     encode,
 )
@@ -38,6 +39,8 @@ class TestBase(unittest.TestCase):
 
     """
 
+    private_key = None
+    invalid_private_key = None
     mock_urlopen = None
 
     @classmethod
@@ -49,6 +52,17 @@ class TestBase(unittest.TestCase):
         try:
             with open(file=jwks_path, mode="rb") as private_key_file:
                 cls.jwks: bytes = private_key_file.read()
+        except FileNotFoundError:
+            raise FileNotFoundError("Failed to read private key file")
+
+        private_key_path: str = os.path.join(os.path.dirname(__file__), "test_data", "privateKey.pem")
+        invalid_key_path: str = os.path.join(os.path.dirname(__file__), "test_data", "invalidPrivateKey.pem")
+
+        try:
+            with open(file=private_key_path, mode="rb") as private_key_file:
+                cls.private_key: bytes = private_key_file.read()
+            with open(file=invalid_key_path, mode="rb") as private_key_file:
+                cls.invalid_private_key: bytes = private_key_file.read()
         except FileNotFoundError:
             raise FileNotFoundError("Failed to read private key file")
 
@@ -110,12 +124,49 @@ class TestBase(unittest.TestCase):
             ),
             # Invalid issuer (iss)
             (False, self._generate_jwt(iss="https://invalid.com", exp=int(time()) + 100, nbf=int(time()) - 100), None, None),
+            # Use false private key
+            (
+                False,
+                self._generate_jwt(valid_key=False, iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100),
+                InvalidSignatureError,
+                "Signature verification failed",
+            ),
+            # Invalid issuer (false project id)
+            (
+                False,
+                self._generate_jwt(
+                    iss="https://pro-12.frontendapi.cloud.corbado.io", exp=int(time()) + 100, nbf=int(time()) - 100
+                ),
+                None,
+                None,
+            ),
+            # Success with old Frontend API URL in config
+            (
+                True,
+                self._generate_jwt(
+                    iss="https://pro-55.frontendapi.cloud.corbado.io", exp=int(time()) + 100, nbf=int(time()) - 100
+                ),
+                None,
+                None,
+            ),
+            # Success with old Frontend API URL in config (2)
+            (
+                True,
+                self._generate_jwt(iss="https://pro-55.frontendapi.corbado.io", exp=int(time()) + 100, nbf=int(time()) - 100),
+                None,
+                None,
+            ),
             # Success
-            (True, self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100), None, None),
+            (
+                True,
+                self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100),
+                None,
+                None,
+            ),
         ]
 
     @classmethod
-    def _generate_jwt(cls, iss: str, exp: int, nbf: int) -> str:
+    def _generate_jwt(cls, iss: str, exp: int, nbf: int, valid_key: bool = True) -> str:
         payload = {
             "iss": iss,
             "iat": int(time()),
@@ -125,14 +176,9 @@ class TestBase(unittest.TestCase):
             "name": TEST_NAME,
         }
 
-        private_key_path: str = os.path.join(os.path.dirname(__file__), "test_data", "privateKey.pem")
-        try:
-            with open(file=private_key_path, mode="rb") as private_key_file:
-                private_key = private_key_file.read()
-        except FileNotFoundError:
-            raise FileNotFoundError("Failed to read private key file")
-
-        return encode(payload, private_key, algorithm="RS256", headers={"kid": "kid123"})
+        if valid_key:
+            return encode(payload, key=cls.private_key, algorithm="RS256", headers={"kid": "kid123"})
+        return encode(payload, key=cls.invalid_private_key, algorithm="RS256", headers={"kid": "kid123"})
 
 
 class TestSessionService(TestBase):
@@ -148,9 +194,9 @@ class TestSessionService(TestBase):
                     # Code that should raise the ValidationError
                     self.session_service.validate_token(session_token=token)
                 if expected_original_error:
-                    print(f"type: { print(context.exception.original_exception.__class__)}")
-                    print(f"exception: {context.exception.original_exception}")
-                    print(f"Token: {token}")
+                    # print(f"type: { print(context.exception.original_exception.__class__)}")
+                    # print(f"exception: {context.exception.original_exception}")
+                    # print(f"Token: {token}")
                     self.assertIsInstance(context.exception.original_exception, expected_original_error)
                     self.assertEqual(str(context.exception.original_exception), expected_original_error_message)
 
