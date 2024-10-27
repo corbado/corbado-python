@@ -1,17 +1,13 @@
 import jwt
 from jwt import decode
 from jwt.jwks_client import PyJWKClient
-from pydantic import (
-    BaseModel,
-    ConfigDict,
-    StrictStr,
-    StringConstraints,
-    ValidationError,
-)
+from pydantic import BaseModel, ConfigDict, StrictStr, StringConstraints
 from typing_extensions import Annotated
 
-from corbado_python_sdk.entities.session_validation_result import (
-    SessionValidationResult,
+from corbado_python_sdk.entities import UserEntity, UserStatus
+from corbado_python_sdk.exceptions.token_validation_exception import (
+    TokenValidationException,
+    ValidationErrorType,
 )
 
 DEFAULT_SESSION_TOKEN_LENGTH = 300
@@ -74,40 +70,56 @@ class SessionService(BaseModel):
         )
 
     # Core methods
-    def validate_token(self, session_token: StrictStr) -> SessionValidationResult:
+    def validate_token(self, session_token: StrictStr) -> UserEntity:
         """Validate the given short-term session (represented as JWT) value.
 
         Args:
             session_token (StrictStr): jwt
 
+        Raises:
+            TokenValidationException: If token is invalid.
+
         Returns:
-            SessionValidationResult: SessionValidationResult with authenticated=True on success,
-            otherwise with authenticated=False
+            UserEntity: User Entity.
         """
         if not session_token:
-            return SessionValidationResult(authenticated=False)
-        try:
-            # retrieve signing key
-            signing_key: jwt.PyJWK = self._jwk_client.get_signing_key_from_jwt(token=session_token)
+            raise TokenValidationException(
+                error_type=ValidationErrorType.EMPTY_SESSION_TOKEN, message=ValidationErrorType.EMPTY_SESSION_TOKEN.name
+            )
 
-            # decode short session (jwt) with signing key
+        # retrieve signing key
+        try:
+            signing_key: jwt.PyJWK = self._jwk_client.get_signing_key_from_jwt(token=session_token)
+        except Exception as error:
+            self._set_validation_error(error=error)
+            raise TokenValidationException(
+                error_type=ValidationErrorType.SIGNING_KEY_ERROR,
+                message=f"Could not retrieve signing key: {session_token}. See  original_exception for further information.",
+                original_exception=error,
+            )
+
+        # decode short session (jwt) with signing key
+        try:
             payload = decode(jwt=session_token, key=signing_key.key, algorithms=["RS256"])
 
             # extract information from decoded payload
             token_issuer: str = payload.get("iss")
             sub: str = payload.get("sub")
             full_name: str = payload.get("name")
-
-            # validate issuer
-            self._validate_issuer(token_issuer=token_issuer, session_token=session_token)
-
-            return SessionValidationResult(authenticated=True, user_id=sub, full_name=full_name)
         except Exception as error:
-            # return unauthenticated user on error
-            self.set_validation_error(error)
-            return SessionValidationResult(authenticated=False, error=error)
+            self._set_validation_error(error=error)
+            raise TokenValidationException(
+                error_type=ValidationErrorType.INVALID_TOKEN,
+                message=f"Error occured during token decode: {session_token}. See  original_exception for further information.",
+                original_exception=error,
+            )
 
-    def set_issuer_mismatch_error(self, token_issuer: str) -> None:
+        # validate issuer
+        self._validate_issuer(token_issuer=token_issuer, session_token=session_token)
+        # TODO: Retrieve user status
+        return UserEntity(fullName=full_name, userID=sub, status=UserStatus.ACTIVE)
+
+    def _set_issuer_mismatch_error(self, token_issuer: str) -> None:
         """Set issuer mismatch error.
 
         Args:
@@ -115,7 +127,7 @@ class SessionService(BaseModel):
         """
         self.last_session_token_validation_result = f"Mismatch in issuer (configured: {self.issuer}, JWT: {token_issuer})"
 
-    def set_validation_error(self, error: Exception) -> None:
+    def _set_validation_error(self, error: Exception) -> None:
         """Set validation error.
 
         Args:
@@ -132,11 +144,13 @@ class SessionService(BaseModel):
             session_token (str): Session token.
 
         Raises:
-            ValidationError: If issuer is invalid.
+            TokenValidationException: If issuer is invalid.
 
         """
         if not token_issuer:
-            raise ValidationError(f"Issuer is empty. Session token: {session_token}")
+            raise TokenValidationException(
+                error_type=ValidationErrorType.EMPTY_ISSUER, message=f"Issuer is empty. Session token: {session_token}"
+            )
 
         # Check for old Frontend API (without .cloud.)
         expected_old: StrictStr = f"https://{self.project_id}.frontendapi.corbado.io"
@@ -150,6 +164,7 @@ class SessionService(BaseModel):
 
         # Check against the configured issuer (e.g., a custom domain or CNAME)
         if token_issuer != self.issuer:
-            raise ValidationError(
-                f"Issuer mismatch (configured via FrontendAPI: '{self.issuer}', JWT issuer: '{token_issuer}')",
+            raise TokenValidationException(
+                error_type=ValidationErrorType.ISSUER_MISSMATCH,
+                message=f"Issuer mismatch (configured via FrontendAPI: '{self.issuer}', JWT issuer: '{token_issuer}')",
             )
