@@ -74,7 +74,7 @@ class SessionService(BaseModel):
         )
 
     # Core methods
-    def get_and_validate_short_session_value(self, session_token: StrictStr) -> SessionValidationResult:
+    def validate_token(self, session_token: StrictStr) -> SessionValidationResult:
         """Validate the given short-term session (represented as JWT) value.
 
         Args:
@@ -106,19 +106,6 @@ class SessionService(BaseModel):
             # return unauthenticated user on error
             self.set_validation_error(error)
             return SessionValidationResult(authenticated=False, error=error)
-
-    def get_current_user(self, session_token: StrictStr) -> SessionValidationResult:
-        """Return current user for the short session.
-
-        Args:
-            session_token (StrictStr): Short session.
-
-        Returns:
-            SessionValidationResult:  SessionValidationResult with authenticated=True on success, otherwise with
-                authenticated=False.
-        """
-        user: SessionValidationResult = self.get_and_validate_short_session_value(session_token)
-        return user
 
     def set_issuer_mismatch_error(self, token_issuer: str) -> None:
         """Set issuer mismatch error.

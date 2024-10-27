@@ -117,9 +117,9 @@ class TestBase(unittest.TestCase):
 
 
 class TestSessionService(TestBase):
-    def test_get_and_validate_short_session_value(self):
+    def test_validate_token(self):
         for valid, token in self._provide_jwts():
-            result: SessionValidationResult = self.session_service.get_and_validate_short_session_value(session_token=token)
+            result: SessionValidationResult = self.session_service.validate_token(session_token=token)
 
             self.assertEqual(first=valid, second=result.authenticated)
             self.assertEqual(first=valid, second=result.error is None)
@@ -130,10 +130,10 @@ class TestSessionService(TestBase):
 
     def test_cache_jwk_set_used_expect_reduced_urlopen_calls(self):
         jwt: str = self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100)
-        self.session_service.get_and_validate_short_session_value(session_token=jwt)
+        self.session_service.validate_token(session_token=jwt)
         num_calls: int = self.mock_urlopen.call_count
         for _i in range(3):
-            self.session_service.get_and_validate_short_session_value(session_token=jwt)
+            self.session_service.validate_token(session_token=jwt)
         self.assertEqual(num_calls, self.mock_urlopen.call_count)
 
     def test_generate_jwt(self):
