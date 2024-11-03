@@ -1,5 +1,10 @@
 import jwt
-from jwt import decode
+from jwt import (
+    ExpiredSignatureError,
+    ImmatureSignatureError,
+    InvalidSignatureError,
+    decode,
+)
 from jwt.jwks_client import PyJWKClient
 from pydantic import BaseModel, ConfigDict, StrictStr, StringConstraints
 from typing_extensions import Annotated
@@ -82,7 +87,8 @@ class SessionService(BaseModel):
         """
         if not session_token:
             raise TokenValidationException(
-                error_type=ValidationErrorType.EMPTY_SESSION_TOKEN, message=ValidationErrorType.EMPTY_SESSION_TOKEN.name
+                error_type=ValidationErrorType.CODE_JWT_EMPTY_SESSION_TOKEN,
+                message=ValidationErrorType.CODE_JWT_EMPTY_SESSION_TOKEN.name,
             )
 
         # retrieve signing key
@@ -91,7 +97,7 @@ class SessionService(BaseModel):
         except Exception as error:
             self._set_validation_error(error=error)
             raise TokenValidationException(
-                error_type=ValidationErrorType.SIGNING_KEY_ERROR,
+                error_type=ValidationErrorType.CODE_JWT_SIGNING_KEY_ERROR,
                 message=f"Could not retrieve signing key: {session_token}. See  original_exception for further information: {str(error)}",
                 original_exception=error,
             )
@@ -104,10 +110,33 @@ class SessionService(BaseModel):
             token_issuer: str = payload.get("iss")
             sub: str = payload.get("sub")
             full_name: str = payload.get("name")
+        except ImmatureSignatureError as error:
+            self._set_validation_error(error=error)
+            raise TokenValidationException(
+                error_type=ValidationErrorType.CODE_JWT_BEFORE,
+                message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_BEFORE.value}",
+                original_exception=error,
+            )
+        except ExpiredSignatureError as error:
+            self._set_validation_error(error=error)
+            raise TokenValidationException(
+                error_type=ValidationErrorType.CODE_JWT_INVALID_SIGNATURE,
+                message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_INVALID_SIGNATURE.value}",
+                original_exception=error,
+            )
+
+        except InvalidSignatureError as error:
+            self._set_validation_error(error=error)
+            raise TokenValidationException(
+                error_type=ValidationErrorType.CODE_JWT_EXPIRED,
+                message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_EXPIRED.value}",
+                original_exception=error,
+            )
+
         except Exception as error:
             self._set_validation_error(error=error)
             raise TokenValidationException(
-                error_type=ValidationErrorType.INVALID_TOKEN,
+                error_type=ValidationErrorType.CODE_JWT_GENERAL,
                 message=f"Error occured during token decode: {session_token}. See  original_exception for further information: {str(error)}",
                 original_exception=error,
             )
@@ -147,7 +176,7 @@ class SessionService(BaseModel):
         """
         if not token_issuer:
             raise TokenValidationException(
-                error_type=ValidationErrorType.EMPTY_ISSUER, message=f"Issuer is empty. Session token: {session_token}"
+                error_type=ValidationErrorType.CODE_JWT_ISSUER_EMPTY, message=f"Issuer is empty. Session token: {session_token}"
             )
 
         # Check for old Frontend API (without .cloud.)
@@ -163,6 +192,6 @@ class SessionService(BaseModel):
         # Check against the configured issuer (e.g., a custom domain or CNAME)
         if token_issuer != self.issuer:
             raise TokenValidationException(
-                error_type=ValidationErrorType.ISSUER_MISSMATCH,
+                error_type=ValidationErrorType.CODE_JWT_ISSUER_MISSMATCH,
                 message=f"Issuer mismatch (configured via FrontendAPI: '{self.issuer}', JWT issuer: '{token_issuer}')",
             )

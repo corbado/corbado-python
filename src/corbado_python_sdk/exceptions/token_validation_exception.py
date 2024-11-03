@@ -12,17 +12,25 @@ class ValidationErrorType(Enum):
 
     Attributes:
         INVALID_TOKEN (str): Indicates that the token is invalid. More information in 'original_exception'.
-        SIGNING_KEY_ERROR (str): Indicates that the signing key could not be retrieved. More information in 'original_exception'.
-        EMPTY_SESSION_TOKEN (str): Indicates that the session token is empty.
-        EMPTY_ISSUER (str): Indicates that the issuer is empty.
-        ISSUER_MISSMATCH (str): Indicates that the token issuer does not match the expected issuer.
+        CODE_JWT_SIGNING_KEY_ERROR (str): Indicates that the signing key could not be retrieved. More information in 'original_exception'.
+        CODE_JWT_CODE_JWT_EMPTY_SESSION_TOKEN (str): Indicates that the session token is empty.
+        CODE_JWT_ISSUER_EMPTY (str): Indicates that the issuer is empty.
+        CODE_JWT_ISSUER_MISSMATCH (str): Indicates that the token issuer does not match the expected issuer.
+        CODE_JWT_BEFORE (str):Token is not yet valid.
+        CODE_JWT_EXPIRED (str): Token expired.
+        CODE_JWT_INVALID_SIGNATURE (str): Invalid Signature.
+
+
     """
 
-    INVALID_TOKEN = "Invalid token"  # noqa s105
-    SIGNING_KEY_ERROR = "Could not retrieve signing key"
-    EMPTY_SESSION_TOKEN = "Session token is empty"  # noqa s105
-    EMPTY_ISSUER = "Issuer is empty"
-    ISSUER_MISSMATCH = "Token issuer does not match"
+    CODE_JWT_GENERAL = "Invalid token"  # noqa s105
+    CODE_JWT_SIGNING_KEY_ERROR = "Could not retrieve signing key"
+    CODE_JWT_EMPTY_SESSION_TOKEN = "Session token is empty"  # noqa s105
+    CODE_JWT_ISSUER_EMPTY = "Issuer is empty"
+    CODE_JWT_ISSUER_MISSMATCH = "Token issuer does not match"
+    CODE_JWT_BEFORE = "Token is not yet valid"
+    CODE_JWT_EXPIRED = "Token expired"
+    CODE_JWT_INVALID_SIGNATURE = "Invalid Signature"
 
 
 class TokenValidationException(Exception):

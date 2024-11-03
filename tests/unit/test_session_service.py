@@ -224,9 +224,6 @@ class TestSessionService(TestBase):
                     # Code that should raise the ValidationError
                     self.session_service.validate_token(session_token=token)
                 if expected_original_error:
-                    # print(f"type: { print(context.exception.original_exception.__class__)}")
-                    # print(f"exception: {context.exception.original_exception}")
-                    # print(f"Token: {token}")
                     self.assertIsInstance(context.exception.original_exception, expected_original_error)
                     self.assertEqual(str(context.exception.original_exception), expected_original_error_message)
 
