@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ConfigDict, StringConstraints, field_validator
 from typing_extensions import Annotated, Optional
 
-from corbado_python_sdk.utils import DEFAULT_SESSION_TOKEN_COOKIE_NAME, validators
+from corbado_python_sdk.utils import validators
 
 
 class Config(BaseModel):
@@ -16,9 +16,8 @@ class Config(BaseModel):
     Attributes:
         project_id (str): The unique identifier for the project.
         api_secret (str): The secret key used to authenticate API requests.
-        backend_api (str): The base URL for the backend API.
         frontend_api (str): The base URL for the frontend API.
-        session_token_cookie_name (str): The name of the cookie for short session management. Defaults to "cbo_session_token".
+        backend_api (str): The base URL for the backend API.
     """
 
     # Make sure that field assignments are also validated, use "set_assignment_validation(False)"
@@ -29,7 +28,6 @@ class Config(BaseModel):
     project_id: str
     api_secret: str
 
-    session_token_cookie_name: str = DEFAULT_SESSION_TOKEN_COOKIE_NAME
     cname: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
 
     _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None

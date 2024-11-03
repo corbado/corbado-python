@@ -20,7 +20,6 @@ class SessionService(BaseModel):
 
     Attributes:
         model_config (ConfigDict): Configuration dictionary for the model.
-        session_token_cookie_name (str): Name of the short session cookie.
         issuer (str): Issuer of the session tokens.
         jwks_uri (str): URI of the JSON Web Key Set (JWKS) endpoint.
         last_session_token_validation_result (str): Result of the last short session validation.
@@ -36,7 +35,6 @@ class SessionService(BaseModel):
     model_config = ConfigDict(arbitrary_types_allowed=True, validate_assignment=True)
 
     # Fields
-    session_token_cookie_name: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     issuer: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     jwks_uri: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     last_session_token_validation_result: str = ""
@@ -54,7 +52,7 @@ class SessionService(BaseModel):
         Args:
             **kwargs: Additional keyword arguments to initialize the SessionService.
                 These keyword arguments should include values for the attributes defined in the class,
-                such as 'session_token_cookie_name', 'issuer', 'jwks_uri', 'last_session_token_validation_result',
+                such as 'issuer', 'jwks_uri', 'last_session_token_validation_result',
                 'cache_keys',cache_jwk_set and 'session_token_cookie_length'.
 
         Raises:

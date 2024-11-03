@@ -86,7 +86,6 @@ class TestBase(unittest.TestCase):
             SessionService: SessionService instance
         """
         return SessionService(
-            session_token_cookie_name="cbo_session_token",
             issuer="https://auth.acme.com",
             jwks_uri="https://example_uri.com",  # does not matter, url access is mocked
             project_id="pro-55",
@@ -111,7 +110,6 @@ class TestBase(unittest.TestCase):
             cname=cname,
         )
         return SessionService(
-            session_token_cookie_name=config.session_token_cookie_name,
             issuer=config.issuer,
             jwks_uri="https://example_uri.com",  # does not matter, url access is mocked
             project_id=config.project_id,
@@ -251,13 +249,11 @@ class TestSessionService(TestBase):
     def test_init_parameters(self):
         test_cases = [
             # Valid session service
-            ({"issuer": "s", "jwks_uri": "2", "session_token_cookie_name": "name", "project_id": "pro-55"}, True),
+            ({"issuer": "s", "jwks_uri": "2", "project_id": "pro-55"}, True),
             # Test empty issuer
-            ({"issuer": "", "jwks_uri": "2", "session_token_cookie_name": "name", "project_id": "pro-55"}, False),
+            ({"issuer": "", "jwks_uri": "2", "project_id": "pro-55"}, False),
             # Test empty jwks_uri
-            ({"issuer": "s", "jwks_uri": "", "session_token_cookie_name": "name", "project_id": "pro-55"}, False),
-            # Tesft empty session_token_cookie_name
-            ({"issuer": "s", "jwks_uri": "2", "session_token_cookie_name": "", "project_id": "pro-55"}, False),
+            ({"issuer": "s", "jwks_uri": "", "project_id": "pro-55"}, False),
         ]
 
         for params, expected_result in test_cases:
