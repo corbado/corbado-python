@@ -27,12 +27,12 @@ class Config(BaseModel):
     # Fields
     project_id: str
     api_secret: str
+    frontend_api: str
+    backend_api: str
 
     cname: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
 
     _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
-    frontend_api: str
-    backend_api: str
 
     @field_validator(
         "backend_api",
