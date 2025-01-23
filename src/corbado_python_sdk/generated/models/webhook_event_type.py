@@ -19,22 +19,21 @@ from enum import Enum
 from typing_extensions import Self
 
 
-class ConnectTokenType(str, Enum):
+class WebhookEventType(str, Enum):
     """
-    ConnectTokenType
+    WebhookEventType
     """
 
     """
     allowed enum values
     """
-    PASSKEY_MINUS_APPEND = 'passkey-append'
-    PASSKEY_MINUS_DELETE = 'passkey-delete'
-    PASSKEY_MINUS_LIST = 'passkey-list'
-    PASSKEY_MINUS_LOGIN = 'passkey-login'
+    PASSKEY_MINUS_LOGIN_DOT_COMPLETED = 'passkey-login.completed'
+    PASSKEY_DOT_CREATED = 'passkey.created'
+    PASSKEY_DOT_DELETED = 'passkey.deleted'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
-        """Create an instance of ConnectTokenType from a JSON string"""
+        """Create an instance of WebhookEventType from a JSON string"""
         return cls(json.loads(json_str))
 
 

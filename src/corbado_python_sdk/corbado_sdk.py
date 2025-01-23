@@ -70,9 +70,9 @@ class CorbadoSDK(BaseModel):
         """
         if not self._sessions:
             self._sessions = SessionService(
-                short_session_cookie_name=self.config.short_session_cookie_name,
                 issuer=self.config.issuer,
                 jwks_uri=self.config.frontend_api + "/.well-known/jwks",
+                project_id=self.config.project_id,
             )
 
         return self._sessions

@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,7 @@ class RequestData(BaseModel):
     Data about the request itself, can be used for debugging
     """ # noqa: E501
     request_id: StrictStr = Field(description="Unique ID of request, you can provide your own while making the request, if not the ID will be randomly generated on server side", alias="requestID")
-    link: StrictStr = Field(description="Link to dashboard with details about request")
+    link: Optional[StrictStr] = Field(default=None, description="Link to dashboard with details about request")
     __properties: ClassVar[List[str]] = ["requestID", "link"]
 
     model_config = ConfigDict(

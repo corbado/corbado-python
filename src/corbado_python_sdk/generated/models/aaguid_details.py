@@ -18,23 +18,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.long_session_status import LongSessionStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
-class LongSession(BaseModel):
+class AaguidDetails(BaseModel):
     """
-    LongSession
+    AaguidDetails
     """ # noqa: E501
-    long_session_id: StrictStr = Field(alias="longSessionID")
-    user_id: StrictStr = Field(alias="userID")
-    identifier_value: StrictStr = Field(alias="identifierValue")
-    status: LongSessionStatus
-    expires: StrictStr
-    expires_ms: StrictInt = Field(alias="expiresMs")
-    __properties: ClassVar[List[str]] = ["longSessionID", "userID", "identifierValue", "status", "expires", "expiresMs"]
+    aaguid: StrictStr
+    name: StrictStr
+    icon_light: StrictStr = Field(alias="iconLight")
+    icon_dark: StrictStr = Field(alias="iconDark")
+    __properties: ClassVar[List[str]] = ["aaguid", "name", "iconLight", "iconDark"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +51,7 @@ class LongSession(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of LongSession from a JSON string"""
+        """Create an instance of AaguidDetails from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,7 +76,7 @@ class LongSession(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of LongSession from a dict"""
+        """Create an instance of AaguidDetails from a dict"""
         if obj is None:
             return None
 
@@ -87,12 +84,10 @@ class LongSession(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "longSessionID": obj.get("longSessionID"),
-            "userID": obj.get("userID"),
-            "identifierValue": obj.get("identifierValue"),
-            "status": obj.get("status"),
-            "expires": obj.get("expires"),
-            "expiresMs": obj.get("expiresMs")
+            "aaguid": obj.get("aaguid"),
+            "name": obj.get("name"),
+            "iconLight": obj.get("iconLight"),
+            "iconDark": obj.get("iconDark")
         })
         return _obj
 

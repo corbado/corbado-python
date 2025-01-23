@@ -33,7 +33,8 @@ class PasskeyEventCreateReq(BaseModel):
     process_id: Optional[StrictStr] = Field(default=None, alias="processID")
     client_env_id: Optional[StrictStr] = Field(default=None, alias="clientEnvID")
     credential_id: Optional[StrictStr] = Field(default=None, alias="credentialID")
-    __properties: ClassVar[List[str]] = ["eventType", "expires", "processID", "clientEnvID", "credentialID"]
+    challenge: Optional[StrictStr] = None
+    __properties: ClassVar[List[str]] = ["eventType", "expires", "processID", "clientEnvID", "credentialID", "challenge"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -90,7 +91,8 @@ class PasskeyEventCreateReq(BaseModel):
             "expires": obj.get("expires"),
             "processID": obj.get("processID"),
             "clientEnvID": obj.get("clientEnvID"),
-            "credentialID": obj.get("credentialID")
+            "credentialID": obj.get("credentialID"),
+            "challenge": obj.get("challenge")
         })
         return _obj
 

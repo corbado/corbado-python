@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from corbado_python_sdk.generated.models.auth_event_method import AuthEventMethod
 from corbado_python_sdk.generated.models.auth_event_status import AuthEventStatus
@@ -36,8 +36,9 @@ class AuthEvent(BaseModel):
     event_type: AuthEventType = Field(alias="eventType")
     method: AuthEventMethod
     created: StrictStr = Field(description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format")
+    created_ms: StrictInt = Field(alias="createdMs")
     status: AuthEventStatus
-    __properties: ClassVar[List[str]] = ["authEventID", "userID", "username", "eventType", "method", "created", "status"]
+    __properties: ClassVar[List[str]] = ["authEventID", "userID", "username", "eventType", "method", "created", "createdMs", "status"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,6 +97,7 @@ class AuthEvent(BaseModel):
             "eventType": obj.get("eventType"),
             "method": obj.get("method"),
             "created": obj.get("created"),
+            "createdMs": obj.get("createdMs"),
             "status": obj.get("status")
         })
         return _obj

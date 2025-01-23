@@ -20,21 +20,22 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.long_session_status import LongSessionStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
-class LongSession(BaseModel):
+class PasswordManager(BaseModel):
     """
-    LongSession
+    PasswordManager
     """ # noqa: E501
-    long_session_id: StrictStr = Field(alias="longSessionID")
+    id: StrictStr
     user_id: StrictStr = Field(alias="userID")
-    identifier_value: StrictStr = Field(alias="identifierValue")
-    status: LongSessionStatus
-    expires: StrictStr
-    expires_ms: StrictInt = Field(alias="expiresMs")
-    __properties: ClassVar[List[str]] = ["longSessionID", "userID", "identifierValue", "status", "expires", "expiresMs"]
+    client_env_id: StrictStr = Field(alias="clientEnvID")
+    credential_id: StrictStr = Field(alias="credentialID")
+    aaguid: StrictStr
+    status: StrictStr
+    score: StrictInt
+    created_ms: StrictInt = Field(alias="createdMs")
+    __properties: ClassVar[List[str]] = ["id", "userID", "clientEnvID", "credentialID", "aaguid", "status", "score", "createdMs"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +55,7 @@ class LongSession(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of LongSession from a JSON string"""
+        """Create an instance of PasswordManager from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,7 +80,7 @@ class LongSession(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of LongSession from a dict"""
+        """Create an instance of PasswordManager from a dict"""
         if obj is None:
             return None
 
@@ -87,12 +88,14 @@ class LongSession(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "longSessionID": obj.get("longSessionID"),
+            "id": obj.get("id"),
             "userID": obj.get("userID"),
-            "identifierValue": obj.get("identifierValue"),
+            "clientEnvID": obj.get("clientEnvID"),
+            "credentialID": obj.get("credentialID"),
+            "aaguid": obj.get("aaguid"),
             "status": obj.get("status"),
-            "expires": obj.get("expires"),
-            "expiresMs": obj.get("expiresMs")
+            "score": obj.get("score"),
+            "createdMs": obj.get("createdMs")
         })
         return _obj
 

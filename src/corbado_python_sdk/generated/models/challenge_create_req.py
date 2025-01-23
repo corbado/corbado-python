@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from corbado_python_sdk.generated.models.challenge_type import ChallengeType
 from corbado_python_sdk.generated.models.client_information import ClientInformation
@@ -32,8 +32,9 @@ class ChallengeCreateReq(BaseModel):
     challenge_type: ChallengeType = Field(alias="challengeType")
     identifier_value: StrictStr = Field(alias="identifierValue")
     challenge_metadata: Optional[Dict[str, Any]] = Field(default=None, alias="challengeMetadata")
+    lifetime_seconds: Optional[StrictInt] = Field(default=None, alias="lifetimeSeconds")
     client_information: ClientInformation = Field(alias="clientInformation")
-    __properties: ClassVar[List[str]] = ["challengeType", "identifierValue", "challengeMetadata", "clientInformation"]
+    __properties: ClassVar[List[str]] = ["challengeType", "identifierValue", "challengeMetadata", "lifetimeSeconds", "clientInformation"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,6 +93,7 @@ class ChallengeCreateReq(BaseModel):
             "challengeType": obj.get("challengeType"),
             "identifierValue": obj.get("identifierValue"),
             "challengeMetadata": obj.get("challengeMetadata"),
+            "lifetimeSeconds": obj.get("lifetimeSeconds"),
             "clientInformation": ClientInformation.from_dict(obj["clientInformation"]) if obj.get("clientInformation") is not None else None
         })
         return _obj

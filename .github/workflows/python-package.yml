@@ -4,12 +4,12 @@ name: Python package
 
 on:
   push:
-    branches: [ "main","feature/**","development"]
+    branches: [ "main","feature/**","development", "[0-9]+-*"]
     tags:
       - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
     branches: [ "main","development"]
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
 
 jobs:
   test-and-lint:
@@ -48,9 +48,11 @@ jobs:
       run: |
         tox run
       env:
-        CORBADO_BACKEND_API: ${{ vars.CORBADO_BACKEND_API }}
-        CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
         CORBADO_PROJECT_ID: ${{ secrets.CORBADO_PROJECT_ID }}
+        CORBADO_API_SECRET: ${{ secrets.CORBADO_API_SECRET }}
+        CORBADO_FRONTEND_API: ${{ vars.CORBADO_FRONTEND_API }}
+        CORBADO_BACKEND_API: ${{ vars.CORBADO_BACKEND_API }}
+
         
         
   build:

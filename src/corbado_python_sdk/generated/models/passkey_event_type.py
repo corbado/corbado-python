@@ -30,9 +30,13 @@ class PasskeyEventType(str, Enum):
     USER_MINUS_LOGIN_MINUS_BLACKLISTED = 'user-login-blacklisted'
     LOGIN_MINUS_EXPLICIT_MINUS_ABORT = 'login-explicit-abort'
     LOGIN_MINUS_ERROR = 'login-error'
+    LOGIN_MINUS_ERROR_MINUS_UNTYPED = 'login-error-untyped'
     LOGIN_MINUS_ONE_MINUS_TAP_MINUS_SWITCH = 'login-one-tap-switch'
     USER_MINUS_APPEND_MINUS_AFTER_MINUS_CROSS_MINUS_PLATFORM_MINUS_BLACKLISTED = 'user-append-after-cross-platform-blacklisted'
     USER_MINUS_APPEND_MINUS_AFTER_MINUS_LOGIN_MINUS_ERROR_MINUS_BLACKLISTED = 'user-append-after-login-error-blacklisted'
+    APPEND_MINUS_CREDENTIAL_MINUS_EXISTS = 'append-credential-exists'
+    APPEND_MINUS_EXPLICIT_MINUS_ABORT = 'append-explicit-abort'
+    APPEND_MINUS_ERROR = 'append-error'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

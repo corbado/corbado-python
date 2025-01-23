@@ -36,7 +36,8 @@ class PasskeyEvent(BaseModel):
     credential_id: Optional[StrictStr] = Field(default=None, alias="credentialID")
     expires: Optional[StrictInt] = None
     created: StrictStr = Field(description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format")
-    __properties: ClassVar[List[str]] = ["passkeyEventID", "userID", "eventType", "clientEnvID", "processID", "credentialID", "expires", "created"]
+    created_ms: StrictInt = Field(alias="createdMs")
+    __properties: ClassVar[List[str]] = ["passkeyEventID", "userID", "eventType", "clientEnvID", "processID", "credentialID", "expires", "created", "createdMs"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,7 +97,8 @@ class PasskeyEvent(BaseModel):
             "processID": obj.get("processID"),
             "credentialID": obj.get("credentialID"),
             "expires": obj.get("expires"),
-            "created": obj.get("created")
+            "created": obj.get("created"),
+            "createdMs": obj.get("createdMs")
         })
         return _obj
 

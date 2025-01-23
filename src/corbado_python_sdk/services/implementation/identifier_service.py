@@ -94,9 +94,10 @@ class IdentifierService(BaseModel):
             encoded_type: StrictStr = urllib.parse.quote_plus(identifier_type)
             filters.append(f"identifierType:eq:{encoded_type}")
         if identifier_value:
-            encoded_value: StrictStr = urllib.parse.quote_plus(identifier_value)
+            # encoded_value: StrictStr = urllib.parse.quote_plus(identifier_value)
             filters = filters or []
-            filters.append(f"identifierValue:eq:{encoded_value}")
+            # only works when the identifier_value is not url encoded
+            filters.append(f"identifierValue:eq:{identifier_value}")
         try:
             return self.client.identifier_list(sort=sort, filter=filters, page=page, page_size=page_size)
         except ApiException as e:

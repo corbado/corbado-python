@@ -16,8 +16,8 @@ class Config(BaseModel):
     Attributes:
         project_id (str): The unique identifier for the project.
         api_secret (str): The secret key used to authenticate API requests.
-        backend_api (str): The base URL for the backend API. Defaults to "https://backendapi.cloud.corbado.io/v2".
-        short_session_cookie_name (str): The name of the cookie for short session management. Defaults to "cbo_short_session".
+        frontend_api (str): The base URL for the frontend API.
+        backend_api (str): The base URL for the backend API.
     """
 
     # Make sure that field assignments are also validated, use "set_assignment_validation(False)"
@@ -27,15 +27,16 @@ class Config(BaseModel):
     # Fields
     project_id: str
     api_secret: str
+    frontend_api: str
+    backend_api: str
 
-    backend_api: str = "https://backendapi.cloud.corbado.io/v2"
-    short_session_cookie_name: str = "cbo_short_session"
     cname: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
 
     _issuer: Optional[Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]] = None
-    _frontend_api: Optional[str] = None
 
-    @field_validator("backend_api")
+    @field_validator(
+        "backend_api",
+    )
     @classmethod
     def validate_backend_api(cls, backend_api: str) -> str:
         """Validate the backend API URL and ensure it ends with '/v2'.
@@ -43,20 +44,31 @@ class Config(BaseModel):
         Args:
             backend_api (str): Backend API URL to validate.
 
-        Raises:
-            ValueError: _description_
-
         Returns:
             str: Validated backend API URL ending with '/v2'.
         """
-        if not validators.url_validator(backend_api):
-            raise ValueError(f'Invalid URL "{backend_api}" provided for backend API.')
+        backend_api = validators.url_validator(url=backend_api)
 
         # Append '/v2' if not already present
         if not backend_api.endswith("/v2"):
             return backend_api.rstrip("/") + "/v2"
 
         return backend_api
+
+    @field_validator(
+        "frontend_api",
+    )
+    @classmethod
+    def validate_frontend_api(cls, frontend_api: str) -> str:
+        """Validate the frontend API URL.
+
+        Args:
+            frontend_api (str): Frontend API URL to validate.
+
+        Returns:
+            str: Validated frontend API.
+        """
+        return validators.url_validator(url=frontend_api)
 
     @field_validator("project_id")
     @classmethod
@@ -121,32 +133,3 @@ class Config(BaseModel):
             issuer (str): issuer to set.
         """
         self._issuer = issuer
-
-    @property
-    def frontend_api(self) -> str:
-        """Get Frontend API.
-
-        Returns:
-            str: Frontend API
-        """
-        if not self._frontend_api:
-            self._frontend_api = "https://" + self.project_id + ".frontendapi.corbado.io"
-        return self._frontend_api
-
-    @frontend_api.setter
-    def frontend_api(self, frontend_api: str) -> None:
-        """Set Frontend API. Use it to override default value.
-
-        Args:
-            frontend_api (str): Frontend API to set.
-        """
-        self._frontend_api = validators.url_validator(url=frontend_api)  # validate url
-
-    # ------- Internal --------------#
-    def set_assignment_validation(self, validate: bool) -> None:
-        """Only use it if you know what you do. Sets assignment validation.
-
-        Args:
-            validate (bool): Enable/disable validation
-        """
-        self.model_config["validate_assignment"] = validate

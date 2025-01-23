@@ -27,6 +27,9 @@ def url_validator(url: str) -> str:
     if parts.username:
         raise ValueError("Assert failed: username needs to be empty")
 
+    if parts.path:
+        raise ValueError("Assert failed: path needs to be empty")
+
     if parts.password:
         raise ValueError("Assert failed: password needs to be empty")
 

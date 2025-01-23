@@ -45,6 +45,7 @@ class DecisionTag(str, Enum):
     PROCESS_MINUS_PK_MINUS_LOGIN_MINUS_NOT_MINUS_OFFERED = 'process-pk-login-not-offered'
     PROCESS_MINUS_PK_MINUS_LOGIN_MINUS_INCOMPLETE = 'process-pk-login-incomplete'
     PROCESS_MINUS_PK_MINUS_LOGIN_MINUS_CROSS_MINUS_PLATFORM_MINUS_COMPLETED = 'process-pk-login-cross-platform-completed'
+    DEVICE_MINUS_LOCAL_MINUS_PLATFORM_MINUS_PASSKEY_MINUS_EXPERIMENT = 'device-local-platform-passkey-experiment'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
