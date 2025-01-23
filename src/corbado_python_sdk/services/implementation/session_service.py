@@ -27,7 +27,6 @@ class SessionService(BaseModel):
         model_config (ConfigDict): Configuration dictionary for the model.
         issuer (str): Issuer of the session tokens.
         jwks_uri (str): URI of the JSON Web Key Set (JWKS) endpoint.
-        last_session_token_validation_result (str): Result of the last short session validation.
         _jwk_client (PyJWKClient): JSON Web Key (JWK) client for handling JWKS.
         project_id (str): Corbado Project Id.
     """
@@ -37,7 +36,6 @@ class SessionService(BaseModel):
     # Fields
     issuer: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     jwks_uri: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
-    last_session_token_validation_result: str = ""
     project_id: str
     _jwk_client: PyJWKClient
 
@@ -49,8 +47,7 @@ class SessionService(BaseModel):
         Args:
             **kwargs: Additional keyword arguments to initialize the SessionService.
                 These keyword arguments should include values for the attributes defined in the class,
-                such as 'issuer', 'jwks_uri', 'last_session_token_validation_result',
-                'cache_keys',cache_jwk_set and 'session_token_cookie_length'.
+                such as 'issuer', 'jwks_uri', 'cache_keys', 'cache_jwk_set' and 'session_token_cookie_length'.
 
         Raises:
             Any errors raised during the initialization process.
@@ -136,22 +133,6 @@ class SessionService(BaseModel):
         # TODO: Retrieve user status
         return UserEntity(fullName=full_name, userID=sub, status=UserStatus.ACTIVE)
 
-    def _set_issuer_mismatch_error(self, token_issuer: str) -> None:
-        """Set issuer mismatch error.
-
-        Args:
-            token_issuer (str): Token issuer.
-        """
-        self.last_session_token_validation_result = f"Mismatch in issuer (configured: {self.issuer}, JWT: {token_issuer})"
-
-    def _set_validation_error(self, error: Exception) -> None:
-        """Set validation error.
-
-        Args:
-            error (Exception): Exception occurred.
-        """
-        self.last_session_token_validation_result = f"JWT validation failed: {error}"
-
     # Private methods
     def _validate_issuer(self, token_issuer: str, session_token: str) -> None:
         """Validate issuer.
@@ -166,7 +147,8 @@ class SessionService(BaseModel):
         """
         if not token_issuer:
             raise TokenValidationException(
-                error_type=ValidationErrorType.CODE_JWT_ISSUER_EMPTY, message=f"Issuer is empty. Session token: {session_token}"
+                error_type=ValidationErrorType.CODE_JWT_ISSUER_EMPTY,
+                message=f"Issuer is empty. Session token: {session_token}"
             )
 
         # Check for old Frontend API (without .cloud.)
