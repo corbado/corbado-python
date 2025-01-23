@@ -269,7 +269,7 @@ class TestSessionServiceConfiguration(TestBase):
         config: Config = Config(
             api_secret="corbado1_XXX",
             project_id="pro-55",
-            backend_api="https://backendapi.cloud.corbado.io/",
+            backend_api="https://backendapi.cloud.corbado.io",
             frontend_api="https://test.com",
             cname=test_cname,
         )
