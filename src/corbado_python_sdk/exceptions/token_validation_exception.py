@@ -57,7 +57,7 @@ class TokenValidationException(Exception):
         super().__init__(message)
         self.message: str = message
         self.error_type: ValidationErrorType = error_type
-        self.original_exception: Exception | None = original_exception
+        self.original_exception: Optional[Exception] = original_exception
 
     def __str__(self) -> str:
         """Return a string representation of the validation error.
