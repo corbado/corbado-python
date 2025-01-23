@@ -64,6 +64,16 @@ The Corbado Python SDK raises exceptions for all errors. The following exception
 - `TokenValidationException` for errors in session service (client side)
 - `StandardException` for everything else (client side)
 
+`SessionService` returns a `UserEntity` as a result of token validation. If the token is invalid for any reason,
+a `TokenValidationException` is thrown. It provides detailed information on the error.
+If no error, is thrown, the `session_token` is valid and you can use the `UserEntity` object.
+
+```Python
+try:
+  user: UserEntity = sdk.sessions.validate_token(session_token)
+except TokenValidationException:
+  # handle error..
+  pass
 ```
 
 If the Backend API returns a HTTP status code other than 200, the Corbado Python SDK throws a `ServerException`. The `ServerException`class provides convenient methods to access all important data:
