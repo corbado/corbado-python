@@ -4,7 +4,7 @@ name: Python package
 
 on:
   push:
-    branches: [ "main","feature/**","development"]
+    branches: [ "main","feature/**","development", "[0-9]+-*"]
     tags:
       - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
