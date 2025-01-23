@@ -9,7 +9,7 @@ on:
       - v[0-9]+.[0-9]+.[0-9]+*
   pull_request:
     branches: [ "main","development"]
-    types: [opened, reopened]
+    types: [opened, reopened, edited]
 
 jobs:
   test-and-lint:
