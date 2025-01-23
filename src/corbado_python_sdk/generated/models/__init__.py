@@ -15,6 +15,7 @@
 
 
 # import models into model package
+from corbado_python_sdk.generated.models.aaguid_details import AaguidDetails
 from corbado_python_sdk.generated.models.app_type import AppType
 from corbado_python_sdk.generated.models.auth_event import AuthEvent
 from corbado_python_sdk.generated.models.auth_event_create_req import AuthEventCreateReq
@@ -33,6 +34,7 @@ from corbado_python_sdk.generated.models.connect_token_data import ConnectTokenD
 from corbado_python_sdk.generated.models.connect_token_data_passkey_append import ConnectTokenDataPasskeyAppend
 from corbado_python_sdk.generated.models.connect_token_data_passkey_delete import ConnectTokenDataPasskeyDelete
 from corbado_python_sdk.generated.models.connect_token_data_passkey_list import ConnectTokenDataPasskeyList
+from corbado_python_sdk.generated.models.connect_token_data_passkey_login import ConnectTokenDataPasskeyLogin
 from corbado_python_sdk.generated.models.connect_token_list import ConnectTokenList
 from corbado_python_sdk.generated.models.connect_token_status import ConnectTokenStatus
 from corbado_python_sdk.generated.models.connect_token_type import ConnectTokenType
@@ -40,7 +42,9 @@ from corbado_python_sdk.generated.models.connect_token_update_req import Connect
 from corbado_python_sdk.generated.models.credential import Credential
 from corbado_python_sdk.generated.models.credential_list import CredentialList
 from corbado_python_sdk.generated.models.cross_device_authentication_strategy import CrossDeviceAuthenticationStrategy
+from corbado_python_sdk.generated.models.decision_insights import DecisionInsights
 from corbado_python_sdk.generated.models.decision_tag import DecisionTag
+from corbado_python_sdk.generated.models.detection_insights import DetectionInsights
 from corbado_python_sdk.generated.models.detection_tag import DetectionTag
 from corbado_python_sdk.generated.models.error_rsp import ErrorRsp
 from corbado_python_sdk.generated.models.error_rsp_all_of_error import ErrorRspAllOfError
@@ -81,6 +85,10 @@ from corbado_python_sdk.generated.models.passkey_mediation_finish_req import Pas
 from corbado_python_sdk.generated.models.passkey_mediation_finish_rsp import PasskeyMediationFinishRsp
 from corbado_python_sdk.generated.models.passkey_mediation_start_req import PasskeyMediationStartReq
 from corbado_python_sdk.generated.models.passkey_mediation_start_rsp import PasskeyMediationStartRsp
+from corbado_python_sdk.generated.models.passkey_post_login_req import PasskeyPostLoginReq
+from corbado_python_sdk.generated.models.passkey_post_login_rsp import PasskeyPostLoginRsp
+from corbado_python_sdk.generated.models.password_manager import PasswordManager
+from corbado_python_sdk.generated.models.password_manager_list import PasswordManagerList
 from corbado_python_sdk.generated.models.project_config_update_cname_req import ProjectConfigUpdateCnameReq
 from corbado_python_sdk.generated.models.request_data import RequestData
 from corbado_python_sdk.generated.models.short_session import ShortSession
@@ -93,3 +101,7 @@ from corbado_python_sdk.generated.models.user import User
 from corbado_python_sdk.generated.models.user_create_req import UserCreateReq
 from corbado_python_sdk.generated.models.user_status import UserStatus
 from corbado_python_sdk.generated.models.user_update_req import UserUpdateReq
+from corbado_python_sdk.generated.models.webhook_endpoint import WebhookEndpoint
+from corbado_python_sdk.generated.models.webhook_endpoint_create_req import WebhookEndpointCreateReq
+from corbado_python_sdk.generated.models.webhook_endpoint_list import WebhookEndpointList
+from corbado_python_sdk.generated.models.webhook_event_type import WebhookEventType

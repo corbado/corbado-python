@@ -18,8 +18,9 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr, field_validator
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictInt, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
+from corbado_python_sdk.generated.models.aaguid_details import AaguidDetails
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -37,9 +38,12 @@ class Credential(BaseModel):
     source_os: StrictStr = Field(alias="sourceOS")
     source_browser: StrictStr = Field(alias="sourceBrowser")
     last_used: StrictStr = Field(description="Timestamp of when the passkey was last used in yyyy-MM-dd'T'HH:mm:ss format", alias="lastUsed")
+    last_used_ms: StrictInt = Field(alias="lastUsedMs")
     created: StrictStr = Field(description="Timestamp of when the entity was created in yyyy-MM-dd'T'HH:mm:ss format")
+    created_ms: StrictInt = Field(alias="createdMs")
     status: StrictStr = Field(description="Status")
-    __properties: ClassVar[List[str]] = ["id", "credentialID", "attestationType", "transport", "backupEligible", "backupState", "authenticatorAAGUID", "sourceOS", "sourceBrowser", "lastUsed", "created", "status"]
+    aaguid_details: AaguidDetails = Field(alias="aaguidDetails")
+    __properties: ClassVar[List[str]] = ["id", "credentialID", "attestationType", "transport", "backupEligible", "backupState", "authenticatorAAGUID", "sourceOS", "sourceBrowser", "lastUsed", "lastUsedMs", "created", "createdMs", "status", "aaguidDetails"]
 
     @field_validator('transport')
     def transport_validate_enum(cls, value):
@@ -95,6 +99,9 @@ class Credential(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of aaguid_details
+        if self.aaguid_details:
+            _dict['aaguidDetails'] = self.aaguid_details.to_dict()
         return _dict
 
     @classmethod
@@ -117,8 +124,11 @@ class Credential(BaseModel):
             "sourceOS": obj.get("sourceOS"),
             "sourceBrowser": obj.get("sourceBrowser"),
             "lastUsed": obj.get("lastUsed"),
+            "lastUsedMs": obj.get("lastUsedMs"),
             "created": obj.get("created"),
-            "status": obj.get("status")
+            "createdMs": obj.get("createdMs"),
+            "status": obj.get("status"),
+            "aaguidDetails": AaguidDetails.from_dict(obj["aaguidDetails"]) if obj.get("aaguidDetails") is not None else None
         })
         return _obj
 

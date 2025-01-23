@@ -40,10 +40,6 @@ tags:
     description: All API calls to manage connect tokens (they are used for Corbado Connect)
   - name: PasskeyChallenges
     description: All API calls to manage passkey challenges
-  - name: WebhookEndpoints
-    description: All API calls to manage webhook endpoints
-  - name: PasswordManagers
-    description: All API calls to manage password managers
 
 paths:
   /users:
@@ -581,26 +577,6 @@ paths:
         default:
           $ref: '#/components/responses/error'
 
-  /users/{userID}/passwordManagers:
-    get:
-      description: Returns a list of password managers
-      operationId: PasswordManagerList
-      tags:
-        - PasswordManagers
-      security:
-        - basicAuth: [ ]
-      parameters:
-        - $ref: '#/components/parameters/userID'
-      responses:
-        '200':
-          description: List of all matching password managers
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/passwordManagerList'
-        default:
-          $ref: '#/components/responses/error'
-
   /longSessions/{longSessionID}:
     get:
       description: Retrieves a long session by ID
@@ -768,63 +744,6 @@ paths:
         default:
           $ref: '#/components/responses/error'
 
-  /webhookEndpoints:
-    get:
-      description: Returns a list of webhook endpoints
-      operationId: WebhookEndpointList
-      tags:
-        - WebhookEndpoints
-      security:
-        - basicAuth: [ ]
-      responses:
-        '200':
-          description: List of webhook endpoints
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/webhookEndpointList'
-        default:
-          $ref: '#/components/responses/error'
-    post:
-      description: Creates a new webhook endpoint
-      operationId: WebhookEndpointCreate
-      tags:
-        - WebhookEndpoints
-      security:
-        - basicAuth: [ ]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/webhookEndpointCreateReq'
-      responses:
-        '200':
-          description: Webhook endpoint has been created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/webhookEndpoint'
-        default:
-          $ref: '#/components/responses/error'
-
-  /webhookEndpoints/{webhookEndpointID}:
-    delete:
-      description: Deletes an existing webhook endpoint
-      operationId: WebhookEndpointDelete
-      tags:
-        - WebhookEndpoints
-      security:
-        - basicAuth: [ ]
-      parameters:
-        - $ref: '#/components/parameters/webhookEndpointID'
-      responses:
-        '200':
-          $ref: '#/components/responses/200'
-        default:
-          $ref: '#/components/responses/error'
-
-
   ###################################################################
   # Outliers (non-rest calls)                                       #
   ###################################################################
@@ -922,30 +841,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/passkeyLoginFinishRsp'
-        default:
-          $ref: '#/components/responses/error'
-
-  /passkey/postLogin:
-    post:
-      description: Explicitly runs the post-login action
-      operationId: PasskeyPostLogin
-      tags:
-        - Passkeys
-      security:
-        - basicAuth: [ ]
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/passkeyPostLoginReq'
-      responses:
-        '200':
-          description: Post Passkey Login succeeded
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/passkeyPostLoginRsp'
         default:
           $ref: '#/components/responses/error'
 
@@ -1066,15 +961,7 @@ components:
       description: ID of a passkey event
       required: true
       schema:
-        type: string
-
-    webhookEndpointID:
-      name: webhookEndpointID
-      in: path
-      description: ID of a webhook endpoint
-      required: true
-      schema:
-        type: string
+          type: string
 
   schemas:
     ###################################################################
@@ -1144,8 +1031,6 @@ components:
           type: string
         challengeMetadata:
           type: object
-        lifetimeSeconds:
-          type: integer
         clientInformation:
           $ref: '#/components/schemas/clientInformation'
 
@@ -1203,19 +1088,21 @@ components:
       type: object
       required:
         - appendAllow
+        - detectionTags
+        - decisionTag
         - attestationOptions
-        - detectionInsights
-        - decisionInsights
       properties:
         appendAllow:
           type: boolean
+        detectionTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/detectionTag'
+        decisionTag:
+          $ref: '#/components/schemas/decisionTag'
         attestationOptions:
           type: string
           example: '{"publicKey":{"challenge":"2m6...0w9/MgW...KE=","rp":{"name":"demo","id":"localhost"},"user":{"name":"example@mail.com","id":"dXN...zk5"},"pubKeyCredParams":[{"type":"public-key","alg":-7},{"type":"public-key","alg":-35},{"type":"public-key","alg":-36},{"type":"public-key","alg":-257},{"type":"public-key","alg":-258},{"type":"public-key","alg":-259},{"type":"public-key","alg":-37},{"type":"public-key","alg":-38},{"type":"public-key","alg":-39},{"type":"public-key","alg":-8}],"authenticatorSelection":{"authenticatorAttachment":"platform","requireResidentKey":false,"userVerification":"required"},"timeout":60000,"attestation":"none"}}'
-        detectionInsights:
-          $ref: '#/components/schemas/detectionInsights'
-        decisionInsights:
-          $ref: '#/components/schemas/decisionInsights'
 
     passkeyAppendFinishReq:
       type: object
@@ -1266,18 +1153,23 @@ components:
       type: object
       required:
         - loginAllow
+        - detectionTags
+        - decisionTag
         - assertionOptions
-        - detectionInsights
-        - decisionInsights
+        - isCDACandidate
       properties:
         loginAllow:
           type: boolean
+        detectionTags:
+          type: array
+          items:
+            $ref: '#/components/schemas/detectionTag'
+        decisionTag:
+          $ref: '#/components/schemas/decisionTag'
         assertionOptions:
           type: string
-        detectionInsights:
-          $ref: '#/components/schemas/detectionInsights'
-        decisionInsights:
-          $ref: '#/components/schemas/decisionInsights'
+        isCDACandidate:
+          type: boolean
 
     passkeyLoginFinishReq:
       type: object
@@ -1295,8 +1187,6 @@ components:
           $ref: '#/components/schemas/clientInformation'
         processID:
           type: string
-        signPasskeyData:
-          type: boolean
 
     passkeyLoginFinishRsp:
       type: object
@@ -1305,24 +1195,6 @@ components:
       properties:
         passkeyData:
           $ref: '#/components/schemas/passkeyData'
-        signedPasskeyData:
-          type: string
-
-    passkeyPostLoginReq:
-      type: object
-      required:
-        - signedPasskeyData
-      properties:
-        signedPasskeyData:
-          type: string
-
-    passkeyPostLoginRsp:
-      type: object
-      required:
-        - session
-      properties:
-        session:
-          type: string
 
     passkeyMediationStartReq:
       type: object
@@ -1356,8 +1228,6 @@ components:
           $ref: '#/components/schemas/clientInformation'
         processID:
           type: string
-        signPasskeyData:
-          type: boolean
 
     passkeyMediationFinishRsp:
       type: object
@@ -1366,8 +1236,6 @@ components:
       properties:
         passkeyData:
           $ref: '#/components/schemas/passkeyData'
-        signedPasskeyData:
-          type: string
 
     connectTokenCreateReq:
       type: object
@@ -1391,22 +1259,6 @@ components:
         status:
           $ref: '#/components/schemas/connectTokenStatus'
 
-    webhookEndpointCreateReq:
-      type: object
-      required:
-        - url
-        - subscribedEvents
-        - customHeaders
-      properties:
-        url:
-          type: string
-        subscribedEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/webhookEventType'
-        customHeaders:
-          type: object
-
     ###################################################################
     # Entities                                                        #
     ###################################################################
@@ -1419,7 +1271,6 @@ components:
         - username
         - ceremonyType
         - challengeID
-        - aaguidDetails
       properties:
         id:
           type: string
@@ -1432,8 +1283,6 @@ components:
           enum: [ 'local', 'cda', 'security-key' ]
         challengeID:
           type: string
-        aaguidDetails:
-          $ref: '#/components/schemas/aaguidDetails'
 
     user:
       type: object
@@ -1458,7 +1307,6 @@ components:
         - identifierValue
         - status
         - expires
-        - expiresMs
       properties:
         longSessionID:
           type: string
@@ -1470,9 +1318,6 @@ components:
           $ref: '#/components/schemas/longSessionStatus'
         expires:
           type: string
-        expiresMs:
-          type: integer
-          format: int64
 
     shortSession:
       type: object
@@ -1584,13 +1429,10 @@ components:
         - backupEligible
         - backupState
         - authenticatorAAGUID
-        - aaguidDetails
         - sourceOS
         - sourceBrowser
         - lastUsed
-        - lastUsedMs
         - created
-        - createdMs
         - status
       properties:
         id:
@@ -1618,37 +1460,12 @@ components:
         lastUsed:
           type: string
           description: Timestamp of when the passkey was last used in yyyy-MM-dd'T'HH:mm:ss format
-        lastUsedMs:
-          type: integer
-          format: int64
         created:
           $ref: 'common.yml#/components/schemas/created'
-        createdMs:
-          type: integer
-          format: int64
         status:
           type: string
           enum: [ 'pending', 'active' ]
           description: "Status"
-        aaguidDetails:
-          $ref: '#/components/schemas/aaguidDetails'
-
-    aaguidDetails:
-      type: object
-      required:
-        - aaguid
-        - name
-        - iconLight
-        - iconDark
-      properties:
-        aaguid:
-          type: string
-        name:
-          type: string
-        iconLight:
-          type: string
-        iconDark:
-          type: string
 
     credentialList:
       type: object
@@ -1670,7 +1487,6 @@ components:
         - type
         - identifierValue
         - value
-        - expires
         - status
       properties:
         challengeID:
@@ -1681,9 +1497,6 @@ components:
           type: string
         value:
           type: string
-        expires:
-          type: integer
-          format: int64
         status:
           $ref: '#/components/schemas/challengeStatus'
 
@@ -1716,7 +1529,6 @@ components:
         - eventType
         - method
         - created
-        - createdMs
         - status
       properties:
         authEventID:
@@ -1731,9 +1543,6 @@ components:
           $ref: '#/components/schemas/authEventMethod'
         created:
           $ref: 'common.yml#/components/schemas/created'
-        createdMs:
-          type: integer
-          format: int64
         status:
           $ref: '#/components/schemas/authEventStatus'
 
@@ -1752,8 +1561,6 @@ components:
           type: string
         credentialID:
           type: string
-        challenge:
-          type: string
 
     passkeyEvent:
       type: object
@@ -1762,7 +1569,6 @@ components:
         - userID
         - eventType
         - created
-        - createdMs
       properties:
         passkeyEventID:
           type: string
@@ -1780,9 +1586,6 @@ components:
           type: integer
         created:
           $ref: 'common.yml#/components/schemas/created'
-        createdMs:
-          type: integer
-          format: int64
 
     passkeyEventList:
       type: object
@@ -1838,7 +1641,6 @@ components:
         - process-pk-login-not-offered
         - process-pk-login-incomplete
         - process-pk-login-cross-platform-completed
-        - device-local-platform-passkey-experiment
 
     clientInformation:
       type: object
@@ -1846,7 +1648,6 @@ components:
         - remoteAddress
         - userAgent
         - userVerifyingPlatformAuthenticatorAvailable
-        - conditionalMediationAvailable
       properties:
         remoteAddress:
           description: Client's IP address
@@ -1871,10 +1672,6 @@ components:
           description: Client's password manager availability
           type: boolean
         userVerifyingPlatformAuthenticatorAvailable:
-          type: boolean
-        conditionalMediationAvailable:
-          type: boolean
-        privateMode:
           type: boolean
 
     passkeyIntelFlags:
@@ -1928,7 +1725,6 @@ components:
         - value
         - status
         - created
-        - createdMs
         - expires
       properties:
         challengeID:
@@ -1940,9 +1736,6 @@ components:
         status:
           $ref: '#/components/schemas/passkeyChallengeStatus'
         created:
-          type: integer
-          format: int64
-        createdMs:
           type: integer
           format: int64
         expires:
@@ -1991,7 +1784,7 @@ components:
 
     connectTokenType:
       type: string
-      enum: [ 'passkey-append', 'passkey-delete', 'passkey-list', 'passkey-login' ]
+      enum: [ 'passkey-append', 'passkey-delete', 'passkey-list' ]
 
     authEventMethod:
       type: string
@@ -2005,23 +1798,15 @@ components:
       type: string
       enum: [ 'success', 'failure' ]
 
-    webhookEventType:
-      type: string
-      enum: [ 'passkey-login.completed', 'passkey.created', 'passkey.deleted' ]
-
     passkeyEventType:
       type: string
       enum:
         - user-login-blacklisted
         - login-explicit-abort
         - login-error
-        - login-error-untyped
         - login-one-tap-switch
         - user-append-after-cross-platform-blacklisted
         - user-append-after-login-error-blacklisted
-        - append-credential-exists
-        - append-explicit-abort
-        - append-error
 
     connectToken:
       type: object
@@ -2072,21 +1857,12 @@ components:
         identifier:
           type: string
 
-    connectTokenDataPasskeyLogin:
-      type: object
-      required:
-        - identifier
-      properties:
-        identifier:
-          type: string
-
     connectTokenData:
       type: object
       oneOf:
         - $ref: '#/components/schemas/connectTokenDataPasskeyAppend'
         - $ref: '#/components/schemas/connectTokenDataPasskeyDelete'
         - $ref: '#/components/schemas/connectTokenDataPasskeyList'
-        - $ref: '#/components/schemas/connectTokenDataPasskeyLogin'
 
     connectTokenList:
       type: object
@@ -2100,131 +1876,6 @@ components:
             $ref: '#/components/schemas/connectToken'
         paging:
           $ref: 'common.yml#/components/schemas/paging'
-
-    webhookEndpointList:
-      type: object
-      required:
-        - webhookEndpoints
-      properties:
-        webhookEndpoints:
-          type: array
-          items:
-            $ref: '#/components/schemas/webhookEndpoint'
-
-    webhookEndpoint:
-      type: object
-      required:
-        - id
-        - url
-        - customHeaders
-        - subscribedEvents
-        - created
-        - createdMs
-        - updated
-        - updatedMs
-      properties:
-        id:
-          type: string
-        url:
-          type: string
-        customHeaders:
-          type: object
-        subscribedEvents:
-          type: array
-          items:
-            $ref: '#/components/schemas/webhookEventType'
-        created:
-          type: string
-        createdMs:
-          type: integer
-          format: int64
-        updated:
-          type: string
-        updatedMs:
-          type: integer
-          format: int64
-
-    detectionInsights:
-      type: object
-      required:
-        - tags
-        - credentialIds
-        - clientEnvIds
-        - isCDACandidate
-        - passwordManagerIds
-      properties:
-        tags:
-          type: array
-          items:
-            $ref: '#/components/schemas/detectionTag'
-        credentialIds:
-          type: array
-          items:
-            type: string
-        clientEnvIds:
-          type: array
-          items:
-            type: string
-        passwordManagerIds:
-          type: array
-          items:
-            type: string
-
-    decisionInsights:
-      type: object
-      required:
-        - tag
-        - isCDACandidate
-        - experiments
-      properties:
-        tag:
-          $ref: '#/components/schemas/decisionTag'
-        isCDACandidate:
-          type: boolean
-        experiments:
-          type: array
-          items:
-            type: string
-
-    passwordManagerList:
-      type: object
-      required:
-        - passwordManagers
-      properties:
-        passwordManagers:
-          type: array
-          items:
-            $ref: '#/components/schemas/passwordManager'
-
-    passwordManager:
-      type: object
-      required:
-        - id
-        - userID
-        - clientEnvID
-        - credentialID
-        - aaguid
-        - status
-        - score
-        - createdMs
-      properties:
-        id:
-          type: string
-        userID:
-          type: string
-        clientEnvID:
-          type: string
-        credentialID:
-          type: string
-        aaguid:
-          type: string
-        status:
-          type: string
-        score:
-          type: integer
-        createdMs:
-          type: integer
-          format: int64
 
   responses:
     ###################################################################

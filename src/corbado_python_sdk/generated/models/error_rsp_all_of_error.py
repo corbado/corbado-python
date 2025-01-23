@@ -31,7 +31,7 @@ class ErrorRspAllOfError(BaseModel):
     type: StrictStr = Field(description="Type of error")
     details: Optional[StrictStr] = Field(default=None, description="Details of error")
     validation: Optional[List[ErrorRspAllOfErrorValidation]] = Field(default=None, description="Validation errors per field")
-    links: List[StrictStr] = Field(description="Additional links to help understand the error")
+    links: Optional[List[StrictStr]] = Field(default=None, description="Additional links to help understand the error")
     __properties: ClassVar[List[str]] = ["type", "details", "validation", "links"]
 
     model_config = ConfigDict(

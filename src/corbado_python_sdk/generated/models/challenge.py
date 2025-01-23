@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List
 from corbado_python_sdk.generated.models.challenge_status import ChallengeStatus
 from corbado_python_sdk.generated.models.challenge_type import ChallengeType
@@ -33,8 +33,9 @@ class Challenge(BaseModel):
     type: ChallengeType
     identifier_value: StrictStr = Field(alias="identifierValue")
     value: StrictStr
+    expires: StrictInt
     status: ChallengeStatus
-    __properties: ClassVar[List[str]] = ["challengeID", "type", "identifierValue", "value", "status"]
+    __properties: ClassVar[List[str]] = ["challengeID", "type", "identifierValue", "value", "expires", "status"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,6 +92,7 @@ class Challenge(BaseModel):
             "type": obj.get("type"),
             "identifierValue": obj.get("identifierValue"),
             "value": obj.get("value"),
+            "expires": obj.get("expires"),
             "status": obj.get("status")
         })
         return _obj

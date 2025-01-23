@@ -36,7 +36,9 @@ class ClientInformation(BaseModel):
     bluetooth_available: Optional[StrictBool] = Field(default=None, description="Client's Bluetooth availability", alias="bluetoothAvailable")
     password_manager_available: Optional[StrictBool] = Field(default=None, description="Client's password manager availability", alias="passwordManagerAvailable")
     user_verifying_platform_authenticator_available: StrictBool = Field(alias="userVerifyingPlatformAuthenticatorAvailable")
-    __properties: ClassVar[List[str]] = ["remoteAddress", "userAgent", "clientEnvHandle", "javascriptFingerprint", "javaScriptHighEntropy", "bluetoothAvailable", "passwordManagerAvailable", "userVerifyingPlatformAuthenticatorAvailable"]
+    conditional_mediation_available: StrictBool = Field(alias="conditionalMediationAvailable")
+    private_mode: Optional[StrictBool] = Field(default=None, alias="privateMode")
+    __properties: ClassVar[List[str]] = ["remoteAddress", "userAgent", "clientEnvHandle", "javascriptFingerprint", "javaScriptHighEntropy", "bluetoothAvailable", "passwordManagerAvailable", "userVerifyingPlatformAuthenticatorAvailable", "conditionalMediationAvailable", "privateMode"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -99,7 +101,9 @@ class ClientInformation(BaseModel):
             "javaScriptHighEntropy": JavaScriptHighEntropy.from_dict(obj["javaScriptHighEntropy"]) if obj.get("javaScriptHighEntropy") is not None else None,
             "bluetoothAvailable": obj.get("bluetoothAvailable"),
             "passwordManagerAvailable": obj.get("passwordManagerAvailable"),
-            "userVerifyingPlatformAuthenticatorAvailable": obj.get("userVerifyingPlatformAuthenticatorAvailable")
+            "userVerifyingPlatformAuthenticatorAvailable": obj.get("userVerifyingPlatformAuthenticatorAvailable"),
+            "conditionalMediationAvailable": obj.get("conditionalMediationAvailable"),
+            "privateMode": obj.get("privateMode")
         })
         return _obj
 

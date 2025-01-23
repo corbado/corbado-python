@@ -89,7 +89,8 @@ components:
         filterEmail:
           summary: Filter for one email address
           value:
-            - name:eq:mail@exammple.com
+            - identifierType:eq:email
+            - identifierValue:eq:mail@example.com
         filterTimepoint:
           summary: timePoint after 20/07/2021
           value:
@@ -373,9 +374,14 @@ components:
       type: string
 
     loginIdentifierType:
-      description: Login Identifier type
+      description: Login Identifier type (deprecated)
       type: string
       enum: [ 'email', 'phone_number', 'custom' ]
+
+    identifierType:
+      description: Login Identifier type
+      type: string
+      enum: [ 'email', 'phone', 'username' ]
 
     appType:
       description: Application type
@@ -392,7 +398,6 @@ components:
       type: object
       required:
         - requestID
-        - link
       properties:
         requestID:
           $ref: '#/components/schemas/requestID'
@@ -409,7 +414,7 @@ components:
         - useAsLoginIdentifier
       properties:
         type:
-          $ref: '#/components/schemas/loginIdentifierType'
+          $ref: '#/components/schemas/identifierType'
         enforceVerification:
           type: string
           enum: [ none, signup, at_first_login ]
@@ -476,6 +481,8 @@ components:
           $ref: '#/components/schemas/loginIdentifierConfig'
         p25:
           $ref: '#/components/schemas/socialProviderType'
+        p26:
+          $ref: '#/components/schemas/identifierType'
 
     genericRsp:
       type: object
@@ -513,7 +520,6 @@ components:
               type: object
               required:
                 - type
-                - links
               properties:
                 type:
                   description: Type of error

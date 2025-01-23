@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.decision_tag import DecisionTag
-from corbado_python_sdk.generated.models.detection_tag import DetectionTag
+from corbado_python_sdk.generated.models.decision_insights import DecisionInsights
+from corbado_python_sdk.generated.models.detection_insights import DetectionInsights
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,10 +30,10 @@ class PasskeyAppendStartRsp(BaseModel):
     PasskeyAppendStartRsp
     """ # noqa: E501
     append_allow: StrictBool = Field(alias="appendAllow")
-    detection_tags: List[DetectionTag] = Field(alias="detectionTags")
-    decision_tag: DecisionTag = Field(alias="decisionTag")
     attestation_options: StrictStr = Field(alias="attestationOptions")
-    __properties: ClassVar[List[str]] = ["appendAllow", "detectionTags", "decisionTag", "attestationOptions"]
+    detection_insights: DetectionInsights = Field(alias="detectionInsights")
+    decision_insights: DecisionInsights = Field(alias="decisionInsights")
+    __properties: ClassVar[List[str]] = ["appendAllow", "attestationOptions", "detectionInsights", "decisionInsights"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,13 +74,12 @@ class PasskeyAppendStartRsp(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in detection_tags (list)
-        _items = []
-        if self.detection_tags:
-            for _item_detection_tags in self.detection_tags:
-                if _item_detection_tags:
-                    _items.append(_item_detection_tags.to_dict())
-            _dict['detectionTags'] = _items
+        # override the default output from pydantic by calling `to_dict()` of detection_insights
+        if self.detection_insights:
+            _dict['detectionInsights'] = self.detection_insights.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of decision_insights
+        if self.decision_insights:
+            _dict['decisionInsights'] = self.decision_insights.to_dict()
         return _dict
 
     @classmethod
@@ -94,9 +93,9 @@ class PasskeyAppendStartRsp(BaseModel):
 
         _obj = cls.model_validate({
             "appendAllow": obj.get("appendAllow"),
-            "detectionTags": [DetectionTag.from_dict(_item) for _item in obj["detectionTags"]] if obj.get("detectionTags") is not None else None,
-            "decisionTag": obj.get("decisionTag"),
-            "attestationOptions": obj.get("attestationOptions")
+            "attestationOptions": obj.get("attestationOptions"),
+            "detectionInsights": DetectionInsights.from_dict(obj["detectionInsights"]) if obj.get("detectionInsights") is not None else None,
+            "decisionInsights": DecisionInsights.from_dict(obj["decisionInsights"]) if obj.get("decisionInsights") is not None else None
         })
         return _obj
 

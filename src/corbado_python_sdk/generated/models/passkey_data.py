@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
+from corbado_python_sdk.generated.models.aaguid_details import AaguidDetails
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -32,7 +33,8 @@ class PasskeyData(BaseModel):
     username: StrictStr
     ceremony_type: StrictStr = Field(alias="ceremonyType")
     challenge_id: StrictStr = Field(alias="challengeID")
-    __properties: ClassVar[List[str]] = ["id", "userID", "username", "ceremonyType", "challengeID"]
+    aaguid_details: AaguidDetails = Field(alias="aaguidDetails")
+    __properties: ClassVar[List[str]] = ["id", "userID", "username", "ceremonyType", "challengeID", "aaguidDetails"]
 
     @field_validator('ceremony_type')
     def ceremony_type_validate_enum(cls, value):
@@ -80,6 +82,9 @@ class PasskeyData(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of aaguid_details
+        if self.aaguid_details:
+            _dict['aaguidDetails'] = self.aaguid_details.to_dict()
         return _dict
 
     @classmethod
@@ -96,7 +101,8 @@ class PasskeyData(BaseModel):
             "userID": obj.get("userID"),
             "username": obj.get("username"),
             "ceremonyType": obj.get("ceremonyType"),
-            "challengeID": obj.get("challengeID")
+            "challengeID": obj.get("challengeID"),
+            "aaguidDetails": AaguidDetails.from_dict(obj["aaguidDetails"]) if obj.get("aaguidDetails") is not None else None
         })
         return _obj
 

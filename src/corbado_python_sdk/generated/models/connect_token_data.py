@@ -21,11 +21,12 @@ from typing import Any, List, Optional
 from corbado_python_sdk.generated.models.connect_token_data_passkey_append import ConnectTokenDataPasskeyAppend
 from corbado_python_sdk.generated.models.connect_token_data_passkey_delete import ConnectTokenDataPasskeyDelete
 from corbado_python_sdk.generated.models.connect_token_data_passkey_list import ConnectTokenDataPasskeyList
+from corbado_python_sdk.generated.models.connect_token_data_passkey_login import ConnectTokenDataPasskeyLogin
 from pydantic import StrictStr, Field
 from typing import Union, List, Set, Optional, Dict
 from typing_extensions import Literal, Self
 
-CONNECTTOKENDATA_ONE_OF_SCHEMAS = ["ConnectTokenDataPasskeyAppend", "ConnectTokenDataPasskeyDelete", "ConnectTokenDataPasskeyList"]
+CONNECTTOKENDATA_ONE_OF_SCHEMAS = ["ConnectTokenDataPasskeyAppend", "ConnectTokenDataPasskeyDelete", "ConnectTokenDataPasskeyList", "ConnectTokenDataPasskeyLogin"]
 
 class ConnectTokenData(BaseModel):
     """
@@ -37,8 +38,10 @@ class ConnectTokenData(BaseModel):
     oneof_schema_2_validator: Optional[ConnectTokenDataPasskeyDelete] = None
     # data type: ConnectTokenDataPasskeyList
     oneof_schema_3_validator: Optional[ConnectTokenDataPasskeyList] = None
-    actual_instance: Optional[Union[ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList]] = None
-    one_of_schemas: Set[str] = { "ConnectTokenDataPasskeyAppend", "ConnectTokenDataPasskeyDelete", "ConnectTokenDataPasskeyList" }
+    # data type: ConnectTokenDataPasskeyLogin
+    oneof_schema_4_validator: Optional[ConnectTokenDataPasskeyLogin] = None
+    actual_instance: Optional[Union[ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList, ConnectTokenDataPasskeyLogin]] = None
+    one_of_schemas: Set[str] = { "ConnectTokenDataPasskeyAppend", "ConnectTokenDataPasskeyDelete", "ConnectTokenDataPasskeyList", "ConnectTokenDataPasskeyLogin" }
 
     model_config = ConfigDict(
         validate_assignment=True,
@@ -76,12 +79,17 @@ class ConnectTokenData(BaseModel):
             error_messages.append(f"Error! Input type `{type(v)}` is not `ConnectTokenDataPasskeyList`")
         else:
             match += 1
+        # validate data type: ConnectTokenDataPasskeyLogin
+        if not isinstance(v, ConnectTokenDataPasskeyLogin):
+            error_messages.append(f"Error! Input type `{type(v)}` is not `ConnectTokenDataPasskeyLogin`")
+        else:
+            match += 1
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when setting `actual_instance` in ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when setting `actual_instance` in ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList, ConnectTokenDataPasskeyLogin. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when setting `actual_instance` in ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when setting `actual_instance` in ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList, ConnectTokenDataPasskeyLogin. Details: " + ", ".join(error_messages))
         else:
             return v
 
@@ -114,13 +122,19 @@ class ConnectTokenData(BaseModel):
             match += 1
         except (ValidationError, ValueError) as e:
             error_messages.append(str(e))
+        # deserialize data into ConnectTokenDataPasskeyLogin
+        try:
+            instance.actual_instance = ConnectTokenDataPasskeyLogin.from_json(json_str)
+            match += 1
+        except (ValidationError, ValueError) as e:
+            error_messages.append(str(e))
 
         if match > 1:
             # more than 1 match
-            raise ValueError("Multiple matches found when deserializing the JSON string into ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList. Details: " + ", ".join(error_messages))
+            raise ValueError("Multiple matches found when deserializing the JSON string into ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList, ConnectTokenDataPasskeyLogin. Details: " + ", ".join(error_messages))
         elif match == 0:
             # no match
-            raise ValueError("No match found when deserializing the JSON string into ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList. Details: " + ", ".join(error_messages))
+            raise ValueError("No match found when deserializing the JSON string into ConnectTokenData with oneOf schemas: ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList, ConnectTokenDataPasskeyLogin. Details: " + ", ".join(error_messages))
         else:
             return instance
 
@@ -134,7 +148,7 @@ class ConnectTokenData(BaseModel):
         else:
             return json.dumps(self.actual_instance)
 
-    def to_dict(self) -> Optional[Union[Dict[str, Any], ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList]]:
+    def to_dict(self) -> Optional[Union[Dict[str, Any], ConnectTokenDataPasskeyAppend, ConnectTokenDataPasskeyDelete, ConnectTokenDataPasskeyList, ConnectTokenDataPasskeyLogin]]:
         """Returns the dict representation of the actual instance"""
         if self.actual_instance is None:
             return None

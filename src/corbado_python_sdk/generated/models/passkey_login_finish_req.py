@@ -18,8 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from corbado_python_sdk.generated.models.client_information import ClientInformation
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +32,8 @@ class PasskeyLoginFinishReq(BaseModel):
     assertion_response: StrictStr = Field(alias="assertionResponse")
     client_information: ClientInformation = Field(alias="clientInformation")
     process_id: StrictStr = Field(alias="processID")
-    __properties: ClassVar[List[str]] = ["userID", "assertionResponse", "clientInformation", "processID"]
+    sign_passkey_data: Optional[StrictBool] = Field(default=None, alias="signPasskeyData")
+    __properties: ClassVar[List[str]] = ["userID", "assertionResponse", "clientInformation", "processID", "signPasskeyData"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,7 +92,8 @@ class PasskeyLoginFinishReq(BaseModel):
             "userID": obj.get("userID"),
             "assertionResponse": obj.get("assertionResponse"),
             "clientInformation": ClientInformation.from_dict(obj["clientInformation"]) if obj.get("clientInformation") is not None else None,
-            "processID": obj.get("processID")
+            "processID": obj.get("processID"),
+            "signPasskeyData": obj.get("signPasskeyData")
         })
         return _obj
 

@@ -18,23 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.long_session_status import LongSessionStatus
+from corbado_python_sdk.generated.models.webhook_endpoint import WebhookEndpoint
 from typing import Optional, Set
 from typing_extensions import Self
 
-class LongSession(BaseModel):
+class WebhookEndpointList(BaseModel):
     """
-    LongSession
+    WebhookEndpointList
     """ # noqa: E501
-    long_session_id: StrictStr = Field(alias="longSessionID")
-    user_id: StrictStr = Field(alias="userID")
-    identifier_value: StrictStr = Field(alias="identifierValue")
-    status: LongSessionStatus
-    expires: StrictStr
-    expires_ms: StrictInt = Field(alias="expiresMs")
-    __properties: ClassVar[List[str]] = ["longSessionID", "userID", "identifierValue", "status", "expires", "expiresMs"]
+    webhook_endpoints: List[WebhookEndpoint] = Field(alias="webhookEndpoints")
+    __properties: ClassVar[List[str]] = ["webhookEndpoints"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +49,7 @@ class LongSession(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of LongSession from a JSON string"""
+        """Create an instance of WebhookEndpointList from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,11 +70,18 @@ class LongSession(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in webhook_endpoints (list)
+        _items = []
+        if self.webhook_endpoints:
+            for _item_webhook_endpoints in self.webhook_endpoints:
+                if _item_webhook_endpoints:
+                    _items.append(_item_webhook_endpoints.to_dict())
+            _dict['webhookEndpoints'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of LongSession from a dict"""
+        """Create an instance of WebhookEndpointList from a dict"""
         if obj is None:
             return None
 
@@ -87,12 +89,7 @@ class LongSession(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "longSessionID": obj.get("longSessionID"),
-            "userID": obj.get("userID"),
-            "identifierValue": obj.get("identifierValue"),
-            "status": obj.get("status"),
-            "expires": obj.get("expires"),
-            "expiresMs": obj.get("expiresMs")
+            "webhookEndpoints": [WebhookEndpoint.from_dict(_item) for _item in obj["webhookEndpoints"]] if obj.get("webhookEndpoints") is not None else None
         })
         return _obj
 

@@ -34,8 +34,9 @@ class PasskeyChallenge(BaseModel):
     value: StrictStr
     status: PasskeyChallengeStatus
     created: StrictInt
+    created_ms: StrictInt = Field(alias="createdMs")
     expires: StrictInt
-    __properties: ClassVar[List[str]] = ["challengeID", "type", "value", "status", "created", "expires"]
+    __properties: ClassVar[List[str]] = ["challengeID", "type", "value", "status", "created", "createdMs", "expires"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,6 +94,7 @@ class PasskeyChallenge(BaseModel):
             "value": obj.get("value"),
             "status": obj.get("status"),
             "created": obj.get("created"),
+            "createdMs": obj.get("createdMs"),
             "expires": obj.get("expires")
         })
         return _obj
