@@ -44,7 +44,7 @@ class TestConfig(unittest.TestCase):
             ("http://auth.acme.com", False),  # Only HTTPS
             ("https://user@auth.acme.com", False),  # No user
             ("https://user:pass@auth.acme.com", False),  # No user no password
-            ("https://auth.acme.com/", False), # No path
+            ("https://auth.acme.com/", False),  # No path
             ("https://auth.acme.com?xxx", False),  # No query string
             ("https://auth.acme.com#xxx", False),  # No fragment
             ("https://auth.acme.com", True),
