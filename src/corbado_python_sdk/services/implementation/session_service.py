@@ -25,28 +25,20 @@ class SessionService(BaseModel):
 
     Attributes:
         model_config (ConfigDict): Configuration dictionary for the model.
-        issuer (str): Issuer of the session tokens.
-        jwks_uri (str): URI of the JSON Web Key Set (JWKS) endpoint.
         last_session_token_validation_result (str): Result of the last short session validation.
-        session_token_cookie_length (int): Length of short session in seconds. Default = 300
-        _jwk_client (PyJWKClient): JSON Web Key (JWK) client for handling JWKS.
-        cache_keys (bool): Flag to cache keys. Default = False.
-        cache_jwk_set (bool): Flag to cache jwk_sets. Default = True.
         project_id (str): Corbado Project Id.
-
-
+        _issuer (str): Issuer of the session tokens.
+        _jwks_uri (str): URI of the JSON Web Key Set (JWKS) endpoint.
+        _jwk_client (PyJWKClient): JSON Web Key (JWK) client for handling JWKS.
     """
 
     model_config = ConfigDict(arbitrary_types_allowed=True, validate_assignment=True)
 
     # Fields
-    issuer: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
-    jwks_uri: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     last_session_token_validation_result: str = ""
-    session_token_cookie_length: int = DEFAULT_SESSION_TOKEN_LENGTH
-    cache_keys: bool = False
-    cache_jwk_set: bool = True
     project_id: str
+    _issuer: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
+    _jwks_uri: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1)]
     _jwk_client: PyJWKClient
 
     # Constructor
@@ -57,19 +49,15 @@ class SessionService(BaseModel):
         Args:
             **kwargs: Additional keyword arguments to initialize the SessionService.
                 These keyword arguments should include values for the attributes defined in the class,
-                such as 'issuer', 'jwks_uri', 'last_session_token_validation_result',
-                'cache_keys',cache_jwk_set and 'session_token_cookie_length'.
+                such as 'issuer', '_jwks_uri' and 'last_session_token_validation_result',
 
         Raises:
             Any errors raised during the initialization process.
-
         """
         super().__init__(**kwargs)
         self._jwk_client = PyJWKClient(
-            uri=self.jwks_uri,
-            cache_keys=self.cache_keys,
-            lifespan=self.session_token_cookie_length,
-            cache_jwk_set=self.cache_jwk_set,
+            uri=self._jwks_uri,
+            lifespan=DEFAULT_SESSION_TOKEN_LENGTH,
         )
 
     # Core methods
@@ -152,7 +140,7 @@ class SessionService(BaseModel):
         Args:
             token_issuer (str): Token issuer.
         """
-        self.last_session_token_validation_result = f"Mismatch in issuer (configured: {self.issuer}, JWT: {token_issuer})"
+        self.last_session_token_validation_result = f"Mismatch in issuer (configured: {self._issuer}, JWT: {token_issuer})"
 
     def _set_validation_error(self, error: Exception) -> None:
         """Set validation error.
@@ -176,7 +164,8 @@ class SessionService(BaseModel):
         """
         if not token_issuer:
             raise TokenValidationException(
-                error_type=ValidationErrorType.CODE_JWT_ISSUER_EMPTY, message=f"Issuer is empty. Session token: {session_token}"
+                error_type=ValidationErrorType.CODE_JWT_ISSUER_EMPTY,
+                message=f"Issuer is empty. Session token: {session_token}"
             )
 
         # Check for old Frontend API (without .cloud.)
@@ -190,8 +179,8 @@ class SessionService(BaseModel):
             return
 
         # Check against the configured issuer (e.g., a custom domain or CNAME)
-        if token_issuer != self.issuer:
+        if token_issuer != self._issuer:
             raise TokenValidationException(
                 error_type=ValidationErrorType.CODE_JWT_ISSUER_MISSMATCH,
-                message=f"Issuer mismatch (configured via FrontendAPI: '{self.issuer}', JWT issuer: '{token_issuer}')",
+                message=f"Issuer mismatch (configured via FrontendAPI: '{self._issuer}', JWT issuer: '{token_issuer}')",
             )

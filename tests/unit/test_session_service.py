@@ -276,4 +276,4 @@ class TestSessionServiceConfiguration(TestBase):
 
         sdk = CorbadoSDK(config=config)
         sessions: SessionService = sdk.sessions
-        self.assertEqual("https://" + test_cname, sessions.issuer)
+        self.assertEqual("https://" + test_cname, sessions._issuer)
