@@ -82,7 +82,6 @@ class SessionService(BaseModel):
         try:
             signing_key: jwt.PyJWK = self._jwk_client.get_signing_key_from_jwt(token=session_token)
         except Exception as error:
-            self._set_validation_error(error=error)
             raise TokenValidationException(
                 error_type=ValidationErrorType.CODE_JWT_SIGNING_KEY_ERROR,
                 message=f"Could not retrieve signing key: {session_token}. See  original_exception for further information: {str(error)}",
@@ -98,14 +97,12 @@ class SessionService(BaseModel):
             sub: str = payload.get("sub")
             full_name: str = payload.get("name")
         except ImmatureSignatureError as error:
-            self._set_validation_error(error=error)
             raise TokenValidationException(
                 error_type=ValidationErrorType.CODE_JWT_BEFORE,
                 message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_BEFORE.value}",
                 original_exception=error,
             )
         except ExpiredSignatureError as error:
-            self._set_validation_error(error=error)
             raise TokenValidationException(
                 error_type=ValidationErrorType.CODE_JWT_INVALID_SIGNATURE,
                 message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_INVALID_SIGNATURE.value}",
@@ -113,7 +110,6 @@ class SessionService(BaseModel):
             )
 
         except InvalidSignatureError as error:
-            self._set_validation_error(error=error)
             raise TokenValidationException(
                 error_type=ValidationErrorType.CODE_JWT_EXPIRED,
                 message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_EXPIRED.value}",
@@ -121,7 +117,6 @@ class SessionService(BaseModel):
             )
 
         except Exception as error:
-            self._set_validation_error(error=error)
             raise TokenValidationException(
                 error_type=ValidationErrorType.CODE_JWT_GENERAL,
                 message=f"Error occured during token decode: {session_token}. See  original_exception for further information: {str(error)}",
