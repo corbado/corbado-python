@@ -19,7 +19,7 @@ class ServerException(Exception):
             StandardException: If response body is not a string.
 
         """
-        __body = e.body  # type: ignore
+        __body = e.body
         if not isinstance(__body, str):
             raise StandardException("Response body is not a string")
         __data: Dict[str, Any] = Util.json_decode(__body)
