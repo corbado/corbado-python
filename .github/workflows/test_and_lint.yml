@@ -2,7 +2,7 @@ name: Daily Test and Lint
 
 on:
   schedule:
-    - cron: '0 0 * * *'  # Run at midnight
+    - cron: '0 4 * * *' 
 
 jobs:
   test-and-lint:
