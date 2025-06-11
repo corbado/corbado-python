@@ -8,7 +8,6 @@ from jwt import (
     DecodeError,
     ExpiredSignatureError,
     ImmatureSignatureError,
-    InvalidAlgorithmError,
     InvalidSignatureError,
     PyJWKClientError,
     encode,
