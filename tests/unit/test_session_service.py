@@ -10,7 +10,6 @@ from jwt import (
     ImmatureSignatureError,
     InvalidAlgorithmError,
     InvalidSignatureError,
-    PyJWKClientError,
     encode,
 )
 from pydantic import ValidationError
@@ -129,8 +128,8 @@ class TestBase(unittest.TestCase):
                 False,
                 """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6
                 IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.dyt0CoTl4WoVjAHI9Q_CwSKhl6d_9rhM3NrXuJttkao""",
-                PyJWKClientError,
-                'Unable to find a signing key that matches: "None"',
+                InvalidAlgorithmError,
+                "Algorithm not allowed",
             ),
             # Not before (nfb) in future
             (
@@ -180,6 +179,13 @@ class TestBase(unittest.TestCase):
                 None,
                 None,
             ),
+            # Disallowed algorithm "none"
+            (
+                False,
+                self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100, algorithm="none"),
+                InvalidAlgorithmError,
+                "Algorithm not allowed",
+            ),
             # Success with old Frontend API URL in config (2)
             (
                 True,
@@ -194,20 +200,17 @@ class TestBase(unittest.TestCase):
                 None,
                 None,
             ),
-            # Disallowed algorithm "none"
-            (
-                False,
-                "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0."
-                "eyJpc3MiOiJodHRwczovL2F1dGguYWNtZS5jb20iLCJzdWIiOiIxMjM0NSIsImlhdCI6"
-                + str(int(time()))
-                + "f.",
-                InvalidAlgorithmError,
-                "Algorithm not allowed",
-            ),
         ]
 
     @classmethod
-    def _generate_jwt(cls, iss: str, exp: int, nbf: int, valid_key: bool = True) -> str:
+    def _generate_jwt(
+        cls,
+        iss: str,
+        exp: int,
+        nbf: int,
+        valid_key: bool = True,
+        algorithm: str = "RS256",
+    ) -> str:
         payload = {
             "iss": iss,
             "iat": int(time()),
@@ -217,9 +220,24 @@ class TestBase(unittest.TestCase):
             "name": TEST_NAME,
         }
 
-        if valid_key:
-            return encode(payload, key=cls.private_key, algorithm="RS256", headers={"kid": "kid123"})
-        return encode(payload, key=cls.invalid_private_key, algorithm="RS256", headers={"kid": "kid123"})
+        key_to_use = cls.private_key if valid_key else cls.invalid_private_key
+
+        # unsecured JWT (“none”)
+        if algorithm.lower() == "none":
+            # key must be None for alg=none
+            return encode(
+                payload,
+                key=None,
+                headers={"alg": "none", "typ": "JWT"},
+            )
+
+        # signed JWT (RS256 by default)
+        return encode(
+            payload,
+            key=key_to_use,
+            algorithm=algorithm,
+            headers={"kid": "kid123"},
+        )
 
 
 class TestSessionService(TestBase):

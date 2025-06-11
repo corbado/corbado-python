@@ -1,5 +1,6 @@
 import jwt
 from jwt import (
+    get_unverified_header,          # ← added
     ExpiredSignatureError,
     ImmatureSignatureError,
     InvalidAlgorithmError,
@@ -79,6 +80,23 @@ class SessionService(BaseModel):
                 error_type=ValidationErrorType.CODE_JWT_EMPTY_SESSION_TOKEN,
                 message=ValidationErrorType.CODE_JWT_EMPTY_SESSION_TOKEN.name,
             )
+
+        # ---- pre-flight alg rejection ----
+        try:
+            header = get_unverified_header(session_token)
+        except Exception as err:
+            raise TokenValidationException(
+                error_type=ValidationErrorType.CODE_JWT_GENERAL,
+                message=f"Error parsing JWT header: {session_token}",
+                original_exception=err,
+            )
+        if header.get("alg") not in ALLOWED_ALGS:
+            raise TokenValidationException(
+                error_type=ValidationErrorType.CODE_JWT_INVALID_SIGNATURE,
+                message="Algorithm not allowed",
+                original_exception=InvalidAlgorithmError("Algorithm not allowed"),
+            )
+        # -----------------------------------------
 
         # retrieve signing key
         try:
