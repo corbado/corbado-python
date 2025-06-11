@@ -3,6 +3,7 @@ from jwt import (
     ExpiredSignatureError,
     ImmatureSignatureError,
     InvalidSignatureError,
+    InvalidAlgorithmError,
     decode,
 )
 from jwt.jwks_client import PyJWKClient
@@ -16,6 +17,7 @@ from corbado_python_sdk.exceptions.token_validation_exception import (
 )
 
 DEFAULT_SESSION_TOKEN_LENGTH = 300
+ALLOWED_ALGS = {"RS256"}
 
 
 class SessionService(BaseModel):
@@ -90,7 +92,7 @@ class SessionService(BaseModel):
 
         # decode short session (jwt) with signing key
         try:
-            payload = decode(jwt=session_token, key=signing_key.key, algorithms=["RS256"])
+            payload = decode(jwt=session_token, key=signing_key.key, algorithms=list(ALLOWED_ALGS))
 
             # extract information from decoded payload
             token_issuer: str = payload.get("iss")
@@ -104,15 +106,21 @@ class SessionService(BaseModel):
             )
         except ExpiredSignatureError as error:
             raise TokenValidationException(
-                error_type=ValidationErrorType.CODE_JWT_INVALID_SIGNATURE,
-                message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_INVALID_SIGNATURE.value}",
+                error_type=ValidationErrorType.CODE_JWT_EXPIRED,
+                message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_EXPIRED.value}",
                 original_exception=error,
             )
 
         except InvalidSignatureError as error:
             raise TokenValidationException(
-                error_type=ValidationErrorType.CODE_JWT_EXPIRED,
-                message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_EXPIRED.value}",
+                error_type=ValidationErrorType.CODE_JWT_INVALID_SIGNATURE,
+                message=f"Error occured during token decode: {session_token}. {ValidationErrorType.CODE_JWT_INVALID_SIGNATURE.value}",
+                original_exception=error,
+            )
+        except InvalidAlgorithmError as error:
+            raise TokenValidationException(
+                error_type=ValidationErrorType.CODE_JWT_INVALID_SIGNATURE,
+                message="Algorithm not allowed",
                 original_exception=error,
             )
 

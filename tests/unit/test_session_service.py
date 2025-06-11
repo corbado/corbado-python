@@ -9,6 +9,7 @@ from jwt import (
     ExpiredSignatureError,
     ImmatureSignatureError,
     InvalidSignatureError,
+    InvalidAlgorithmError,
     PyJWKClientError,
     encode,
 )
@@ -192,6 +193,16 @@ class TestBase(unittest.TestCase):
                 self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100),
                 None,
                 None,
+            ),
+            # Disallowed algorithm "none"
+            (
+                False,
+                "eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0."
+                "eyJpc3MiOiJodHRwczovL2F1dGguYWNtZS5jb20iLCJzdWIiOiIxMjM0NSIsImlhdCI6"
+                + str(int(time()))
+                + "f.",
+                InvalidAlgorithmError,
+                "Algorithm not allowed",
             ),
         ]
 
