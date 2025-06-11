@@ -2,8 +2,8 @@ import jwt
 from jwt import (
     ExpiredSignatureError,
     ImmatureSignatureError,
-    InvalidSignatureError,
     InvalidAlgorithmError,
+    InvalidSignatureError,
     decode,
 )
 from jwt.jwks_client import PyJWKClient
