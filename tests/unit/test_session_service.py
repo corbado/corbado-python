@@ -10,6 +10,7 @@ from jwt import (
     ImmatureSignatureError,
     InvalidAlgorithmError,
     InvalidSignatureError,
+    PyJWKClientError,
     encode,
 )
 from pydantic import ValidationError
@@ -128,8 +129,8 @@ class TestBase(unittest.TestCase):
                 False,
                 """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6
                 IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.dyt0CoTl4WoVjAHI9Q_CwSKhl6d_9rhM3NrXuJttkao""",
-                InvalidAlgorithmError,
-                "Algorithm not allowed",
+                PyJWKClientError,
+                'Unable to find a signing key that matches: "None"',
             ),
             # Not before (nfb) in future
             (
@@ -183,8 +184,8 @@ class TestBase(unittest.TestCase):
             (
                 False,
                 self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100, algorithm="none"),
-                InvalidAlgorithmError,
-                "Algorithm not allowed",
+                PyJWKClientError,
+                'Unable to find a signing key that matches: "None"',
             ),
             # Success with old Frontend API URL in config (2)
             (
