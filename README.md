@@ -3,10 +3,10 @@
 # Corbado Python SDK
 
 [![License](https://img.shields.io/badge/license-MIT-green)](./LICENSE)
-[![documentation](https://img.shields.io/badge/documentation-Corbado_Backend_API_Reference-blue.svg)](https://apireference.cloud.corbado.io/backendapi/)
+[![documentation](https://img.shields.io/badge/documentation-Corbado_Backend_API_Reference-blue.svg)](https://docs.corbado.com/api-reference/backend-api)
 [![Slack](https://img.shields.io/badge/slack-join%20chat-brightgreen.svg)](https://join.slack.com/t/corbado/shared_invite/zt-1b7867yz8-V~Xr~ngmSGbt7IA~g16ZsQ)
 
-The [Corbado](https://www.corbado.com) Python SDK provides convenient access to the [Corbado Backend API](https://apireference.cloud.corbado.io/backendapi-v2/) from applications written in the Python language.
+The [Corbado](https://www.corbado.com) Python SDK provides convenient access to the [Corbado Backend API](https://docs.corbado.com/api-reference/backend-api) from applications written in the Python language.
 
 [![integration-guides](https://github.com/user-attachments/assets/7859201b-a345-4b68-b336-6e2edcc6577b)](https://app.corbado.com/getting-started?search=python)
 
@@ -56,7 +56,7 @@ To use a specific service, such as `users`, invoke it as shown below:
 
 ```Python
 user_service: UserService = sdk.users
-``` 
+```
 
 ## :books: Advanced
 
@@ -82,7 +82,7 @@ except TokenValidationException:
 ```
 
 If the Backend API returns a HTTP status code other than 200, the Corbado Python SDK throws a `ServerException`. The `ServerException`class provides convenient methods to access all important data:
-  sdk.users.get(user_id="usr-123456789")
+sdk.users.get(user_id="usr-123456789")
 
 ```Python
         try:
@@ -109,18 +109,22 @@ If the Backend API returns a HTTP status code other than 200, the Corbado Python
             print(f"Full error: {e.error}")
 
 ```
+
 ## Developer Setup
 
 Create a virtual environment and install packages -
-``` console
+
+```console
 python3 -m venv venv_name
 source venv_name/bin/activate
 pip install -r requirements-dev.txt
 ```
+
 (Add venv_name to "exclude" list in .flake8, otherwise flake8 will lint the generated venv)
 
 Add environment variables for tests (use the test project from secrets repositoty) -
-``` console
+
+```console
 export CORBADO_API_SECRET=corbado1_123456
 export CORBADO_PROJECT_ID=pro-123456
 export CORBADO_BACKEND_API="https://backendapi.cloud.corbado.io"
@@ -130,14 +134,15 @@ export CORBADO_BACKEND_API="https://backendapi.cloud.corbado.io"
 
 Run all tests using -
 
-``` console
+```console
 tox run -e py38
 ```
 
-The tox tests are configured to run on Python  3.8, 3.9, 3.10, 3.11, 3.12 (you need to remove "-e py38" tox argument)
+The tox tests are configured to run on Python 3.8, 3.9, 3.10, 3.11, 3.12 (you need to remove "-e py38" tox argument)
 
 Run linting and mypy:
-``` console
+
+```console
 mypy -p corbado_python_sdk --exclude generated --strict --disable-error-code attr-defined
 flake8 .
 ```
@@ -149,8 +154,6 @@ Use Version file as single source of truth for version control.
 Use VSCode with provided project/extentions configuration .vscode/settings.json
 
 Use the recommended extentions from .vscode/extentions.json and explore their functionality to achieve expected code quality by integration tests:
-
-
 
 ## :speech_balloon: Support & Feedback
 
