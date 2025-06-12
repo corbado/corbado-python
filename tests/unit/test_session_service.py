@@ -9,6 +9,7 @@ from jwt import (
     ExpiredSignatureError,
     ImmatureSignatureError,
     InvalidSignatureError,
+    InvalidAlgorithmError,
     PyJWKClientError,
     encode,
 )
@@ -182,9 +183,9 @@ class TestBase(unittest.TestCase):
             # Disallowed algorithm "none"
             (
                 False,
-                self._generate_jwt(iss="https://auth.acme.com", exp=int(time()) + 100, nbf=int(time()) - 100, algorithm="none"),
-                PyJWKClientError,
-                'Unable to find a signing key that matches: "None"',
+                "eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIiwgImtpZCI6ICJraWQxMjMifQ.eyJpc3MiOiAiaHR0cHM6Ly9hdXRoLmFjbWUuY29tIiwgInN1YiI6ICIxMjM0NSIsICJpYXQiOiAxNzQ5NzI2NjIxLCAiZXhwIjogMTc0OTczMDIyMSwgIm5iZiI6IDE3NDk3MjY2MjF9.",
+                InvalidAlgorithmError,
+                'The specified alg value is not allowed',
             ),
             # Success with old Frontend API URL in config (2)
             (
@@ -209,7 +210,6 @@ class TestBase(unittest.TestCase):
         exp: int,
         nbf: int,
         valid_key: bool = True,
-        algorithm: str = "RS256",
     ) -> str:
         payload = {
             "iss": iss,
@@ -222,20 +222,11 @@ class TestBase(unittest.TestCase):
 
         key_to_use = cls.private_key if valid_key else cls.invalid_private_key
 
-        # unsecured JWT (“none”)
-        if algorithm.lower() == "none":
-            # key must be None for alg=none
-            return encode(
-                payload,
-                key=None,
-                headers={"alg": "none", "typ": "JWT"},
-            )
-
         # signed JWT (RS256 by default)
         return encode(
             payload,
             key=key_to_use,
-            algorithm=algorithm,
+            algorithm="RS256",
             headers={"kid": "kid123"},
         )
 
