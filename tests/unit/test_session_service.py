@@ -204,13 +204,7 @@ class TestBase(unittest.TestCase):
         ]
 
     @classmethod
-    def _generate_jwt(
-        cls,
-        iss: str,
-        exp: int,
-        nbf: int,
-        valid_key: bool = True,
-    ) -> str:
+    def _generate_jwt(cls, iss: str, exp: int, nbf: int, valid_key: bool = True) -> str:
         payload = {
             "iss": iss,
             "iat": int(time()),
@@ -220,15 +214,9 @@ class TestBase(unittest.TestCase):
             "name": TEST_NAME,
         }
 
-        key_to_use = cls.private_key if valid_key else cls.invalid_private_key
-
-        # signed JWT (RS256 by default)
-        return encode(
-            payload,
-            key=key_to_use,
-            algorithm="RS256",
-            headers={"kid": "kid123"},
-        )
+        if valid_key:
+            return encode(payload, key=cls.private_key, algorithm="RS256", headers={"kid": "kid123"})
+        return encode(payload, key=cls.invalid_private_key, algorithm="RS256", headers={"kid": "kid123"})
 
 
 class TestSessionService(TestBase):
