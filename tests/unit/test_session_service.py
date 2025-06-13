@@ -8,6 +8,7 @@ from jwt import (
     DecodeError,
     ExpiredSignatureError,
     ImmatureSignatureError,
+    InvalidAlgorithmError,
     InvalidSignatureError,
     PyJWKClientError,
     encode,
@@ -126,8 +127,10 @@ class TestBase(unittest.TestCase):
             # JWT signed with wrong algorithm (HS256 instead of RS256)
             (
                 False,
-                """eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6
-                IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.dyt0CoTl4WoVjAHI9Q_CwSKhl6d_9rhM3NrXuJttkao""",
+                (
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6"
+                    "IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.dyt0CoTl4WoVjAHI9Q_CwSKhl6d_9rhM3NrXuJttkao"
+                ),
                 PyJWKClientError,
                 'Unable to find a signing key that matches: "None"',
             ),
@@ -178,6 +181,14 @@ class TestBase(unittest.TestCase):
                 ),
                 None,
                 None,
+            ),
+            # Disallowed algorithm "none"
+            (
+                False,
+                "eyJhbGciOiAibm9uZSIsICJ0eXAiOiAiSldUIiwgImtpZCI6ICJraWQxMjMifQ.eyJpc3MiOiAiaHR0cHM6"
+                "Ly9hdXRoLmFjbWUuY29tIiwgInN1YiI6ICIxMjM0NSIsICJpYXQiOiAxNzQ5NzI2NjIxLCAiZXhwIjogMTc0OTczMDIyMSwgIm5iZiI6IDE3NDk3MjY2MjF9.",
+                InvalidAlgorithmError,
+                'The specified alg value is not allowed',
             ),
             # Success with old Frontend API URL in config (2)
             (
