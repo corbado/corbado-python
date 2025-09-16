@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,17 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ShortSession(BaseModel):
+class UserListDefaultResponseAllOfRequestData(BaseModel):
     """
-    ShortSession
+    Data about the request itself, can be used for debugging
     """ # noqa: E501
-    value: StrictStr
-    __properties: ClassVar[List[str]] = ["value"]
+    request_id: StrictStr = Field(description="Unique ID of request, you can provide your own while making the request, if not the ID will be randomly generated on server side", alias="requestID")
+    link: Optional[StrictStr] = Field(default=None, description="Link to dashboard with details about request")
+    __properties: ClassVar[List[str]] = ["requestID", "link"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -48,7 +49,7 @@ class ShortSession(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ShortSession from a JSON string"""
+        """Create an instance of UserListDefaultResponseAllOfRequestData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,7 +74,7 @@ class ShortSession(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ShortSession from a dict"""
+        """Create an instance of UserListDefaultResponseAllOfRequestData from a dict"""
         if obj is None:
             return None
 
@@ -81,7 +82,8 @@ class ShortSession(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "value": obj.get("value")
+            "requestID": obj.get("requestID"),
+            "link": obj.get("link")
         })
         return _obj
 

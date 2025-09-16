@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -25,10 +25,10 @@ from typing_extensions import Self
 
 class ConnectTokenDataPasskeyAppend(BaseModel):
     """
-    ConnectTokenDataPasskeyAppend
+    Data for `passkey-append`.
     """ # noqa: E501
-    display_name: StrictStr = Field(alias="displayName")
-    identifier: StrictStr
+    display_name: StrictStr = Field(description="Display name of the user.", alias="displayName")
+    identifier: StrictStr = Field(description="Login identifier of the user (here email address).")
     __properties: ClassVar[List[str]] = ["displayName", "identifier"]
 
     model_config = ConfigDict(

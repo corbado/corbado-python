@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -30,7 +30,7 @@ class UserCreateReq(BaseModel):
     """ # noqa: E501
     full_name: Optional[StrictStr] = Field(default=None, alias="fullName")
     status: UserStatus
-    explicit_webauthn_id: Optional[StrictStr] = Field(default=None, description="For connect projects, the webauthnID can be explicitly set for a user", alias="explicitWebauthnID")
+    explicit_webauthn_id: Optional[StrictStr] = Field(default=None, description="For [Corbado Connect](https://docs.corbado.com/corbado-connect) projects, the webauthnID can be explicitly set for a user", alias="explicitWebauthnID")
     __properties: ClassVar[List[str]] = ["fullName", "status", "explicitWebauthnID"]
 
     model_config = ConfigDict(

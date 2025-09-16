@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -43,7 +43,8 @@ class Credential(BaseModel):
     created_ms: StrictInt = Field(alias="createdMs")
     status: StrictStr = Field(description="Status")
     aaguid_details: AaguidDetails = Field(alias="aaguidDetails")
-    __properties: ClassVar[List[str]] = ["id", "credentialID", "attestationType", "transport", "backupEligible", "backupState", "authenticatorAAGUID", "sourceOS", "sourceBrowser", "lastUsed", "lastUsedMs", "created", "createdMs", "status", "aaguidDetails"]
+    tags: List[StrictStr]
+    __properties: ClassVar[List[str]] = ["id", "credentialID", "attestationType", "transport", "backupEligible", "backupState", "authenticatorAAGUID", "sourceOS", "sourceBrowser", "lastUsed", "lastUsedMs", "created", "createdMs", "status", "aaguidDetails", "tags"]
 
     @field_validator('transport')
     def transport_validate_enum(cls, value):
@@ -128,7 +129,8 @@ class Credential(BaseModel):
             "created": obj.get("created"),
             "createdMs": obj.get("createdMs"),
             "status": obj.get("status"),
-            "aaguidDetails": AaguidDetails.from_dict(obj["aaguidDetails"]) if obj.get("aaguidDetails") is not None else None
+            "aaguidDetails": AaguidDetails.from_dict(obj["aaguidDetails"]) if obj.get("aaguidDetails") is not None else None,
+            "tags": obj.get("tags")
         })
         return _obj
 

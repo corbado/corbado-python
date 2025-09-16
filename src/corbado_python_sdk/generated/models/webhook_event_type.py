@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -30,6 +30,9 @@ class WebhookEventType(str, Enum):
     PASSKEY_MINUS_LOGIN_DOT_COMPLETED = 'passkey-login.completed'
     PASSKEY_DOT_CREATED = 'passkey.created'
     PASSKEY_DOT_DELETED = 'passkey.deleted'
+    USER_DOT_CREATED = 'user.created'
+    USER_DOT_UPDATED = 'user.updated'
+    USER_DOT_DELETED = 'user.deleted'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

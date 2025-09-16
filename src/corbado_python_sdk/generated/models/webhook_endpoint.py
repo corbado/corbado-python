@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -30,13 +30,15 @@ class WebhookEndpoint(BaseModel):
     """ # noqa: E501
     id: StrictStr
     url: StrictStr
+    basic_auth_username: StrictStr = Field(alias="basicAuthUsername")
+    basic_auth_password: StrictStr = Field(alias="basicAuthPassword")
     custom_headers: Dict[str, Any] = Field(alias="customHeaders")
     subscribed_events: List[WebhookEventType] = Field(alias="subscribedEvents")
     created: StrictStr
     created_ms: StrictInt = Field(alias="createdMs")
     updated: StrictStr
     updated_ms: StrictInt = Field(alias="updatedMs")
-    __properties: ClassVar[List[str]] = ["id", "url", "customHeaders", "subscribedEvents", "created", "createdMs", "updated", "updatedMs"]
+    __properties: ClassVar[List[str]] = ["id", "url", "basicAuthUsername", "basicAuthPassword", "customHeaders", "subscribedEvents", "created", "createdMs", "updated", "updatedMs"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,6 +93,8 @@ class WebhookEndpoint(BaseModel):
         _obj = cls.model_validate({
             "id": obj.get("id"),
             "url": obj.get("url"),
+            "basicAuthUsername": obj.get("basicAuthUsername"),
+            "basicAuthPassword": obj.get("basicAuthPassword"),
             "customHeaders": obj.get("customHeaders"),
             "subscribedEvents": obj.get("subscribedEvents"),
             "created": obj.get("created"),

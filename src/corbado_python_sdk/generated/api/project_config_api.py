@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -17,8 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.project_config_update_cname_req import ProjectConfigUpdateCnameReq
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -54,8 +54,8 @@ class ProjectConfigApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
-        """project_config_update_cname
+    ) -> UserDelete200Response:
+        """Update project CNAME and generate SSL certificate
 
         Update project config CNAME and generates new SSL certificate
 
@@ -92,7 +92,7 @@ class ProjectConfigApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -121,8 +121,8 @@ class ProjectConfigApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
-        """project_config_update_cname
+    ) -> ApiResponse[UserDelete200Response]:
+        """Update project CNAME and generate SSL certificate
 
         Update project config CNAME and generates new SSL certificate
 
@@ -159,7 +159,7 @@ class ProjectConfigApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -189,7 +189,7 @@ class ProjectConfigApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """project_config_update_cname
+        """Update project CNAME and generate SSL certificate
 
         Update project config CNAME and generates new SSL certificate
 
@@ -226,7 +226,7 @@ class ProjectConfigApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,

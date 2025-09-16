@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -29,11 +29,11 @@ class Identifier(BaseModel):
     """
     Identifier
     """ # noqa: E501
-    identifier_id: StrictStr = Field(alias="identifierID")
+    identifier_id: StrictStr = Field(description="Unique identifier of the login identifier.", alias="identifierID")
     type: IdentifierType
-    value: StrictStr
+    value: StrictStr = Field(description="Value of the identifier (here email address).")
     status: IdentifierStatus
-    user_id: StrictStr = Field(alias="userID")
+    user_id: StrictStr = Field(description="Unique identifier of the user.", alias="userID")
     __properties: ClassVar[List[str]] = ["identifierID", "type", "value", "status", "userID"]
 
     model_config = ConfigDict(

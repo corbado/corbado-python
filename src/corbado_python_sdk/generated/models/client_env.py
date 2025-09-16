@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,24 +18,26 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from corbado_python_sdk.generated.models.error_rsp_all_of_error import ErrorRspAllOfError
-from corbado_python_sdk.generated.models.request_data import RequestData
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ErrorRsp(BaseModel):
+class ClientEnv(BaseModel):
     """
-    ErrorRsp
+    ClientEnv
     """ # noqa: E501
-    http_status_code: StrictInt = Field(description="HTTP status code of operation", alias="httpStatusCode")
-    message: StrictStr
-    request_data: RequestData = Field(alias="requestData")
-    runtime: Union[StrictFloat, StrictInt] = Field(description="Runtime in seconds for this request")
-    data: Optional[Dict[str, Any]] = None
-    error: ErrorRspAllOfError
-    __properties: ClassVar[List[str]] = ["httpStatusCode", "message", "requestData", "runtime", "data", "error"]
+    id: StrictStr
+    handle: StrictStr
+    browser_name: StrictStr = Field(alias="browserName")
+    browser_version: StrictStr = Field(alias="browserVersion")
+    os_name: StrictStr = Field(alias="osName")
+    os_version: StrictStr = Field(alias="osVersion")
+    user_agent: StrictStr = Field(alias="userAgent")
+    js_fingerprint: StrictStr = Field(alias="jsFingerprint")
+    created_ms: StrictInt = Field(alias="createdMs")
+    device_id: Optional[StrictStr] = Field(default=None, alias="deviceId")
+    __properties: ClassVar[List[str]] = ["id", "handle", "browserName", "browserVersion", "osName", "osVersion", "userAgent", "jsFingerprint", "createdMs", "deviceId"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +57,7 @@ class ErrorRsp(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ErrorRsp from a JSON string"""
+        """Create an instance of ClientEnv from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,17 +78,11 @@ class ErrorRsp(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of request_data
-        if self.request_data:
-            _dict['requestData'] = self.request_data.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of error
-        if self.error:
-            _dict['error'] = self.error.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ErrorRsp from a dict"""
+        """Create an instance of ClientEnv from a dict"""
         if obj is None:
             return None
 
@@ -94,12 +90,16 @@ class ErrorRsp(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "httpStatusCode": obj.get("httpStatusCode"),
-            "message": obj.get("message"),
-            "requestData": RequestData.from_dict(obj["requestData"]) if obj.get("requestData") is not None else None,
-            "runtime": obj.get("runtime"),
-            "data": obj.get("data"),
-            "error": ErrorRspAllOfError.from_dict(obj["error"]) if obj.get("error") is not None else None
+            "id": obj.get("id"),
+            "handle": obj.get("handle"),
+            "browserName": obj.get("browserName"),
+            "browserVersion": obj.get("browserVersion"),
+            "osName": obj.get("osName"),
+            "osVersion": obj.get("osVersion"),
+            "userAgent": obj.get("userAgent"),
+            "jsFingerprint": obj.get("jsFingerprint"),
+            "createdMs": obj.get("createdMs"),
+            "deviceId": obj.get("deviceId")
         })
         return _obj
 

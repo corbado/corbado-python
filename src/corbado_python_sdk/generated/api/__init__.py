@@ -3,6 +3,7 @@
 # import apis into api package
 from corbado_python_sdk.generated.api.auth_events_api import AuthEventsApi
 from corbado_python_sdk.generated.api.challenges_api import ChallengesApi
+from corbado_python_sdk.generated.api.client_envs_api import ClientEnvsApi
 from corbado_python_sdk.generated.api.connect_tokens_api import ConnectTokensApi
 from corbado_python_sdk.generated.api.identifiers_api import IdentifiersApi
 from corbado_python_sdk.generated.api.passkey_challenges_api import PasskeyChallengesApi

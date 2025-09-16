@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -45,11 +45,11 @@ class PasskeyChallengesApi:
     @validate_call
     def passkey_challenge_list(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -63,19 +63,19 @@ class PasskeyChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyChallengeList:
-        """passkey_challenge_list
+        """List all passkey challenges for a user
 
-        Returns a list of matching passkey challenges
+        Returns a list of passkey challenges for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `projectID`, `status`, and `type`. - The `filter` parameter supports the following fields: `userID`, `projectID`, `status`, and `type`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -128,11 +128,11 @@ class PasskeyChallengesApi:
     @validate_call
     def passkey_challenge_list_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -146,19 +146,19 @@ class PasskeyChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyChallengeList]:
-        """passkey_challenge_list
+        """List all passkey challenges for a user
 
-        Returns a list of matching passkey challenges
+        Returns a list of passkey challenges for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `projectID`, `status`, and `type`. - The `filter` parameter supports the following fields: `userID`, `projectID`, `status`, and `type`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -211,11 +211,11 @@ class PasskeyChallengesApi:
     @validate_call
     def passkey_challenge_list_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -229,19 +229,19 @@ class PasskeyChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_challenge_list
+        """List all passkey challenges for a user
 
-        Returns a list of matching passkey challenges
+        Returns a list of passkey challenges for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `projectID`, `status`, and `type`. - The `filter` parameter supports the following fields: `userID`, `projectID`, `status`, and `type`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -375,7 +375,7 @@ class PasskeyChallengesApi:
     @validate_call
     def passkey_challenge_update(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_challenge_id: Annotated[StrictStr, Field(description="ID of a passkey challenge")],
         passkey_challenge_update_req: PasskeyChallengeUpdateReq,
         _request_timeout: Union[
@@ -391,11 +391,11 @@ class PasskeyChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyChallenge:
-        """passkey_challenge_update
+        """Update a passkey challenge for a user
 
-        Updates a passkey challenge
+        Updates a passkey challenge for a user by given `userID` and `passkeyChallengeID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_challenge_id: ID of a passkey challenge (required)
         :type passkey_challenge_id: str
@@ -450,7 +450,7 @@ class PasskeyChallengesApi:
     @validate_call
     def passkey_challenge_update_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_challenge_id: Annotated[StrictStr, Field(description="ID of a passkey challenge")],
         passkey_challenge_update_req: PasskeyChallengeUpdateReq,
         _request_timeout: Union[
@@ -466,11 +466,11 @@ class PasskeyChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyChallenge]:
-        """passkey_challenge_update
+        """Update a passkey challenge for a user
 
-        Updates a passkey challenge
+        Updates a passkey challenge for a user by given `userID` and `passkeyChallengeID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_challenge_id: ID of a passkey challenge (required)
         :type passkey_challenge_id: str
@@ -525,7 +525,7 @@ class PasskeyChallengesApi:
     @validate_call
     def passkey_challenge_update_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_challenge_id: Annotated[StrictStr, Field(description="ID of a passkey challenge")],
         passkey_challenge_update_req: PasskeyChallengeUpdateReq,
         _request_timeout: Union[
@@ -541,11 +541,11 @@ class PasskeyChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_challenge_update
+        """Update a passkey challenge for a user
 
-        Updates a passkey challenge
+        Updates a passkey challenge for a user by given `userID` and `passkeyChallengeID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_challenge_id: ID of a passkey challenge (required)
         :type passkey_challenge_id: str

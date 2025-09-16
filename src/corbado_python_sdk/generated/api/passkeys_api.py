@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -31,6 +31,8 @@ from corbado_python_sdk.generated.models.passkey_mediation_start_req import Pass
 from corbado_python_sdk.generated.models.passkey_mediation_start_rsp import PasskeyMediationStartRsp
 from corbado_python_sdk.generated.models.passkey_post_login_req import PasskeyPostLoginReq
 from corbado_python_sdk.generated.models.passkey_post_login_rsp import PasskeyPostLoginRsp
+from corbado_python_sdk.generated.models.passkey_verify_signed_data_req import PasskeyVerifySignedDataReq
+from corbado_python_sdk.generated.models.passkey_verify_signed_data_rsp import PasskeyVerifySignedDataRsp
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -67,9 +69,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyAppendFinishRsp:
-        """passkey_append_finish
+        """Finish creating a new passkey
 
-        Completes a challenge for creating a new passkey
+        Finishes creating a new passkey by completing the WebAuthn ceremony. 
 
         :param passkey_append_finish_req: (required)
         :type passkey_append_finish_req: PasskeyAppendFinishReq
@@ -134,9 +136,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyAppendFinishRsp]:
-        """passkey_append_finish
+        """Finish creating a new passkey
 
-        Completes a challenge for creating a new passkey
+        Finishes creating a new passkey by completing the WebAuthn ceremony. 
 
         :param passkey_append_finish_req: (required)
         :type passkey_append_finish_req: PasskeyAppendFinishReq
@@ -201,9 +203,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_append_finish
+        """Finish creating a new passkey
 
-        Completes a challenge for creating a new passkey
+        Finishes creating a new passkey by completing the WebAuthn ceremony. 
 
         :param passkey_append_finish_req: (required)
         :type passkey_append_finish_req: PasskeyAppendFinishReq
@@ -341,9 +343,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyAppendStartRsp:
-        """passkey_append_start
+        """Start creating a new passkey
 
-        Starts a challenge for creating a new passkey
+        Starts creating a new passkey by initiating the WebAuthn ceremony. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-creating-a-new-passkey). 
 
         :param passkey_append_start_req: (required)
         :type passkey_append_start_req: PasskeyAppendStartReq
@@ -408,9 +410,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyAppendStartRsp]:
-        """passkey_append_start
+        """Start creating a new passkey
 
-        Starts a challenge for creating a new passkey
+        Starts creating a new passkey by initiating the WebAuthn ceremony. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-creating-a-new-passkey). 
 
         :param passkey_append_start_req: (required)
         :type passkey_append_start_req: PasskeyAppendStartReq
@@ -475,9 +477,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_append_start
+        """Start creating a new passkey
 
-        Starts a challenge for creating a new passkey
+        Starts creating a new passkey by initiating the WebAuthn ceremony. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-creating-a-new-passkey). 
 
         :param passkey_append_start_req: (required)
         :type passkey_append_start_req: PasskeyAppendStartReq
@@ -615,9 +617,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyLoginFinishRsp:
-        """passkey_login_finish
+        """Finish login with an existing passkey
 
-        Completes a challenge for an existing passkey
+        Finishes login with an existing passkey by completing the WebAuthn ceremony. 
 
         :param passkey_login_finish_req: (required)
         :type passkey_login_finish_req: PasskeyLoginFinishReq
@@ -682,9 +684,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyLoginFinishRsp]:
-        """passkey_login_finish
+        """Finish login with an existing passkey
 
-        Completes a challenge for an existing passkey
+        Finishes login with an existing passkey by completing the WebAuthn ceremony. 
 
         :param passkey_login_finish_req: (required)
         :type passkey_login_finish_req: PasskeyLoginFinishReq
@@ -749,9 +751,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_login_finish
+        """Finish login with an existing passkey
 
-        Completes a challenge for an existing passkey
+        Finishes login with an existing passkey by completing the WebAuthn ceremony. 
 
         :param passkey_login_finish_req: (required)
         :type passkey_login_finish_req: PasskeyLoginFinishReq
@@ -889,9 +891,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyLoginStartRsp:
-        """passkey_login_start
+        """Start login with an existing passkey
 
-        Starts a challenge for an existing passkey
+        Starts login with an existing passkey by initiating the WebAuthn ceremony. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey). 
 
         :param passkey_login_start_req: (required)
         :type passkey_login_start_req: PasskeyLoginStartReq
@@ -956,9 +958,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyLoginStartRsp]:
-        """passkey_login_start
+        """Start login with an existing passkey
 
-        Starts a challenge for an existing passkey
+        Starts login with an existing passkey by initiating the WebAuthn ceremony. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey). 
 
         :param passkey_login_start_req: (required)
         :type passkey_login_start_req: PasskeyLoginStartReq
@@ -1023,9 +1025,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_login_start
+        """Start login with an existing passkey
 
-        Starts a challenge for an existing passkey
+        Starts login with an existing passkey by initiating the WebAuthn ceremony. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey). 
 
         :param passkey_login_start_req: (required)
         :type passkey_login_start_req: PasskeyLoginStartReq
@@ -1163,9 +1165,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyMediationFinishRsp:
-        """passkey_mediation_finish
+        """Finish login with an existing passkey (Conditional UI)
 
-        Completes a challenge for an existing passkey (Conditional UI)
+        Finishes login with an existing passkey in [Conditional UI](https://www.corbado.com/glossary/conditional-ui) scenario. 
 
         :param passkey_mediation_finish_req: (required)
         :type passkey_mediation_finish_req: PasskeyMediationFinishReq
@@ -1230,9 +1232,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyMediationFinishRsp]:
-        """passkey_mediation_finish
+        """Finish login with an existing passkey (Conditional UI)
 
-        Completes a challenge for an existing passkey (Conditional UI)
+        Finishes login with an existing passkey in [Conditional UI](https://www.corbado.com/glossary/conditional-ui) scenario. 
 
         :param passkey_mediation_finish_req: (required)
         :type passkey_mediation_finish_req: PasskeyMediationFinishReq
@@ -1297,9 +1299,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_mediation_finish
+        """Finish login with an existing passkey (Conditional UI)
 
-        Completes a challenge for an existing passkey (Conditional UI)
+        Finishes login with an existing passkey in [Conditional UI](https://www.corbado.com/glossary/conditional-ui) scenario. 
 
         :param passkey_mediation_finish_req: (required)
         :type passkey_mediation_finish_req: PasskeyMediationFinishReq
@@ -1437,9 +1439,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyMediationStartRsp:
-        """passkey_mediation_start
+        """Start login with an existing passkey (Conditional UI)
 
-        Starts a challenge for an existing passkey (Conditional UI)
+        Starts login with an existing passkey in [Conditional UI](https://www.corbado.com/glossary/conditional-ui) scenario. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey-conditional-ui). 
 
         :param passkey_mediation_start_req: (required)
         :type passkey_mediation_start_req: PasskeyMediationStartReq
@@ -1504,9 +1506,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyMediationStartRsp]:
-        """passkey_mediation_start
+        """Start login with an existing passkey (Conditional UI)
 
-        Starts a challenge for an existing passkey (Conditional UI)
+        Starts login with an existing passkey in [Conditional UI](https://www.corbado.com/glossary/conditional-ui) scenario. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey-conditional-ui). 
 
         :param passkey_mediation_start_req: (required)
         :type passkey_mediation_start_req: PasskeyMediationStartReq
@@ -1571,9 +1573,9 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_mediation_start
+        """Start login with an existing passkey (Conditional UI)
 
-        Starts a challenge for an existing passkey (Conditional UI)
+        Starts login with an existing passkey in [Conditional UI](https://www.corbado.com/glossary/conditional-ui) scenario. To complete the ceremony you need to call [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey-conditional-ui). 
 
         :param passkey_mediation_start_req: (required)
         :type passkey_mediation_start_req: PasskeyMediationStartReq
@@ -1711,7 +1713,7 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyPostLoginRsp:
-        """passkey_post_login
+        """Run the post-login action for passkey
 
         Explicitly runs the post-login action
 
@@ -1778,7 +1780,7 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyPostLoginRsp]:
-        """passkey_post_login
+        """Run the post-login action for passkey
 
         Explicitly runs the post-login action
 
@@ -1845,7 +1847,7 @@ class PasskeysApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_post_login
+        """Run the post-login action for passkey
 
         Explicitly runs the post-login action
 
@@ -1953,6 +1955,280 @@ class PasskeysApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/passkey/postLogin',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def passkey_verify_signed_data(
+        self,
+        passkey_verify_signed_data_req: PasskeyVerifySignedDataReq,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> PasskeyVerifySignedDataRsp:
+        """Verify signedPasskeyData from a passkey login
+
+        Verifies the `signedPasskeyData` from a passkey login. The `signedPasskeyData` is returned by the [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey) call and is essential for transferring the authentication state to your backend.  It is required only for [Corbado Connect](/corbado-connect) and is thoroughly explained in our [Documentation](/corbado-connect/concepts/signed-passkey-data). Our [generic integration guide](/corbado-connect/integration/generic) explains how to use `signedPasskeyData` in your backend. 
+
+        :param passkey_verify_signed_data_req: (required)
+        :type passkey_verify_signed_data_req: PasskeyVerifySignedDataReq
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._passkey_verify_signed_data_serialize(
+            passkey_verify_signed_data_req=passkey_verify_signed_data_req,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PasskeyVerifySignedDataRsp",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def passkey_verify_signed_data_with_http_info(
+        self,
+        passkey_verify_signed_data_req: PasskeyVerifySignedDataReq,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[PasskeyVerifySignedDataRsp]:
+        """Verify signedPasskeyData from a passkey login
+
+        Verifies the `signedPasskeyData` from a passkey login. The `signedPasskeyData` is returned by the [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey) call and is essential for transferring the authentication state to your backend.  It is required only for [Corbado Connect](/corbado-connect) and is thoroughly explained in our [Documentation](/corbado-connect/concepts/signed-passkey-data). Our [generic integration guide](/corbado-connect/integration/generic) explains how to use `signedPasskeyData` in your backend. 
+
+        :param passkey_verify_signed_data_req: (required)
+        :type passkey_verify_signed_data_req: PasskeyVerifySignedDataReq
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._passkey_verify_signed_data_serialize(
+            passkey_verify_signed_data_req=passkey_verify_signed_data_req,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PasskeyVerifySignedDataRsp",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def passkey_verify_signed_data_without_preload_content(
+        self,
+        passkey_verify_signed_data_req: PasskeyVerifySignedDataReq,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """Verify signedPasskeyData from a passkey login
+
+        Verifies the `signedPasskeyData` from a passkey login. The `signedPasskeyData` is returned by the [finish](/api-reference/backend-api/passkeys/finish-login-with-an-existing-passkey) call and is essential for transferring the authentication state to your backend.  It is required only for [Corbado Connect](/corbado-connect) and is thoroughly explained in our [Documentation](/corbado-connect/concepts/signed-passkey-data). Our [generic integration guide](/corbado-connect/integration/generic) explains how to use `signedPasskeyData` in your backend. 
+
+        :param passkey_verify_signed_data_req: (required)
+        :type passkey_verify_signed_data_req: PasskeyVerifySignedDataReq
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._passkey_verify_signed_data_serialize(
+            passkey_verify_signed_data_req=passkey_verify_signed_data_req,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "PasskeyVerifySignedDataRsp",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _passkey_verify_signed_data_serialize(
+        self,
+        passkey_verify_signed_data_req,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if passkey_verify_signed_data_req is not None:
+            _body_params = passkey_verify_signed_data_req
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'basicAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/passkey/verifySignedData',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

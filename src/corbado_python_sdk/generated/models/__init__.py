@@ -4,7 +4,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -13,10 +13,9 @@
     Do not edit the class manually.
 """  # noqa: E501
 
-
 # import models into model package
 from corbado_python_sdk.generated.models.aaguid_details import AaguidDetails
-from corbado_python_sdk.generated.models.app_type import AppType
+from corbado_python_sdk.generated.models.append_history_data import AppendHistoryData
 from corbado_python_sdk.generated.models.auth_event import AuthEvent
 from corbado_python_sdk.generated.models.auth_event_create_req import AuthEventCreateReq
 from corbado_python_sdk.generated.models.auth_event_method import AuthEventMethod
@@ -27,6 +26,8 @@ from corbado_python_sdk.generated.models.challenge_create_req import ChallengeCr
 from corbado_python_sdk.generated.models.challenge_status import ChallengeStatus
 from corbado_python_sdk.generated.models.challenge_type import ChallengeType
 from corbado_python_sdk.generated.models.challenge_update_req import ChallengeUpdateReq
+from corbado_python_sdk.generated.models.client_env import ClientEnv
+from corbado_python_sdk.generated.models.client_env_list import ClientEnvList
 from corbado_python_sdk.generated.models.client_information import ClientInformation
 from corbado_python_sdk.generated.models.connect_token import ConnectToken
 from corbado_python_sdk.generated.models.connect_token_create_req import ConnectTokenCreateReq
@@ -43,13 +44,10 @@ from corbado_python_sdk.generated.models.credential import Credential
 from corbado_python_sdk.generated.models.credential_list import CredentialList
 from corbado_python_sdk.generated.models.cross_device_authentication_strategy import CrossDeviceAuthenticationStrategy
 from corbado_python_sdk.generated.models.decision_insights import DecisionInsights
+from corbado_python_sdk.generated.models.decision_insights_append import DecisionInsightsAppend
 from corbado_python_sdk.generated.models.decision_tag import DecisionTag
 from corbado_python_sdk.generated.models.detection_insights import DetectionInsights
 from corbado_python_sdk.generated.models.detection_tag import DetectionTag
-from corbado_python_sdk.generated.models.error_rsp import ErrorRsp
-from corbado_python_sdk.generated.models.error_rsp_all_of_error import ErrorRspAllOfError
-from corbado_python_sdk.generated.models.error_rsp_all_of_error_validation import ErrorRspAllOfErrorValidation
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.identifier import Identifier
 from corbado_python_sdk.generated.models.identifier_create_req import IdentifierCreateReq
 from corbado_python_sdk.generated.models.identifier_list import IdentifierList
@@ -57,11 +55,8 @@ from corbado_python_sdk.generated.models.identifier_status import IdentifierStat
 from corbado_python_sdk.generated.models.identifier_type import IdentifierType
 from corbado_python_sdk.generated.models.identifier_update_req import IdentifierUpdateReq
 from corbado_python_sdk.generated.models.java_script_high_entropy import JavaScriptHighEntropy
-from corbado_python_sdk.generated.models.long_session import LongSession
-from corbado_python_sdk.generated.models.long_session_create_req import LongSessionCreateReq
-from corbado_python_sdk.generated.models.long_session_status import LongSessionStatus
-from corbado_python_sdk.generated.models.long_session_update_req import LongSessionUpdateReq
-from corbado_python_sdk.generated.models.paging import Paging
+from corbado_python_sdk.generated.models.native_meta import NativeMeta
+from corbado_python_sdk.generated.models.parsed_device_info import ParsedDeviceInfo
 from corbado_python_sdk.generated.models.passkey_append_finish_req import PasskeyAppendFinishReq
 from corbado_python_sdk.generated.models.passkey_append_finish_rsp import PasskeyAppendFinishRsp
 from corbado_python_sdk.generated.models.passkey_append_start_req import PasskeyAppendStartReq
@@ -81,27 +76,40 @@ from corbado_python_sdk.generated.models.passkey_login_finish_req import Passkey
 from corbado_python_sdk.generated.models.passkey_login_finish_rsp import PasskeyLoginFinishRsp
 from corbado_python_sdk.generated.models.passkey_login_start_req import PasskeyLoginStartReq
 from corbado_python_sdk.generated.models.passkey_login_start_rsp import PasskeyLoginStartRsp
+from corbado_python_sdk.generated.models.passkey_mediation_finish_error_alternative_project import PasskeyMediationFinishErrorAlternativeProject
+from corbado_python_sdk.generated.models.passkey_mediation_finish_error_credential_deleted import PasskeyMediationFinishErrorCredentialDeleted
 from corbado_python_sdk.generated.models.passkey_mediation_finish_req import PasskeyMediationFinishReq
 from corbado_python_sdk.generated.models.passkey_mediation_finish_rsp import PasskeyMediationFinishRsp
+from corbado_python_sdk.generated.models.passkey_mediation_finish_rsp_error import PasskeyMediationFinishRspError
 from corbado_python_sdk.generated.models.passkey_mediation_start_req import PasskeyMediationStartReq
 from corbado_python_sdk.generated.models.passkey_mediation_start_rsp import PasskeyMediationStartRsp
 from corbado_python_sdk.generated.models.passkey_post_login_req import PasskeyPostLoginReq
 from corbado_python_sdk.generated.models.passkey_post_login_rsp import PasskeyPostLoginRsp
+from corbado_python_sdk.generated.models.passkey_verify_signed_data_req import PasskeyVerifySignedDataReq
+from corbado_python_sdk.generated.models.passkey_verify_signed_data_rsp import PasskeyVerifySignedDataRsp
 from corbado_python_sdk.generated.models.password_manager import PasswordManager
 from corbado_python_sdk.generated.models.password_manager_list import PasswordManagerList
 from corbado_python_sdk.generated.models.project_config_update_cname_req import ProjectConfigUpdateCnameReq
-from corbado_python_sdk.generated.models.request_data import RequestData
-from corbado_python_sdk.generated.models.short_session import ShortSession
-from corbado_python_sdk.generated.models.short_session_create_req import ShortSessionCreateReq
+from corbado_python_sdk.generated.models.session_list import SessionList
+from corbado_python_sdk.generated.models.session_list_sessions_inner import SessionListSessionsInner
 from corbado_python_sdk.generated.models.social_account import SocialAccount
 from corbado_python_sdk.generated.models.social_account_create_req import SocialAccountCreateReq
 from corbado_python_sdk.generated.models.social_account_list import SocialAccountList
-from corbado_python_sdk.generated.models.social_provider_type import SocialProviderType
 from corbado_python_sdk.generated.models.user import User
+from corbado_python_sdk.generated.models.user_aggregate import UserAggregate
 from corbado_python_sdk.generated.models.user_create_req import UserCreateReq
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
+from corbado_python_sdk.generated.models.user_list import UserList
+from corbado_python_sdk.generated.models.user_list_default_response import UserListDefaultResponse
+from corbado_python_sdk.generated.models.user_list_default_response_all_of_error import UserListDefaultResponseAllOfError
+from corbado_python_sdk.generated.models.user_list_default_response_all_of_error_validation_inner import UserListDefaultResponseAllOfErrorValidationInner
+from corbado_python_sdk.generated.models.user_list_default_response_all_of_request_data import UserListDefaultResponseAllOfRequestData
+from corbado_python_sdk.generated.models.user_list_paging import UserListPaging
 from corbado_python_sdk.generated.models.user_status import UserStatus
 from corbado_python_sdk.generated.models.user_update_req import UserUpdateReq
 from corbado_python_sdk.generated.models.webhook_endpoint import WebhookEndpoint
 from corbado_python_sdk.generated.models.webhook_endpoint_create_req import WebhookEndpointCreateReq
 from corbado_python_sdk.generated.models.webhook_endpoint_list import WebhookEndpointList
+from corbado_python_sdk.generated.models.webhook_endpoint_update_req import WebhookEndpointUpdateReq
 from corbado_python_sdk.generated.models.webhook_event_type import WebhookEventType
+

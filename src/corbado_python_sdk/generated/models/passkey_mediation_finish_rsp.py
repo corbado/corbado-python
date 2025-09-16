@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -21,6 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from corbado_python_sdk.generated.models.passkey_data import PasskeyData
+from corbado_python_sdk.generated.models.passkey_mediation_finish_rsp_error import PasskeyMediationFinishRspError
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +31,8 @@ class PasskeyMediationFinishRsp(BaseModel):
     """ # noqa: E501
     passkey_data: PasskeyData = Field(alias="passkeyData")
     signed_passkey_data: Optional[StrictStr] = Field(default=None, alias="signedPasskeyData")
-    __properties: ClassVar[List[str]] = ["passkeyData", "signedPasskeyData"]
+    error: Optional[PasskeyMediationFinishRspError] = None
+    __properties: ClassVar[List[str]] = ["passkeyData", "signedPasskeyData", "error"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -74,6 +76,9 @@ class PasskeyMediationFinishRsp(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of passkey_data
         if self.passkey_data:
             _dict['passkeyData'] = self.passkey_data.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of error
+        if self.error:
+            _dict['error'] = self.error.to_dict()
         return _dict
 
     @classmethod
@@ -87,7 +92,8 @@ class PasskeyMediationFinishRsp(BaseModel):
 
         _obj = cls.model_validate({
             "passkeyData": PasskeyData.from_dict(obj["passkeyData"]) if obj.get("passkeyData") is not None else None,
-            "signedPasskeyData": obj.get("signedPasskeyData")
+            "signedPasskeyData": obj.get("signedPasskeyData"),
+            "error": PasskeyMediationFinishRspError.from_dict(obj["error"]) if obj.get("error") is not None else None
         })
         return _obj
 

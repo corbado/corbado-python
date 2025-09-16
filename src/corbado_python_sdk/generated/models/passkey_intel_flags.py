@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,7 +28,8 @@ class PasskeyIntelFlags(BaseModel):
     PasskeyIntelFlags
     """ # noqa: E501
     force_passkey_append: StrictBool = Field(alias="forcePasskeyAppend")
-    __properties: ClassVar[List[str]] = ["forcePasskeyAppend"]
+    ask_for_auto_append: Optional[StrictBool] = Field(default=None, alias="askForAutoAppend")
+    __properties: ClassVar[List[str]] = ["forcePasskeyAppend", "askForAutoAppend"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -81,7 +82,8 @@ class PasskeyIntelFlags(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "forcePasskeyAppend": obj.get("forcePasskeyAppend")
+            "forcePasskeyAppend": obj.get("forcePasskeyAppend"),
+            "askForAutoAppend": obj.get("askForAutoAppend")
         })
         return _obj
 

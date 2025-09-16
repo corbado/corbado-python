@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -33,7 +33,8 @@ class PasskeyAppendFinishReq(BaseModel):
     attestation_response: StrictStr = Field(alias="attestationResponse")
     client_information: ClientInformation = Field(alias="clientInformation")
     send_notification: Optional[StrictBool] = Field(default=None, alias="sendNotification")
-    __properties: ClassVar[List[str]] = ["userID", "processID", "attestationResponse", "clientInformation", "sendNotification"]
+    tracking_id: StrictStr = Field(alias="trackingID")
+    __properties: ClassVar[List[str]] = ["userID", "processID", "attestationResponse", "clientInformation", "sendNotification", "trackingID"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -93,7 +94,8 @@ class PasskeyAppendFinishReq(BaseModel):
             "processID": obj.get("processID"),
             "attestationResponse": obj.get("attestationResponse"),
             "clientInformation": ClientInformation.from_dict(obj["clientInformation"]) if obj.get("clientInformation") is not None else None,
-            "sendNotification": obj.get("sendNotification")
+            "sendNotification": obj.get("sendNotification"),
+            "trackingID": obj.get("trackingID")
         })
         return _obj
 

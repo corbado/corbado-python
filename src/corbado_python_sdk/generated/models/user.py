@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,7 +18,7 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from corbado_python_sdk.generated.models.user_status import UserStatus
 from typing import Optional, Set
@@ -32,7 +32,9 @@ class User(BaseModel):
     full_name: Optional[StrictStr] = Field(default=None, alias="fullName")
     status: UserStatus
     explicit_webauthn_id: Optional[StrictStr] = Field(default=None, alias="explicitWebauthnID")
-    __properties: ClassVar[List[str]] = ["userID", "fullName", "status", "explicitWebauthnID"]
+    updated: StrictStr
+    updated_ms: StrictInt = Field(alias="updatedMs")
+    __properties: ClassVar[List[str]] = ["userID", "fullName", "status", "explicitWebauthnID", "updated", "updatedMs"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -88,7 +90,9 @@ class User(BaseModel):
             "userID": obj.get("userID"),
             "fullName": obj.get("fullName"),
             "status": obj.get("status"),
-            "explicitWebauthnID": obj.get("explicitWebauthnID")
+            "explicitWebauthnID": obj.get("explicitWebauthnID"),
+            "updated": obj.get("updated"),
+            "updatedMs": obj.get("updatedMs")
         })
         return _obj
 

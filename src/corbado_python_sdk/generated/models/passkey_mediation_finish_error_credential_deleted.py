@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,18 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from pydantic import BaseModel, ConfigDict, StrictStr, field_validator
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class RequestData(BaseModel):
+class PasskeyMediationFinishErrorCredentialDeleted(BaseModel):
     """
-    Data about the request itself, can be used for debugging
+    PasskeyMediationFinishErrorCredentialDeleted
     """ # noqa: E501
-    request_id: StrictStr = Field(description="Unique ID of request, you can provide your own while making the request, if not the ID will be randomly generated on server side", alias="requestID")
-    link: Optional[StrictStr] = Field(default=None, description="Link to dashboard with details about request")
-    __properties: ClassVar[List[str]] = ["requestID", "link"]
+    type: StrictStr
+    __properties: ClassVar[List[str]] = ["type"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['credentialDeleted']):
+            raise ValueError("must be one of enum values ('credentialDeleted')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +55,7 @@ class RequestData(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of RequestData from a JSON string"""
+        """Create an instance of PasskeyMediationFinishErrorCredentialDeleted from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,7 +80,7 @@ class RequestData(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of RequestData from a dict"""
+        """Create an instance of PasskeyMediationFinishErrorCredentialDeleted from a dict"""
         if obj is None:
             return None
 
@@ -82,8 +88,7 @@ class RequestData(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "requestID": obj.get("requestID"),
-            "link": obj.get("link")
+            "type": obj.get("type")
         })
         return _obj
 

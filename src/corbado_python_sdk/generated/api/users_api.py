@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -21,12 +21,13 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from corbado_python_sdk.generated.models.credential_list import CredentialList
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.social_account import SocialAccount
 from corbado_python_sdk.generated.models.social_account_create_req import SocialAccountCreateReq
 from corbado_python_sdk.generated.models.social_account_list import SocialAccountList
 from corbado_python_sdk.generated.models.user import User
 from corbado_python_sdk.generated.models.user_create_req import UserCreateReq
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
+from corbado_python_sdk.generated.models.user_list import UserList
 from corbado_python_sdk.generated.models.user_update_req import UserUpdateReq
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
@@ -50,8 +51,8 @@ class UsersApi:
     @validate_call
     def credential_delete(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        credential_id: Annotated[StrictStr, Field(description="ID of credential")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        credential_id: Annotated[StrictStr, Field(description="Unique identifier of the passkey. Format: `cre-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,14 +65,14 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
-        """credential_delete
+    ) -> UserDelete200Response:
+        """Delete a passkey for a user
 
-        Deletes an existing credential (passkey)
+        Deletes an existing passkey for a user by given `userID` and `credentialID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param credential_id: ID of credential (required)
+        :param credential_id: Unique identifier of the passkey. Format: `cre-<number>`.  (required)
         :type credential_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -105,7 +106,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -121,8 +122,8 @@ class UsersApi:
     @validate_call
     def credential_delete_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        credential_id: Annotated[StrictStr, Field(description="ID of credential")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        credential_id: Annotated[StrictStr, Field(description="Unique identifier of the passkey. Format: `cre-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -135,14 +136,14 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
-        """credential_delete
+    ) -> ApiResponse[UserDelete200Response]:
+        """Delete a passkey for a user
 
-        Deletes an existing credential (passkey)
+        Deletes an existing passkey for a user by given `userID` and `credentialID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param credential_id: ID of credential (required)
+        :param credential_id: Unique identifier of the passkey. Format: `cre-<number>`.  (required)
         :type credential_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -176,7 +177,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -192,8 +193,8 @@ class UsersApi:
     @validate_call
     def credential_delete_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        credential_id: Annotated[StrictStr, Field(description="ID of credential")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        credential_id: Annotated[StrictStr, Field(description="Unique identifier of the passkey. Format: `cre-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -207,13 +208,13 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """credential_delete
+        """Delete a passkey for a user
 
-        Deletes an existing credential (passkey)
+        Deletes an existing passkey for a user by given `userID` and `credentialID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param credential_id: ID of credential (required)
+        :param credential_id: Unique identifier of the passkey. Format: `cre-<number>`.  (required)
         :type credential_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -247,7 +248,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -326,11 +327,11 @@ class UsersApi:
     @validate_call
     def credential_list(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -344,19 +345,19 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> CredentialList:
-        """credential_list
+        """List passkeys for a user
 
-        Returns a list of credentials (passkeys)
+        Returns a list of passkeys for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `created`, `status`, `backupState`, `browserName` and `osName`. - The `filter` parameter supports the following fields: `userID`, `created`, `status`, `backupState`, `browserName` and `osName`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -409,11 +410,11 @@ class UsersApi:
     @validate_call
     def credential_list_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -427,19 +428,19 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[CredentialList]:
-        """credential_list
+        """List passkeys for a user
 
-        Returns a list of credentials (passkeys)
+        Returns a list of passkeys for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `created`, `status`, `backupState`, `browserName` and `osName`. - The `filter` parameter supports the following fields: `userID`, `created`, `status`, `backupState`, `browserName` and `osName`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -492,11 +493,11 @@ class UsersApi:
     @validate_call
     def credential_list_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -510,19 +511,19 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """credential_list
+        """List passkeys for a user
 
-        Returns a list of credentials (passkeys)
+        Returns a list of passkeys for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `created`, `status`, `backupState`, `browserName` and `osName`. - The `filter` parameter supports the following fields: `userID`, `created`, `status`, `backupState`, `browserName` and `osName`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -656,7 +657,7 @@ class UsersApi:
     @validate_call
     def social_account_create(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         social_account_create_req: SocialAccountCreateReq,
         _request_timeout: Union[
             None,
@@ -671,11 +672,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SocialAccount:
-        """social_account_create
+        """Create a social login for a user
 
-        Creates a new social account
+        Creates a new social login for a user by given `userID`. Social logins are used to authenticate users with third-party providers like Google, Microsoft, or GitHub.  You can set up social logins in the [Developer Panel](https://app.corbado.com/settings/userinterface?tab=Social) or consult the [Documentation](/corbado-complete/overview/configuration/social-logins/overview) for more details. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param social_account_create_req: (required)
         :type social_account_create_req: SocialAccountCreateReq
@@ -727,7 +728,7 @@ class UsersApi:
     @validate_call
     def social_account_create_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         social_account_create_req: SocialAccountCreateReq,
         _request_timeout: Union[
             None,
@@ -742,11 +743,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SocialAccount]:
-        """social_account_create
+        """Create a social login for a user
 
-        Creates a new social account
+        Creates a new social login for a user by given `userID`. Social logins are used to authenticate users with third-party providers like Google, Microsoft, or GitHub.  You can set up social logins in the [Developer Panel](https://app.corbado.com/settings/userinterface?tab=Social) or consult the [Documentation](/corbado-complete/overview/configuration/social-logins/overview) for more details. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param social_account_create_req: (required)
         :type social_account_create_req: SocialAccountCreateReq
@@ -798,7 +799,7 @@ class UsersApi:
     @validate_call
     def social_account_create_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         social_account_create_req: SocialAccountCreateReq,
         _request_timeout: Union[
             None,
@@ -813,11 +814,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """social_account_create
+        """Create a social login for a user
 
-        Creates a new social account
+        Creates a new social login for a user by given `userID`. Social logins are used to authenticate users with third-party providers like Google, Microsoft, or GitHub.  You can set up social logins in the [Developer Panel](https://app.corbado.com/settings/userinterface?tab=Social) or consult the [Documentation](/corbado-complete/overview/configuration/social-logins/overview) for more details. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param social_account_create_req: (required)
         :type social_account_create_req: SocialAccountCreateReq
@@ -945,10 +946,10 @@ class UsersApi:
     @validate_call
     def social_account_list(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -962,17 +963,17 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> SocialAccountList:
-        """social_account_list
+        """List all social logins
 
-        Returns a list of social accounts
+        Returns a list of social logins.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `providerType` and `foreignID`. - The `filter` parameter supports the following fields: `providerType` and `foreignID`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1024,10 +1025,10 @@ class UsersApi:
     @validate_call
     def social_account_list_with_http_info(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1041,17 +1042,17 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[SocialAccountList]:
-        """social_account_list
+        """List all social logins
 
-        Returns a list of social accounts
+        Returns a list of social logins.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `providerType` and `foreignID`. - The `filter` parameter supports the following fields: `providerType` and `foreignID`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1103,10 +1104,10 @@ class UsersApi:
     @validate_call
     def social_account_list_without_preload_content(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1120,17 +1121,17 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """social_account_list
+        """List all social logins
 
-        Returns a list of social accounts
+        Returns a list of social logins.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `providerType` and `foreignID`. - The `filter` parameter supports the following fields: `providerType` and `foreignID`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1274,9 +1275,9 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> User:
-        """user_create
+        """Create a new user
 
-        Creates a new user
+        Creates a new user with the given status. Use [login identifiers](/api-reference/backend-api/identifiers/create-a-login-identifier-for-a-user) to add an email address or phone number to the user.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
         :param user_create_req: (required)
         :type user_create_req: UserCreateReq
@@ -1341,9 +1342,9 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[User]:
-        """user_create
+        """Create a new user
 
-        Creates a new user
+        Creates a new user with the given status. Use [login identifiers](/api-reference/backend-api/identifiers/create-a-login-identifier-for-a-user) to add an email address or phone number to the user.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
         :param user_create_req: (required)
         :type user_create_req: UserCreateReq
@@ -1408,9 +1409,9 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """user_create
+        """Create a new user
 
-        Creates a new user
+        Creates a new user with the given status. Use [login identifiers](/api-reference/backend-api/identifiers/create-a-login-identifier-for-a-user) to add an email address or phone number to the user.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
         :param user_create_req: (required)
         :type user_create_req: UserCreateReq
@@ -1534,7 +1535,7 @@ class UsersApi:
     @validate_call
     def user_delete(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1547,12 +1548,12 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
-        """user_delete
+    ) -> UserDelete200Response:
+        """Delete a user
 
-        Deletes a user
+        Deletes a user by given `userID`.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1585,7 +1586,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1601,7 +1602,7 @@ class UsersApi:
     @validate_call
     def user_delete_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1614,12 +1615,12 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
-        """user_delete
+    ) -> ApiResponse[UserDelete200Response]:
+        """Delete a user
 
-        Deletes a user
+        Deletes a user by given `userID`.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1652,7 +1653,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1668,7 +1669,7 @@ class UsersApi:
     @validate_call
     def user_delete_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1682,11 +1683,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """user_delete
+        """Delete a user
 
-        Deletes a user
+        Deletes a user by given `userID`.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1719,7 +1720,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1795,7 +1796,7 @@ class UsersApi:
     @validate_call
     def user_get(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1809,11 +1810,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> User:
-        """user_get
+        """Retrieve a user
 
-        Returns a user
+        Retrieves a user by given `userID`. This does not return login identifiers like email addresses or phone numbers.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1862,7 +1863,7 @@ class UsersApi:
     @validate_call
     def user_get_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1876,11 +1877,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[User]:
-        """user_get
+        """Retrieve a user
 
-        Returns a user
+        Retrieves a user by given `userID`. This does not return login identifiers like email addresses or phone numbers.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1929,7 +1930,7 @@ class UsersApi:
     @validate_call
     def user_get_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1943,11 +1944,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """user_get
+        """Retrieve a user
 
-        Returns a user
+        Retrieves a user by given `userID`. This does not return login identifiers like email addresses or phone numbers.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2054,13 +2055,328 @@ class UsersApi:
 
 
     @validate_call
+    def user_list(
+        self,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> UserList:
+        """List users
+
+        Returns a list of project users.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `id`, `name`, `fullName`, `created`, `updated` and `status`. - The `filter` parameter supports the following fields: `id`, `searchValue`, `name`, `fullName`, `created`, `updated` and `status`.  Searches in `searchValue` are performed across the `name`, `fullName` fields and identifiers values (emails, usernames and phone numbers).  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
+
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
+        :type sort: str
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
+        :type filter: List[str]
+        :param page: The page number to retrieve for paginated results. 
+        :type page: int
+        :param page_size: The number of items to return per page. Useful for pagination. 
+        :type page_size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._user_list_serialize(
+            sort=sort,
+            filter=filter,
+            page=page,
+            page_size=page_size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserList",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def user_list_with_http_info(
+        self,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[UserList]:
+        """List users
+
+        Returns a list of project users.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `id`, `name`, `fullName`, `created`, `updated` and `status`. - The `filter` parameter supports the following fields: `id`, `searchValue`, `name`, `fullName`, `created`, `updated` and `status`.  Searches in `searchValue` are performed across the `name`, `fullName` fields and identifiers values (emails, usernames and phone numbers).  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
+
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
+        :type sort: str
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
+        :type filter: List[str]
+        :param page: The page number to retrieve for paginated results. 
+        :type page: int
+        :param page_size: The number of items to return per page. Useful for pagination. 
+        :type page_size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._user_list_serialize(
+            sort=sort,
+            filter=filter,
+            page=page,
+            page_size=page_size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserList",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def user_list_without_preload_content(
+        self,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """List users
+
+        Returns a list of project users.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `id`, `name`, `fullName`, `created`, `updated` and `status`. - The `filter` parameter supports the following fields: `id`, `searchValue`, `name`, `fullName`, `created`, `updated` and `status`.  Searches in `searchValue` are performed across the `name`, `fullName` fields and identifiers values (emails, usernames and phone numbers).  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
+
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
+        :type sort: str
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
+        :type filter: List[str]
+        :param page: The page number to retrieve for paginated results. 
+        :type page: int
+        :param page_size: The number of items to return per page. Useful for pagination. 
+        :type page_size: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._user_list_serialize(
+            sort=sort,
+            filter=filter,
+            page=page,
+            page_size=page_size,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "UserList",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _user_list_serialize(
+        self,
+        sort,
+        filter,
+        page,
+        page_size,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+            'filter[]': 'multi',
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        # process the query parameters
+        if sort is not None:
+            
+            _query_params.append(('sort', sort))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter[]', filter))
+            
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if page_size is not None:
+            
+            _query_params.append(('pageSize', page_size))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'basicAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='GET',
+            resource_path='/users',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
     def user_social_account_list(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2074,19 +2390,19 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> List[SocialAccount]:
-        """user_social_account_list
+        """List all social logins for a user
 
-        Returns a list of social accounts
+        Returns a list of social logins for a user by given `userID`.  The list can be sorted and filtered:   - The `sort` parameter supports the following fields: `providerType` and `foreignID`. - The `filter` parameter supports the following fields: `providerType` and `foreignID`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2139,11 +2455,11 @@ class UsersApi:
     @validate_call
     def user_social_account_list_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2157,19 +2473,19 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[List[SocialAccount]]:
-        """user_social_account_list
+        """List all social logins for a user
 
-        Returns a list of social accounts
+        Returns a list of social logins for a user by given `userID`.  The list can be sorted and filtered:   - The `sort` parameter supports the following fields: `providerType` and `foreignID`. - The `filter` parameter supports the following fields: `providerType` and `foreignID`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2222,11 +2538,11 @@ class UsersApi:
     @validate_call
     def user_social_account_list_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2240,19 +2556,19 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """user_social_account_list
+        """List all social logins for a user
 
-        Returns a list of social accounts
+        Returns a list of social logins for a user by given `userID`.  The list can be sorted and filtered:   - The `sort` parameter supports the following fields: `providerType` and `foreignID`. - The `filter` parameter supports the following fields: `providerType` and `foreignID`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2386,7 +2702,7 @@ class UsersApi:
     @validate_call
     def user_update(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         user_update_req: UserUpdateReq,
         _request_timeout: Union[
             None,
@@ -2401,11 +2717,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> User:
-        """user_update
+        """Update a user
 
-        Updates a user
+        Updates a user by given `userID`. For example, this can be used to modify the user's status.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param user_update_req: (required)
         :type user_update_req: UserUpdateReq
@@ -2457,7 +2773,7 @@ class UsersApi:
     @validate_call
     def user_update_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         user_update_req: UserUpdateReq,
         _request_timeout: Union[
             None,
@@ -2472,11 +2788,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[User]:
-        """user_update
+        """Update a user
 
-        Updates a user
+        Updates a user by given `userID`. For example, this can be used to modify the user's status.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param user_update_req: (required)
         :type user_update_req: UserUpdateReq
@@ -2528,7 +2844,7 @@ class UsersApi:
     @validate_call
     def user_update_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         user_update_req: UserUpdateReq,
         _request_timeout: Union[
             None,
@@ -2543,11 +2859,11 @@ class UsersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """user_update
+        """Update a user
 
-        Updates a user
+        Updates a user by given `userID`. For example, this can be used to modify the user's status.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param user_update_req: (required)
         :type user_update_req: UserUpdateReq
