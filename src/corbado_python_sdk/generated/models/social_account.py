@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -27,13 +27,13 @@ class SocialAccount(BaseModel):
     """
     SocialAccount
     """ # noqa: E501
-    social_account_id: StrictStr = Field(alias="socialAccountID")
-    provider_type: StrictStr = Field(alias="providerType")
-    identifier_value: StrictStr = Field(alias="identifierValue")
-    user_id: StrictStr = Field(alias="userID")
-    foreign_id: StrictStr = Field(alias="foreignID")
-    avatar_url: StrictStr = Field(alias="avatarURL")
-    full_name: StrictStr = Field(alias="fullName")
+    social_account_id: StrictStr = Field(description="Unique identifier of the social account.", alias="socialAccountID")
+    provider_type: StrictStr = Field(description="Type of the social provider.", alias="providerType")
+    identifier_value: StrictStr = Field(description="Login identifier of the user (here email address).", alias="identifierValue")
+    user_id: StrictStr = Field(description="Unique identifier of the user.", alias="userID")
+    foreign_id: StrictStr = Field(description="Unique identifier of the user in the social provider.", alias="foreignID")
+    avatar_url: StrictStr = Field(description="URL of the avatar of the user in the social provider.", alias="avatarURL")
+    full_name: StrictStr = Field(description="Full name of the user in the social provider.", alias="fullName")
     __properties: ClassVar[List[str]] = ["socialAccountID", "providerType", "identifierValue", "userID", "foreignID", "avatarURL", "fullName"]
 
     model_config = ConfigDict(

@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
 from corbado_python_sdk.generated.models.credential import Credential
-from corbado_python_sdk.generated.models.paging import Paging
+from corbado_python_sdk.generated.models.user_list_paging import UserListPaging
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +30,7 @@ class CredentialList(BaseModel):
     CredentialList
     """ # noqa: E501
     credentials: List[Credential]
-    paging: Paging
+    paging: UserListPaging
     __properties: ClassVar[List[str]] = ["credentials", "paging"]
 
     model_config = ConfigDict(
@@ -95,7 +95,7 @@ class CredentialList(BaseModel):
 
         _obj = cls.model_validate({
             "credentials": [Credential.from_dict(_item) for _item in obj["credentials"]] if obj.get("credentials") is not None else None,
-            "paging": Paging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
+            "paging": UserListPaging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
         })
         return _obj
 

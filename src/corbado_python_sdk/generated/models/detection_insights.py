@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -20,6 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
+from corbado_python_sdk.generated.models.append_history_data import AppendHistoryData
 from corbado_python_sdk.generated.models.detection_tag import DetectionTag
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +33,8 @@ class DetectionInsights(BaseModel):
     credential_ids: List[StrictStr] = Field(alias="credentialIds")
     client_env_ids: List[StrictStr] = Field(alias="clientEnvIds")
     password_manager_ids: List[StrictStr] = Field(alias="passwordManagerIds")
-    __properties: ClassVar[List[str]] = ["tags", "credentialIds", "clientEnvIds", "passwordManagerIds"]
+    history_data: AppendHistoryData = Field(alias="historyData")
+    __properties: ClassVar[List[str]] = ["tags", "credentialIds", "clientEnvIds", "passwordManagerIds", "historyData"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -80,6 +82,9 @@ class DetectionInsights(BaseModel):
                 if _item_tags:
                     _items.append(_item_tags.to_dict())
             _dict['tags'] = _items
+        # override the default output from pydantic by calling `to_dict()` of history_data
+        if self.history_data:
+            _dict['historyData'] = self.history_data.to_dict()
         return _dict
 
     @classmethod
@@ -95,7 +100,8 @@ class DetectionInsights(BaseModel):
             "tags": [DetectionTag.from_dict(_item) for _item in obj["tags"]] if obj.get("tags") is not None else None,
             "credentialIds": obj.get("credentialIds"),
             "clientEnvIds": obj.get("clientEnvIds"),
-            "passwordManagerIds": obj.get("passwordManagerIds")
+            "passwordManagerIds": obj.get("passwordManagerIds"),
+            "historyData": AppendHistoryData.from_dict(obj["historyData"]) if obj.get("historyData") is not None else None
         })
         return _obj
 

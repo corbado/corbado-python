@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -32,7 +32,8 @@ class PasskeyMediationFinishReq(BaseModel):
     client_information: ClientInformation = Field(alias="clientInformation")
     process_id: StrictStr = Field(alias="processID")
     sign_passkey_data: Optional[StrictBool] = Field(default=None, alias="signPasskeyData")
-    __properties: ClassVar[List[str]] = ["assertionResponse", "clientInformation", "processID", "signPasskeyData"]
+    tracking_id: StrictStr = Field(alias="trackingID")
+    __properties: ClassVar[List[str]] = ["assertionResponse", "clientInformation", "processID", "signPasskeyData", "trackingID"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,7 +92,8 @@ class PasskeyMediationFinishReq(BaseModel):
             "assertionResponse": obj.get("assertionResponse"),
             "clientInformation": ClientInformation.from_dict(obj["clientInformation"]) if obj.get("clientInformation") is not None else None,
             "processID": obj.get("processID"),
-            "signPasskeyData": obj.get("signPasskeyData")
+            "signPasskeyData": obj.get("signPasskeyData"),
+            "trackingID": obj.get("trackingID")
         })
         return _obj
 

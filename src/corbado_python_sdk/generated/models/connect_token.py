@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -30,12 +30,12 @@ class ConnectToken(BaseModel):
     """
     ConnectToken
     """ # noqa: E501
-    id: StrictStr
+    id: StrictStr = Field(description="Unique identifier of the connectToken.")
     token_type: ConnectTokenType = Field(alias="tokenType")
     data: ConnectTokenData
     connect_token_status: ConnectTokenStatus = Field(alias="connectTokenStatus")
-    secret: Optional[StrictStr] = None
-    expires: StrictInt
+    secret: Optional[StrictStr] = Field(default=None, description="Secret of the connectToken.")
+    expires: StrictInt = Field(description="Unix time of when the connectToken expires (in seconds elapsed since January 1, 1970, 00:00:00 UTC).")
     __properties: ClassVar[List[str]] = ["id", "tokenType", "data", "connectTokenStatus", "secret", "expires"]
 
     model_config = ConfigDict(

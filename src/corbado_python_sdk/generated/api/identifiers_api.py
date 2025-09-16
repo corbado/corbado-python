@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -20,11 +20,11 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.identifier import Identifier
 from corbado_python_sdk.generated.models.identifier_create_req import IdentifierCreateReq
 from corbado_python_sdk.generated.models.identifier_list import IdentifierList
 from corbado_python_sdk.generated.models.identifier_update_req import IdentifierUpdateReq
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -47,7 +47,7 @@ class IdentifiersApi:
     @validate_call
     def identifier_create(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         identifier_create_req: IdentifierCreateReq,
         _request_timeout: Union[
             None,
@@ -62,11 +62,11 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Identifier:
-        """identifier_create
+        """Create a login identifier for a user
 
-        Create a new login identifier
+        Creates a new login identifier for a user with the given ID. Login identifiers can be of the type `email`, `phone`, or `username`. Separating login identifiers from users allows Corbado to manage multiple login identifiers of different types for each user.  You can set up login identifiers in the [Developer Panel](https://app.corbado.com/settings/userinterface?tab=Overview) or consult the [Documentation](/corbado-complete/overview/configuration/user-flow-configuration#2-login-identifiers-and-fallbacks) for more details. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param identifier_create_req: (required)
         :type identifier_create_req: IdentifierCreateReq
@@ -118,7 +118,7 @@ class IdentifiersApi:
     @validate_call
     def identifier_create_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         identifier_create_req: IdentifierCreateReq,
         _request_timeout: Union[
             None,
@@ -133,11 +133,11 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Identifier]:
-        """identifier_create
+        """Create a login identifier for a user
 
-        Create a new login identifier
+        Creates a new login identifier for a user with the given ID. Login identifiers can be of the type `email`, `phone`, or `username`. Separating login identifiers from users allows Corbado to manage multiple login identifiers of different types for each user.  You can set up login identifiers in the [Developer Panel](https://app.corbado.com/settings/userinterface?tab=Overview) or consult the [Documentation](/corbado-complete/overview/configuration/user-flow-configuration#2-login-identifiers-and-fallbacks) for more details. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param identifier_create_req: (required)
         :type identifier_create_req: IdentifierCreateReq
@@ -189,7 +189,7 @@ class IdentifiersApi:
     @validate_call
     def identifier_create_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         identifier_create_req: IdentifierCreateReq,
         _request_timeout: Union[
             None,
@@ -204,11 +204,11 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """identifier_create
+        """Create a login identifier for a user
 
-        Create a new login identifier
+        Creates a new login identifier for a user with the given ID. Login identifiers can be of the type `email`, `phone`, or `username`. Separating login identifiers from users allows Corbado to manage multiple login identifiers of different types for each user.  You can set up login identifiers in the [Developer Panel](https://app.corbado.com/settings/userinterface?tab=Overview) or consult the [Documentation](/corbado-complete/overview/configuration/user-flow-configuration#2-login-identifiers-and-fallbacks) for more details. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param identifier_create_req: (required)
         :type identifier_create_req: IdentifierCreateReq
@@ -336,8 +336,8 @@ class IdentifiersApi:
     @validate_call
     def identifier_delete(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        identifier_id: Annotated[StrictStr, Field(description="ID of login identifier")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        identifier_id: Annotated[StrictStr, Field(description="Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -350,14 +350,14 @@ class IdentifiersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
-        """identifier_delete
+    ) -> UserDelete200Response:
+        """Delete a login identifier for a user
 
-        Delete an existing login identifier
+        Delete an existing login identifier for a user by given `userID` and `identifierID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param identifier_id: ID of login identifier (required)
+        :param identifier_id: Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`.  (required)
         :type identifier_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -391,7 +391,7 @@ class IdentifiersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -407,8 +407,8 @@ class IdentifiersApi:
     @validate_call
     def identifier_delete_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        identifier_id: Annotated[StrictStr, Field(description="ID of login identifier")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        identifier_id: Annotated[StrictStr, Field(description="Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -421,14 +421,14 @@ class IdentifiersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
-        """identifier_delete
+    ) -> ApiResponse[UserDelete200Response]:
+        """Delete a login identifier for a user
 
-        Delete an existing login identifier
+        Delete an existing login identifier for a user by given `userID` and `identifierID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param identifier_id: ID of login identifier (required)
+        :param identifier_id: Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`.  (required)
         :type identifier_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -462,7 +462,7 @@ class IdentifiersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -478,8 +478,8 @@ class IdentifiersApi:
     @validate_call
     def identifier_delete_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        identifier_id: Annotated[StrictStr, Field(description="ID of login identifier")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        identifier_id: Annotated[StrictStr, Field(description="Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -493,13 +493,13 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """identifier_delete
+        """Delete a login identifier for a user
 
-        Delete an existing login identifier
+        Delete an existing login identifier for a user by given `userID` and `identifierID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param identifier_id: ID of login identifier (required)
+        :param identifier_id: Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`.  (required)
         :type identifier_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -533,7 +533,7 @@ class IdentifiersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -612,10 +612,10 @@ class IdentifiersApi:
     @validate_call
     def identifier_list(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -629,17 +629,17 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> IdentifierList:
-        """identifier_list
+        """List all login identifiers
 
-        Returns a list of matching identifiers
+        Returns a list of login identifiers.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `identifierType` and `identifierValue`. - The `filter` parameter supports the following fields: `userID`, `identifierType` and `identifierValue`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -691,10 +691,10 @@ class IdentifiersApi:
     @validate_call
     def identifier_list_with_http_info(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -708,17 +708,17 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[IdentifierList]:
-        """identifier_list
+        """List all login identifiers
 
-        Returns a list of matching identifiers
+        Returns a list of login identifiers.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `identifierType` and `identifierValue`. - The `filter` parameter supports the following fields: `userID`, `identifierType` and `identifierValue`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -770,10 +770,10 @@ class IdentifiersApi:
     @validate_call
     def identifier_list_without_preload_content(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -787,17 +787,17 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """identifier_list
+        """List all login identifiers
 
-        Returns a list of matching identifiers
+        Returns a list of login identifiers.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `userID`, `identifierType` and `identifierValue`. - The `filter` parameter supports the following fields: `userID`, `identifierType` and `identifierValue`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -927,8 +927,8 @@ class IdentifiersApi:
     @validate_call
     def identifier_update(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        identifier_id: Annotated[StrictStr, Field(description="ID of login identifier")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        identifier_id: Annotated[StrictStr, Field(description="Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`. ")],
         identifier_update_req: IdentifierUpdateReq,
         _request_timeout: Union[
             None,
@@ -943,13 +943,13 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Identifier:
-        """identifier_update
+        """Update a login identifier for a user
 
-        Updates a login identifier (e.g. from pending to verified)
+        Updates a login identifier (e.g. from `pending` to `verified`) for a user by given `userID` and `identifierID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param identifier_id: ID of login identifier (required)
+        :param identifier_id: Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`.  (required)
         :type identifier_id: str
         :param identifier_update_req: (required)
         :type identifier_update_req: IdentifierUpdateReq
@@ -1002,8 +1002,8 @@ class IdentifiersApi:
     @validate_call
     def identifier_update_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        identifier_id: Annotated[StrictStr, Field(description="ID of login identifier")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        identifier_id: Annotated[StrictStr, Field(description="Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`. ")],
         identifier_update_req: IdentifierUpdateReq,
         _request_timeout: Union[
             None,
@@ -1018,13 +1018,13 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Identifier]:
-        """identifier_update
+        """Update a login identifier for a user
 
-        Updates a login identifier (e.g. from pending to verified)
+        Updates a login identifier (e.g. from `pending` to `verified`) for a user by given `userID` and `identifierID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param identifier_id: ID of login identifier (required)
+        :param identifier_id: Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`.  (required)
         :type identifier_id: str
         :param identifier_update_req: (required)
         :type identifier_update_req: IdentifierUpdateReq
@@ -1077,8 +1077,8 @@ class IdentifiersApi:
     @validate_call
     def identifier_update_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        identifier_id: Annotated[StrictStr, Field(description="ID of login identifier")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        identifier_id: Annotated[StrictStr, Field(description="Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`. ")],
         identifier_update_req: IdentifierUpdateReq,
         _request_timeout: Union[
             None,
@@ -1093,13 +1093,13 @@ class IdentifiersApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """identifier_update
+        """Update a login identifier for a user
 
-        Updates a login identifier (e.g. from pending to verified)
+        Updates a login identifier (e.g. from `pending` to `verified`) for a user by given `userID` and `identifierID`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param identifier_id: ID of login identifier (required)
+        :param identifier_id: Unique identifier of the login identifier (e.g., email address or phone number). Format: `ide-<number>`.  (required)
         :type identifier_id: str
         :param identifier_update_req: (required)
         :type identifier_update_req: IdentifierUpdateReq

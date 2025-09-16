@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,16 +18,16 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
 class ConnectTokenDataPasskeyDelete(BaseModel):
     """
-    ConnectTokenDataPasskeyDelete
+    Data for `passkey-delete`.
     """ # noqa: E501
-    identifier: StrictStr
+    identifier: StrictStr = Field(description="Login identifier of the user (here email address).")
     __properties: ClassVar[List[str]] = ["identifier"]
 
     model_config = ConfigDict(

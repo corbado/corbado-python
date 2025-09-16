@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -19,18 +19,21 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.app_type import AppType
+from typing import Any, ClassVar, Dict, List, Optional
+from corbado_python_sdk.generated.models.webhook_event_type import WebhookEventType
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ShortSessionCreateReq(BaseModel):
+class WebhookEndpointUpdateReq(BaseModel):
     """
-    ShortSessionCreateReq
+    WebhookEndpointUpdateReq
     """ # noqa: E501
-    app_type: AppType = Field(alias="appType")
-    issuer: StrictStr
-    __properties: ClassVar[List[str]] = ["appType", "issuer"]
+    url: Optional[StrictStr] = None
+    basic_auth_username: Optional[StrictStr] = Field(default=None, alias="basicAuthUsername")
+    basic_auth_password: Optional[StrictStr] = Field(default=None, alias="basicAuthPassword")
+    subscribed_events: Optional[List[WebhookEventType]] = Field(default=None, alias="subscribedEvents")
+    custom_headers: Optional[Dict[str, Any]] = Field(default=None, alias="customHeaders")
+    __properties: ClassVar[List[str]] = ["url", "basicAuthUsername", "basicAuthPassword", "subscribedEvents", "customHeaders"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +53,7 @@ class ShortSessionCreateReq(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ShortSessionCreateReq from a JSON string"""
+        """Create an instance of WebhookEndpointUpdateReq from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +78,7 @@ class ShortSessionCreateReq(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ShortSessionCreateReq from a dict"""
+        """Create an instance of WebhookEndpointUpdateReq from a dict"""
         if obj is None:
             return None
 
@@ -83,8 +86,11 @@ class ShortSessionCreateReq(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "appType": obj.get("appType"),
-            "issuer": obj.get("issuer")
+            "url": obj.get("url"),
+            "basicAuthUsername": obj.get("basicAuthUsername"),
+            "basicAuthPassword": obj.get("basicAuthPassword"),
+            "subscribedEvents": obj.get("subscribedEvents"),
+            "customHeaders": obj.get("customHeaders")
         })
         return _obj
 

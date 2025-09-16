@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -27,6 +27,7 @@ class DecisionTag(str, Enum):
     """
     allowed enum values
     """
+    ENV_MINUS_NO_MINUS_PLATFORM_MINUS_PK_MINUS_SUPPORT = 'env-no-platform-pk-support'
     ENV_MINUS_NO_MINUS_PK_MINUS_SUPPORT = 'env-no-pk-support'
     USER_MINUS_NO_MINUS_PKS = 'user-no-pks'
     USER_MINUS_LOGIN_MINUS_BLACKLISTED = 'user-login-blacklisted'
@@ -46,6 +47,8 @@ class DecisionTag(str, Enum):
     PROCESS_MINUS_PK_MINUS_LOGIN_MINUS_INCOMPLETE = 'process-pk-login-incomplete'
     PROCESS_MINUS_PK_MINUS_LOGIN_MINUS_CROSS_MINUS_PLATFORM_MINUS_COMPLETED = 'process-pk-login-cross-platform-completed'
     DEVICE_MINUS_LOCAL_MINUS_PLATFORM_MINUS_PASSKEY_MINUS_EXPERIMENT = 'device-local-platform-passkey-experiment'
+    ENV_MINUS_BROKEN = 'env-broken'
+    PROCESS_MINUS_PK_MINUS_LOGIN_MINUS_ABORTED = 'process-pk-login-aborted'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:

@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -19,20 +19,17 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
-from corbado_python_sdk.generated.models.error_rsp_all_of_error_validation import ErrorRspAllOfErrorValidation
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ErrorRspAllOfError(BaseModel):
+class PasskeyVerifySignedDataReq(BaseModel):
     """
-    ErrorRspAllOfError
+    PasskeyVerifySignedDataReq
     """ # noqa: E501
-    type: StrictStr = Field(description="Type of error")
-    details: Optional[StrictStr] = Field(default=None, description="Details of error")
-    validation: Optional[List[ErrorRspAllOfErrorValidation]] = Field(default=None, description="Validation errors per field")
-    links: Optional[List[StrictStr]] = Field(default=None, description="Additional links to help understand the error")
-    __properties: ClassVar[List[str]] = ["type", "details", "validation", "links"]
+    signed_passkey_data: StrictStr = Field(alias="signedPasskeyData")
+    username: StrictStr
+    __properties: ClassVar[List[str]] = ["signedPasskeyData", "username"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +49,7 @@ class ErrorRspAllOfError(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ErrorRspAllOfError from a JSON string"""
+        """Create an instance of PasskeyVerifySignedDataReq from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,18 +70,11 @@ class ErrorRspAllOfError(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of each item in validation (list)
-        _items = []
-        if self.validation:
-            for _item_validation in self.validation:
-                if _item_validation:
-                    _items.append(_item_validation.to_dict())
-            _dict['validation'] = _items
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ErrorRspAllOfError from a dict"""
+        """Create an instance of PasskeyVerifySignedDataReq from a dict"""
         if obj is None:
             return None
 
@@ -92,10 +82,8 @@ class ErrorRspAllOfError(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "type": obj.get("type"),
-            "details": obj.get("details"),
-            "validation": [ErrorRspAllOfErrorValidation.from_dict(_item) for _item in obj["validation"]] if obj.get("validation") is not None else None,
-            "links": obj.get("links")
+            "signedPasskeyData": obj.get("signedPasskeyData"),
+            "username": obj.get("username")
         })
         return _obj
 

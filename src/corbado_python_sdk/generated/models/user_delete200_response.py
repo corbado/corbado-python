@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,18 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict
-from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.long_session_status import LongSessionStatus
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Union
+from corbado_python_sdk.generated.models.user_list_default_response_all_of_request_data import UserListDefaultResponseAllOfRequestData
 from typing import Optional, Set
 from typing_extensions import Self
 
-class LongSessionUpdateReq(BaseModel):
+class UserDelete200Response(BaseModel):
     """
-    LongSessionUpdateReq
+    UserDelete200Response
     """ # noqa: E501
-    status: LongSessionStatus
-    __properties: ClassVar[List[str]] = ["status"]
+    http_status_code: StrictInt = Field(description="HTTP status code of operation", alias="httpStatusCode")
+    message: StrictStr
+    request_data: UserListDefaultResponseAllOfRequestData = Field(alias="requestData")
+    runtime: Union[StrictFloat, StrictInt] = Field(description="Runtime in seconds for this request")
+    __properties: ClassVar[List[str]] = ["httpStatusCode", "message", "requestData", "runtime"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +52,7 @@ class LongSessionUpdateReq(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of LongSessionUpdateReq from a JSON string"""
+        """Create an instance of UserDelete200Response from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -70,11 +73,14 @@ class LongSessionUpdateReq(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of request_data
+        if self.request_data:
+            _dict['requestData'] = self.request_data.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of LongSessionUpdateReq from a dict"""
+        """Create an instance of UserDelete200Response from a dict"""
         if obj is None:
             return None
 
@@ -82,7 +88,10 @@ class LongSessionUpdateReq(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "status": obj.get("status")
+            "httpStatusCode": obj.get("httpStatusCode"),
+            "message": obj.get("message"),
+            "requestData": UserListDefaultResponseAllOfRequestData.from_dict(obj["requestData"]) if obj.get("requestData") is not None else None,
+            "runtime": obj.get("runtime")
         })
         return _obj
 

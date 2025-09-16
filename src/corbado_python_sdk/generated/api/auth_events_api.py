@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -43,7 +43,7 @@ class AuthEventsApi:
     @validate_call
     def auth_event_create(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         auth_event_create_req: AuthEventCreateReq,
         _request_timeout: Union[
             None,
@@ -62,7 +62,7 @@ class AuthEventsApi:
 
         Create a new authentication event for a user
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param auth_event_create_req: (required)
         :type auth_event_create_req: AuthEventCreateReq
@@ -114,7 +114,7 @@ class AuthEventsApi:
     @validate_call
     def auth_event_create_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         auth_event_create_req: AuthEventCreateReq,
         _request_timeout: Union[
             None,
@@ -133,7 +133,7 @@ class AuthEventsApi:
 
         Create a new authentication event for a user
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param auth_event_create_req: (required)
         :type auth_event_create_req: AuthEventCreateReq
@@ -185,7 +185,7 @@ class AuthEventsApi:
     @validate_call
     def auth_event_create_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         auth_event_create_req: AuthEventCreateReq,
         _request_timeout: Union[
             None,
@@ -204,7 +204,7 @@ class AuthEventsApi:
 
         Create a new authentication event for a user
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param auth_event_create_req: (required)
         :type auth_event_create_req: AuthEventCreateReq

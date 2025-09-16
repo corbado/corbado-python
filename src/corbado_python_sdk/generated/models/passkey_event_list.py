@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.paging import Paging
 from corbado_python_sdk.generated.models.passkey_event import PasskeyEvent
+from corbado_python_sdk.generated.models.user_list_paging import UserListPaging
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +30,7 @@ class PasskeyEventList(BaseModel):
     PasskeyEventList
     """ # noqa: E501
     passkey_events: List[PasskeyEvent] = Field(alias="passkeyEvents")
-    paging: Paging
+    paging: UserListPaging
     __properties: ClassVar[List[str]] = ["passkeyEvents", "paging"]
 
     model_config = ConfigDict(
@@ -95,7 +95,7 @@ class PasskeyEventList(BaseModel):
 
         _obj = cls.model_validate({
             "passkeyEvents": [PasskeyEvent.from_dict(_item) for _item in obj["passkeyEvents"]] if obj.get("passkeyEvents") is not None else None,
-            "paging": Paging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
+            "paging": UserListPaging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
         })
         return _obj
 

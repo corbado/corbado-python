@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,9 +18,8 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.social_provider_type import SocialProviderType
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,12 +27,19 @@ class SocialAccountCreateReq(BaseModel):
     """
     SocialAccountCreateReq
     """ # noqa: E501
-    provider_type: SocialProviderType = Field(alias="providerType")
-    identifier_value: StrictStr = Field(alias="identifierValue")
-    foreign_id: StrictStr = Field(alias="foreignID")
-    avatar_url: StrictStr = Field(alias="avatarURL")
-    full_name: StrictStr = Field(alias="fullName")
+    provider_type: StrictStr = Field(description="Type of the social provider.", alias="providerType")
+    identifier_value: StrictStr = Field(description="Login identifier of the user (here email address).", alias="identifierValue")
+    foreign_id: StrictStr = Field(description="Unique identifier of the user in the social provider.", alias="foreignID")
+    avatar_url: StrictStr = Field(description="URL of the avatar of the user in the social provider.", alias="avatarURL")
+    full_name: StrictStr = Field(description="Full name of the user in the social provider.", alias="fullName")
     __properties: ClassVar[List[str]] = ["providerType", "identifierValue", "foreignID", "avatarURL", "fullName"]
+
+    @field_validator('provider_type')
+    def provider_type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['google', 'microsoft', 'github']):
+            raise ValueError("must be one of enum values ('google', 'microsoft', 'github')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,

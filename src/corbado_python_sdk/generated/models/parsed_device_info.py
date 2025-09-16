@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,23 +18,20 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.long_session_status import LongSessionStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
-class LongSession(BaseModel):
+class ParsedDeviceInfo(BaseModel):
     """
-    LongSession
+    ParsedDeviceInfo
     """ # noqa: E501
-    long_session_id: StrictStr = Field(alias="longSessionID")
-    user_id: StrictStr = Field(alias="userID")
-    identifier_value: StrictStr = Field(alias="identifierValue")
-    status: LongSessionStatus
-    expires: StrictStr
-    expires_ms: StrictInt = Field(alias="expiresMs")
-    __properties: ClassVar[List[str]] = ["longSessionID", "userID", "identifierValue", "status", "expires", "expiresMs"]
+    browser_name: StrictStr = Field(alias="browserName")
+    browser_version: StrictStr = Field(alias="browserVersion")
+    os_name: StrictStr = Field(alias="osName")
+    os_version: StrictStr = Field(alias="osVersion")
+    __properties: ClassVar[List[str]] = ["browserName", "browserVersion", "osName", "osVersion"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -54,7 +51,7 @@ class LongSession(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of LongSession from a JSON string"""
+        """Create an instance of ParsedDeviceInfo from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -79,7 +76,7 @@ class LongSession(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of LongSession from a dict"""
+        """Create an instance of ParsedDeviceInfo from a dict"""
         if obj is None:
             return None
 
@@ -87,12 +84,10 @@ class LongSession(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "longSessionID": obj.get("longSessionID"),
-            "userID": obj.get("userID"),
-            "identifierValue": obj.get("identifierValue"),
-            "status": obj.get("status"),
-            "expires": obj.get("expires"),
-            "expiresMs": obj.get("expiresMs")
+            "browserName": obj.get("browserName"),
+            "browserVersion": obj.get("browserVersion"),
+            "osName": obj.get("osName"),
+            "osVersion": obj.get("osVersion")
         })
         return _obj
 

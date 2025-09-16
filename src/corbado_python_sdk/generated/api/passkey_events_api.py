@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -20,10 +20,10 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.passkey_event import PasskeyEvent
 from corbado_python_sdk.generated.models.passkey_event_create_req import PasskeyEventCreateReq
 from corbado_python_sdk.generated.models.passkey_event_list import PasskeyEventList
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -46,7 +46,7 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_create(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_event_create_req: PasskeyEventCreateReq,
         _request_timeout: Union[
             None,
@@ -61,11 +61,11 @@ class PasskeyEventsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyEvent:
-        """passkey_event_create
+        """Create a passkey event for a user
 
-        Create a new passkey event for a user
+        Creates a new passkey event for a user by given `userID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_event_create_req: (required)
         :type passkey_event_create_req: PasskeyEventCreateReq
@@ -117,7 +117,7 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_create_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_event_create_req: PasskeyEventCreateReq,
         _request_timeout: Union[
             None,
@@ -132,11 +132,11 @@ class PasskeyEventsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyEvent]:
-        """passkey_event_create
+        """Create a passkey event for a user
 
-        Create a new passkey event for a user
+        Creates a new passkey event for a user by given `userID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_event_create_req: (required)
         :type passkey_event_create_req: PasskeyEventCreateReq
@@ -188,7 +188,7 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_create_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_event_create_req: PasskeyEventCreateReq,
         _request_timeout: Union[
             None,
@@ -203,11 +203,11 @@ class PasskeyEventsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_event_create
+        """Create a passkey event for a user
 
-        Create a new passkey event for a user
+        Creates a new passkey event for a user by given `userID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_event_create_req: (required)
         :type passkey_event_create_req: PasskeyEventCreateReq
@@ -335,7 +335,7 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_delete(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_event_id: Annotated[StrictStr, Field(description="ID of a passkey event")],
         _request_timeout: Union[
             None,
@@ -349,12 +349,12 @@ class PasskeyEventsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
-        """passkey_event_delete
+    ) -> UserDelete200Response:
+        """Delete a passkey event for a user
 
-        Deletes an existing passkey event
+        Deletes an existing passkey event for a user by given `userID` and `passkeyEventID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_event_id: ID of a passkey event (required)
         :type passkey_event_id: str
@@ -390,7 +390,7 @@ class PasskeyEventsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -406,7 +406,7 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_delete_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_event_id: Annotated[StrictStr, Field(description="ID of a passkey event")],
         _request_timeout: Union[
             None,
@@ -420,12 +420,12 @@ class PasskeyEventsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
-        """passkey_event_delete
+    ) -> ApiResponse[UserDelete200Response]:
+        """Delete a passkey event for a user
 
-        Deletes an existing passkey event
+        Deletes an existing passkey event for a user by given `userID` and `passkeyEventID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_event_id: ID of a passkey event (required)
         :type passkey_event_id: str
@@ -461,7 +461,7 @@ class PasskeyEventsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -477,7 +477,7 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_delete_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         passkey_event_id: Annotated[StrictStr, Field(description="ID of a passkey event")],
         _request_timeout: Union[
             None,
@@ -492,11 +492,11 @@ class PasskeyEventsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_event_delete
+        """Delete a passkey event for a user
 
-        Deletes an existing passkey event
+        Deletes an existing passkey event for a user by given `userID` and `passkeyEventID`.
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param passkey_event_id: ID of a passkey event (required)
         :type passkey_event_id: str
@@ -532,7 +532,7 @@ class PasskeyEventsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -611,11 +611,11 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_list(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -629,19 +629,19 @@ class PasskeyEventsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> PasskeyEventList:
-        """passkey_event_list
+        """List all passkey events for a user
 
-        Returns a list of matching passkey events
+        Returns a list of passkey events for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `created` and `eventType`. - The `filter` parameter supports the following fields: `eventType`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -694,11 +694,11 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_list_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -712,19 +712,19 @@ class PasskeyEventsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[PasskeyEventList]:
-        """passkey_event_list
+        """List all passkey events for a user
 
-        Returns a list of matching passkey events
+        Returns a list of passkey events for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `created` and `eventType`. - The `filter` parameter supports the following fields: `eventType`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -777,11 +777,11 @@ class PasskeyEventsApi:
     @validate_call
     def passkey_event_list_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -795,19 +795,19 @@ class PasskeyEventsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """passkey_event_list
+        """List all passkey events for a user
 
-        Returns a list of matching passkey events
+        Returns a list of passkey events for a user by given `userID`.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `created` and `eventType`. - The `filter` parameter supports the following fields: `eventType`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request

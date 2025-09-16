@@ -31,7 +31,7 @@ VERSION: str = version
 PYTHON_REQUIRES = ">=3.8"
 
 INSTALL_REQUIRES = [
-    "urllib3 >= 1.25.3",
+    "urllib3 >= 2.5.0",
     "python-dateutil",  # used in generated code
     "pydantic >= 2",
     "typing-extensions >= 4.7.1",

@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -24,7 +24,7 @@ from corbado_python_sdk.generated.models.connect_token import ConnectToken
 from corbado_python_sdk.generated.models.connect_token_create_req import ConnectTokenCreateReq
 from corbado_python_sdk.generated.models.connect_token_list import ConnectTokenList
 from corbado_python_sdk.generated.models.connect_token_update_req import ConnectTokenUpdateReq
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -61,9 +61,9 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ConnectToken:
-        """connect_token_create
+        """Create a connectToken
 
-        Create a new connect token
+        Creates a new ConnectToken, which is essential for [Corbado Connect](/corbado-connect). ConnectTokens authorize actions that modify user data.  Consult the [Documentation](/corbado-connect/concepts/connect-token) for more details. 
 
         :param connect_token_create_req: (required)
         :type connect_token_create_req: ConnectTokenCreateReq
@@ -128,9 +128,9 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ConnectToken]:
-        """connect_token_create
+        """Create a connectToken
 
-        Create a new connect token
+        Creates a new ConnectToken, which is essential for [Corbado Connect](/corbado-connect). ConnectTokens authorize actions that modify user data.  Consult the [Documentation](/corbado-connect/concepts/connect-token) for more details. 
 
         :param connect_token_create_req: (required)
         :type connect_token_create_req: ConnectTokenCreateReq
@@ -195,9 +195,9 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """connect_token_create
+        """Create a connectToken
 
-        Create a new connect token
+        Creates a new ConnectToken, which is essential for [Corbado Connect](/corbado-connect). ConnectTokens authorize actions that modify user data.  Consult the [Documentation](/corbado-connect/concepts/connect-token) for more details. 
 
         :param connect_token_create_req: (required)
         :type connect_token_create_req: ConnectTokenCreateReq
@@ -321,7 +321,7 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_delete(
         self,
-        connect_token_id: Annotated[StrictStr, Field(description="ID of an append token")],
+        connect_token_id: Annotated[StrictStr, Field(description="Unique identifier of the connectToken. Format: `ctk-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -334,12 +334,12 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
-        """connect_token_delete
+    ) -> UserDelete200Response:
+        """Delete a ConnectToken
 
-        Deletes an existing append token
+        Deletes an existing ConnectToken. 
 
-        :param connect_token_id: ID of an append token (required)
+        :param connect_token_id: Unique identifier of the connectToken. Format: `ctk-<number>`.  (required)
         :type connect_token_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -372,7 +372,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -388,7 +388,7 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_delete_with_http_info(
         self,
-        connect_token_id: Annotated[StrictStr, Field(description="ID of an append token")],
+        connect_token_id: Annotated[StrictStr, Field(description="Unique identifier of the connectToken. Format: `ctk-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -401,12 +401,12 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
-        """connect_token_delete
+    ) -> ApiResponse[UserDelete200Response]:
+        """Delete a ConnectToken
 
-        Deletes an existing append token
+        Deletes an existing ConnectToken. 
 
-        :param connect_token_id: ID of an append token (required)
+        :param connect_token_id: Unique identifier of the connectToken. Format: `ctk-<number>`.  (required)
         :type connect_token_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -439,7 +439,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -455,7 +455,7 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_delete_without_preload_content(
         self,
-        connect_token_id: Annotated[StrictStr, Field(description="ID of an append token")],
+        connect_token_id: Annotated[StrictStr, Field(description="Unique identifier of the connectToken. Format: `ctk-<number>`. ")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -469,11 +469,11 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """connect_token_delete
+        """Delete a ConnectToken
 
-        Deletes an existing append token
+        Deletes an existing ConnectToken. 
 
-        :param connect_token_id: ID of an append token (required)
+        :param connect_token_id: Unique identifier of the connectToken. Format: `ctk-<number>`.  (required)
         :type connect_token_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -506,7 +506,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -582,10 +582,10 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_list(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -599,17 +599,17 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ConnectTokenList:
-        """connect_token_list
+        """List all ConnectTokens
 
-        Returns a list of matching append tokens
+        Returns a list of ConnectTokens.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `token`, `tokenType`, `status` and `expires`. - The `filter` parameter supports the following fields: `token`, `tokenType`, `status` and `expires`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -661,10 +661,10 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_list_with_http_info(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -678,17 +678,17 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[ConnectTokenList]:
-        """connect_token_list
+        """List all ConnectTokens
 
-        Returns a list of matching append tokens
+        Returns a list of ConnectTokens.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `token`, `tokenType`, `status` and `expires`. - The `filter` parameter supports the following fields: `token`, `tokenType`, `status` and `expires`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -740,10 +740,10 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_list_without_preload_content(
         self,
-        sort: Annotated[Optional[StrictStr], Field(description="Field sorting")] = None,
-        filter: Annotated[Optional[List[StrictStr]], Field(description="Field filtering")] = None,
-        page: Annotated[Optional[StrictInt], Field(description="Page number")] = None,
-        page_size: Annotated[Optional[StrictInt], Field(description="Number of items per page")] = None,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -757,17 +757,17 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """connect_token_list
+        """List all ConnectTokens
 
-        Returns a list of matching append tokens
+        Returns a list of ConnectTokens.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `token`, `tokenType`, `status` and `expires`. - The `filter` parameter supports the following fields: `token`, `tokenType`, `status` and `expires`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators. 
 
-        :param sort: Field sorting
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
         :type sort: str
-        :param filter: Field filtering
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
         :type filter: List[str]
-        :param page: Page number
+        :param page: The page number to retrieve for paginated results. 
         :type page: int
-        :param page_size: Number of items per page
+        :param page_size: The number of items to return per page. Useful for pagination. 
         :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -897,7 +897,7 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_update(
         self,
-        connect_token_id: Annotated[StrictStr, Field(description="ID of an append token")],
+        connect_token_id: Annotated[StrictStr, Field(description="Unique identifier of the connectToken. Format: `ctk-<number>`. ")],
         connect_token_update_req: ConnectTokenUpdateReq,
         _request_timeout: Union[
             None,
@@ -911,12 +911,12 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
-        """connect_token_update
+    ) -> UserDelete200Response:
+        """Update a ConnectToken
 
-        Updates an existing append token
+        Updates an existing ConnectToken. 
 
-        :param connect_token_id: ID of an append token (required)
+        :param connect_token_id: Unique identifier of the connectToken. Format: `ctk-<number>`.  (required)
         :type connect_token_id: str
         :param connect_token_update_req: (required)
         :type connect_token_update_req: ConnectTokenUpdateReq
@@ -952,7 +952,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -968,7 +968,7 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_update_with_http_info(
         self,
-        connect_token_id: Annotated[StrictStr, Field(description="ID of an append token")],
+        connect_token_id: Annotated[StrictStr, Field(description="Unique identifier of the connectToken. Format: `ctk-<number>`. ")],
         connect_token_update_req: ConnectTokenUpdateReq,
         _request_timeout: Union[
             None,
@@ -982,12 +982,12 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
-        """connect_token_update
+    ) -> ApiResponse[UserDelete200Response]:
+        """Update a ConnectToken
 
-        Updates an existing append token
+        Updates an existing ConnectToken. 
 
-        :param connect_token_id: ID of an append token (required)
+        :param connect_token_id: Unique identifier of the connectToken. Format: `ctk-<number>`.  (required)
         :type connect_token_id: str
         :param connect_token_update_req: (required)
         :type connect_token_update_req: ConnectTokenUpdateReq
@@ -1023,7 +1023,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1039,7 +1039,7 @@ class ConnectTokensApi:
     @validate_call
     def connect_token_update_without_preload_content(
         self,
-        connect_token_id: Annotated[StrictStr, Field(description="ID of an append token")],
+        connect_token_id: Annotated[StrictStr, Field(description="Unique identifier of the connectToken. Format: `ctk-<number>`. ")],
         connect_token_update_req: ConnectTokenUpdateReq,
         _request_timeout: Union[
             None,
@@ -1054,11 +1054,11 @@ class ConnectTokensApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """connect_token_update
+        """Update a ConnectToken
 
-        Updates an existing append token
+        Updates an existing ConnectToken. 
 
-        :param connect_token_id: ID of an append token (required)
+        :param connect_token_id: Unique identifier of the connectToken. Format: `ctk-<number>`.  (required)
         :type connect_token_id: str
         :param connect_token_update_req: (required)
         :type connect_token_update_req: ConnectTokenUpdateReq
@@ -1094,7 +1094,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,

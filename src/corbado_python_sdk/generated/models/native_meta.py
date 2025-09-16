@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,18 +18,23 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class ErrorRspAllOfErrorValidation(BaseModel):
+class NativeMeta(BaseModel):
     """
-    ErrorRspAllOfErrorValidation
+    NativeMeta
     """ # noqa: E501
-    var_field: StrictStr = Field(alias="field")
-    message: StrictStr
-    __properties: ClassVar[List[str]] = ["field", "message"]
+    build: StrictStr
+    device_owner_auth: Optional[StrictStr] = Field(default=None, alias="deviceOwnerAuth")
+    is_platform_authenticator_api_supported: Optional[StrictBool] = Field(default=None, alias="isPlatformAuthenticatorAPISupported")
+    is_bluetooth_available: Optional[StrictBool] = Field(default=None, alias="isBluetoothAvailable")
+    is_bluetooth_on: Optional[StrictBool] = Field(default=None, alias="isBluetoothOn")
+    google_play_services: Optional[StrictBool] = Field(default=None, alias="googlePlayServices")
+    device_secure: Optional[StrictBool] = Field(default=None, alias="deviceSecure")
+    __properties: ClassVar[List[str]] = ["build", "deviceOwnerAuth", "isPlatformAuthenticatorAPISupported", "isBluetoothAvailable", "isBluetoothOn", "googlePlayServices", "deviceSecure"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +54,7 @@ class ErrorRspAllOfErrorValidation(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of ErrorRspAllOfErrorValidation from a JSON string"""
+        """Create an instance of NativeMeta from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,7 +79,7 @@ class ErrorRspAllOfErrorValidation(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of ErrorRspAllOfErrorValidation from a dict"""
+        """Create an instance of NativeMeta from a dict"""
         if obj is None:
             return None
 
@@ -82,8 +87,13 @@ class ErrorRspAllOfErrorValidation(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "field": obj.get("field"),
-            "message": obj.get("message")
+            "build": obj.get("build"),
+            "deviceOwnerAuth": obj.get("deviceOwnerAuth"),
+            "isPlatformAuthenticatorAPISupported": obj.get("isPlatformAuthenticatorAPISupported"),
+            "isBluetoothAvailable": obj.get("isBluetoothAvailable"),
+            "isBluetoothOn": obj.get("isBluetoothOn"),
+            "googlePlayServices": obj.get("googlePlayServices"),
+            "deviceSecure": obj.get("deviceSecure")
         })
         return _obj
 

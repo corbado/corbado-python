@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -20,7 +20,7 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.decision_insights import DecisionInsights
+from corbado_python_sdk.generated.models.decision_insights_append import DecisionInsightsAppend
 from corbado_python_sdk.generated.models.detection_insights import DetectionInsights
 from typing import Optional, Set
 from typing_extensions import Self
@@ -32,7 +32,7 @@ class PasskeyAppendStartRsp(BaseModel):
     append_allow: StrictBool = Field(alias="appendAllow")
     attestation_options: StrictStr = Field(alias="attestationOptions")
     detection_insights: DetectionInsights = Field(alias="detectionInsights")
-    decision_insights: DecisionInsights = Field(alias="decisionInsights")
+    decision_insights: DecisionInsightsAppend = Field(alias="decisionInsights")
     __properties: ClassVar[List[str]] = ["appendAllow", "attestationOptions", "detectionInsights", "decisionInsights"]
 
     model_config = ConfigDict(
@@ -95,7 +95,7 @@ class PasskeyAppendStartRsp(BaseModel):
             "appendAllow": obj.get("appendAllow"),
             "attestationOptions": obj.get("attestationOptions"),
             "detectionInsights": DetectionInsights.from_dict(obj["detectionInsights"]) if obj.get("detectionInsights") is not None else None,
-            "decisionInsights": DecisionInsights.from_dict(obj["decisionInsights"]) if obj.get("decisionInsights") is not None else None
+            "decisionInsights": DecisionInsightsAppend.from_dict(obj["decisionInsights"]) if obj.get("decisionInsights") is not None else None
         })
         return _obj
 

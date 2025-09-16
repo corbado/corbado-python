@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -17,13 +17,11 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
-from pydantic import Field, StrictStr
+from pydantic import Field, StrictInt, StrictStr
+from typing import List, Optional
 from typing_extensions import Annotated
-from corbado_python_sdk.generated.models.long_session import LongSession
-from corbado_python_sdk.generated.models.long_session_create_req import LongSessionCreateReq
-from corbado_python_sdk.generated.models.long_session_update_req import LongSessionUpdateReq
-from corbado_python_sdk.generated.models.short_session import ShortSession
-from corbado_python_sdk.generated.models.short_session_create_req import ShortSessionCreateReq
+from corbado_python_sdk.generated.models.session_list import SessionList
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -44,10 +42,12 @@ class SessionsApi:
 
 
     @validate_call
-    def long_session_create(
+    def session_list(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_create_req: LongSessionCreateReq,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -60,15 +60,19 @@ class SessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LongSession:
-        """long_session_create
+    ) -> SessionList:
+        """List all sessions
 
-        Create a new long session
+        Returns a list of sessions.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `ID`, `userID`, `expires`, `lastAction`, `created`, `updated`, and `status`. - The `filter` parameter supports the following fields: `ID`, `userID`, `expires`, `lastAction`, `created`, `updated`, and `status`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators.  You can view and manage sessions in the [Developer Panel](https://app.corbado.com/users/sessions) or consult the [Documentation](https://docs.corbado.com/corbado-complete/sessions/overview) for more details. 
 
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_create_req: (required)
-        :type long_session_create_req: LongSessionCreateReq
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
+        :type sort: str
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
+        :type filter: List[str]
+        :param page: The page number to retrieve for paginated results. 
+        :type page: int
+        :param page_size: The number of items to return per page. Useful for pagination. 
+        :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -91,9 +95,11 @@ class SessionsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._long_session_create_serialize(
-            user_id=user_id,
-            long_session_create_req=long_session_create_req,
+        _param = self._session_list_serialize(
+            sort=sort,
+            filter=filter,
+            page=page,
+            page_size=page_size,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -101,7 +107,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
+            '200': "SessionList",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -115,10 +121,12 @@ class SessionsApi:
 
 
     @validate_call
-    def long_session_create_with_http_info(
+    def session_list_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_create_req: LongSessionCreateReq,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -131,15 +139,19 @@ class SessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LongSession]:
-        """long_session_create
+    ) -> ApiResponse[SessionList]:
+        """List all sessions
 
-        Create a new long session
+        Returns a list of sessions.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `ID`, `userID`, `expires`, `lastAction`, `created`, `updated`, and `status`. - The `filter` parameter supports the following fields: `ID`, `userID`, `expires`, `lastAction`, `created`, `updated`, and `status`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators.  You can view and manage sessions in the [Developer Panel](https://app.corbado.com/users/sessions) or consult the [Documentation](https://docs.corbado.com/corbado-complete/sessions/overview) for more details. 
 
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_create_req: (required)
-        :type long_session_create_req: LongSessionCreateReq
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
+        :type sort: str
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
+        :type filter: List[str]
+        :param page: The page number to retrieve for paginated results. 
+        :type page: int
+        :param page_size: The number of items to return per page. Useful for pagination. 
+        :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -162,9 +174,11 @@ class SessionsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._long_session_create_serialize(
-            user_id=user_id,
-            long_session_create_req=long_session_create_req,
+        _param = self._session_list_serialize(
+            sort=sort,
+            filter=filter,
+            page=page,
+            page_size=page_size,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -172,7 +186,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
+            '200': "SessionList",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -186,10 +200,12 @@ class SessionsApi:
 
 
     @validate_call
-    def long_session_create_without_preload_content(
+    def session_list_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_create_req: LongSessionCreateReq,
+        sort: Annotated[Optional[StrictStr], Field(description="Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. ")] = None,
+        filter: Annotated[Optional[List[StrictStr]], Field(description="Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) ")] = None,
+        page: Annotated[Optional[StrictInt], Field(description="The page number to retrieve for paginated results. ")] = None,
+        page_size: Annotated[Optional[StrictInt], Field(description="The number of items to return per page. Useful for pagination. ")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -203,14 +219,18 @@ class SessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """long_session_create
+        """List all sessions
 
-        Create a new long session
+        Returns a list of sessions.  The list can be sorted and filtered: - The `sort` parameter supports the following fields: `ID`, `userID`, `expires`, `lastAction`, `created`, `updated`, and `status`. - The `filter` parameter supports the following fields: `ID`, `userID`, `expires`, `lastAction`, `created`, `updated`, and `status`.  Refer to the parameter description for more details on sorting in different directions and using the filter with different operators.  You can view and manage sessions in the [Developer Panel](https://app.corbado.com/users/sessions) or consult the [Documentation](https://docs.corbado.com/corbado-complete/sessions/overview) for more details. 
 
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_create_req: (required)
-        :type long_session_create_req: LongSessionCreateReq
+        :param sort: Field and direction to sort results. Use the format `fieldName:asc` or `fieldName:desc`. 
+        :type sort: str
+        :param filter: Filter results by specific fields and conditions. Format: `<field>:<operator>:<value>`. Supported operators include:     - `eq`: equals (e\\.g\\. `email:eq:mail@example\\.com` matches items where email equals mail@example\\.com)     - `gt`: greater than (e\\.g\\. `created:gt:2021-01-01T00:00:00` matches items created after Jan 1, 2021)     - `lt`: less than (e\\.g\\. `created:lt:2021-01-01T00:00:00` matches items created before Jan 1, 2021) 
+        :type filter: List[str]
+        :param page: The page number to retrieve for paginated results. 
+        :type page: int
+        :param page_size: The number of items to return per page. Useful for pagination. 
+        :type page_size: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -233,9 +253,11 @@ class SessionsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._long_session_create_serialize(
-            user_id=user_id,
-            long_session_create_req=long_session_create_req,
+        _param = self._session_list_serialize(
+            sort=sort,
+            filter=filter,
+            page=page,
+            page_size=page_size,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -243,7 +265,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
+            '200': "SessionList",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -252,10 +274,12 @@ class SessionsApi:
         return response_data.response
 
 
-    def _long_session_create_serialize(
+    def _session_list_serialize(
         self,
-        user_id,
-        long_session_create_req,
+        sort,
+        filter,
+        page,
+        page_size,
         _request_auth,
         _content_type,
         _headers,
@@ -265,6 +289,7 @@ class SessionsApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
+            'filter[]': 'multi',
         }
 
         _path_params: Dict[str, str] = {}
@@ -277,285 +302,23 @@ class SessionsApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if user_id is not None:
-            _path_params['userID'] = user_id
         # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if long_session_create_req is not None:
-            _body_params = long_session_create_req
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'basicAuth'
-        ]
-
-        return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/users/{userID}/longSessions',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def long_session_get(
-        self,
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LongSession:
-        """long_session_get
-
-        Retrieves a long session by ID
-
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._long_session_get_serialize(
-            long_session_id=long_session_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def long_session_get_with_http_info(
-        self,
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LongSession]:
-        """long_session_get
-
-        Retrieves a long session by ID
-
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._long_session_get_serialize(
-            long_session_id=long_session_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def long_session_get_without_preload_content(
-        self,
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """long_session_get
-
-        Retrieves a long session by ID
-
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._long_session_get_serialize(
-            long_session_id=long_session_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _long_session_get_serialize(
-        self,
-        long_session_id,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if long_session_id is not None:
-            _path_params['longSessionID'] = long_session_id
-        # process the query parameters
+        if sort is not None:
+            
+            _query_params.append(('sort', sort))
+            
+        if filter is not None:
+            
+            _query_params.append(('filter[]', filter))
+            
+        if page is not None:
+            
+            _query_params.append(('page', page))
+            
+        if page_size is not None:
+            
+            _query_params.append(('pageSize', page_size))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -577,7 +340,7 @@ class SessionsApi:
 
         return self.api_client.param_serialize(
             method='GET',
-            resource_path='/longSessions/{longSessionID}',
+            resource_path='/sessions',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -594,11 +357,9 @@ class SessionsApi:
 
 
     @validate_call
-    def long_session_update(
+    def session_revoke(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        long_session_update_req: LongSessionUpdateReq,
+        session_id: Annotated[str, Field(min_length=30, strict=True, max_length=30, description="ID of session")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -611,17 +372,13 @@ class SessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LongSession:
-        """long_session_update
+    ) -> UserDelete200Response:
+        """Revoke a session
 
-        Updates long session status
+        Revokes an existing session by given `sessionID`.
 
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param long_session_update_req: (required)
-        :type long_session_update_req: LongSessionUpdateReq
+        :param session_id: ID of session (required)
+        :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -644,10 +401,8 @@ class SessionsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._long_session_update_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            long_session_update_req=long_session_update_req,
+        _param = self._session_revoke_serialize(
+            session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -655,7 +410,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -669,11 +424,9 @@ class SessionsApi:
 
 
     @validate_call
-    def long_session_update_with_http_info(
+    def session_revoke_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        long_session_update_req: LongSessionUpdateReq,
+        session_id: Annotated[str, Field(min_length=30, strict=True, max_length=30, description="ID of session")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -686,17 +439,13 @@ class SessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LongSession]:
-        """long_session_update
+    ) -> ApiResponse[UserDelete200Response]:
+        """Revoke a session
 
-        Updates long session status
+        Revokes an existing session by given `sessionID`.
 
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param long_session_update_req: (required)
-        :type long_session_update_req: LongSessionUpdateReq
+        :param session_id: ID of session (required)
+        :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -719,10 +468,8 @@ class SessionsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._long_session_update_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            long_session_update_req=long_session_update_req,
+        _param = self._session_revoke_serialize(
+            session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -730,7 +477,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -744,11 +491,9 @@ class SessionsApi:
 
 
     @validate_call
-    def long_session_update_without_preload_content(
+    def session_revoke_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        long_session_update_req: LongSessionUpdateReq,
+        session_id: Annotated[str, Field(min_length=30, strict=True, max_length=30, description="ID of session")],
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -762,16 +507,12 @@ class SessionsApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """long_session_update
+        """Revoke a session
 
-        Updates long session status
+        Revokes an existing session by given `sessionID`.
 
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param long_session_update_req: (required)
-        :type long_session_update_req: LongSessionUpdateReq
+        :param session_id: ID of session (required)
+        :type session_id: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -794,10 +535,8 @@ class SessionsApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._long_session_update_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            long_session_update_req=long_session_update_req,
+        _param = self._session_revoke_serialize(
+            session_id=session_id,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -805,7 +544,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -814,11 +553,9 @@ class SessionsApi:
         return response_data.response
 
 
-    def _long_session_update_serialize(
+    def _session_revoke_serialize(
         self,
-        user_id,
-        long_session_id,
-        long_session_update_req,
+        session_id,
         _request_auth,
         _content_type,
         _headers,
@@ -840,16 +577,12 @@ class SessionsApi:
         _body_params: Optional[bytes] = None
 
         # process the path parameters
-        if user_id is not None:
-            _path_params['userID'] = user_id
-        if long_session_id is not None:
-            _path_params['longSessionID'] = long_session_id
+        if session_id is not None:
+            _path_params['sessionID'] = session_id
         # process the query parameters
         # process the header parameters
         # process the form parameters
         # process the body parameter
-        if long_session_update_req is not None:
-            _body_params = long_session_update_req
 
 
         # set the HTTP header `Accept`
@@ -860,323 +593,6 @@ class SessionsApi:
                 ]
             )
 
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'basicAuth'
-        ]
-
-        return self.api_client.param_serialize(
-            method='PATCH',
-            resource_path='/users/{userID}/longSessions/{longSessionID}',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def short_session_create(
-        self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        short_session_create_req: ShortSessionCreateReq,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ShortSession:
-        """short_session_create
-
-        Create a new short session
-
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param short_session_create_req: (required)
-        :type short_session_create_req: ShortSessionCreateReq
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._short_session_create_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            short_session_create_req=short_session_create_req,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ShortSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def short_session_create_with_http_info(
-        self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        short_session_create_req: ShortSessionCreateReq,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[ShortSession]:
-        """short_session_create
-
-        Create a new short session
-
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param short_session_create_req: (required)
-        :type short_session_create_req: ShortSessionCreateReq
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._short_session_create_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            short_session_create_req=short_session_create_req,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ShortSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def short_session_create_without_preload_content(
-        self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        short_session_create_req: ShortSessionCreateReq,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """short_session_create
-
-        Create a new short session
-
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param short_session_create_req: (required)
-        :type short_session_create_req: ShortSessionCreateReq
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._short_session_create_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            short_session_create_req=short_session_create_req,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "ShortSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _short_session_create_serialize(
-        self,
-        user_id,
-        long_session_id,
-        short_session_create_req,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if user_id is not None:
-            _path_params['userID'] = user_id
-        if long_session_id is not None:
-            _path_params['longSessionID'] = long_session_id
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if short_session_create_req is not None:
-            _body_params = short_session_create_req
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
 
         # authentication setting
         _auth_settings: List[str] = [
@@ -1185,283 +601,7 @@ class SessionsApi:
 
         return self.api_client.param_serialize(
             method='POST',
-            resource_path='/users/{userID}/longSessions/{longSessionID}/shortSessions',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def user_long_session_get(
-        self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> LongSession:
-        """user_long_session_get
-
-        Retrieves a long session by ID and user ID
-
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._user_long_session_get_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def user_long_session_get_with_http_info(
-        self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[LongSession]:
-        """user_long_session_get
-
-        Retrieves a long session by ID and user ID
-
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._user_long_session_get_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def user_long_session_get_without_preload_content(
-        self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
-        long_session_id: Annotated[StrictStr, Field(description="ID of long session")],
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """user_long_session_get
-
-        Retrieves a long session by ID and user ID
-
-        :param user_id: ID of user (required)
-        :type user_id: str
-        :param long_session_id: ID of long session (required)
-        :type long_session_id: str
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._user_long_session_get_serialize(
-            user_id=user_id,
-            long_session_id=long_session_id,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "LongSession",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _user_long_session_get_serialize(
-        self,
-        user_id,
-        long_session_id,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[
-            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
-        ] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if user_id is not None:
-            _path_params['userID'] = user_id
-        if long_session_id is not None:
-            _path_params['longSessionID'] = long_session_id
-        # process the query parameters
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-
-        # authentication setting
-        _auth_settings: List[str] = [
-            'basicAuth'
-        ]
-
-        return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/users/{userID}/longSessions/{longSessionID}',
+            resource_path='/sessions/{sessionID}/revoke',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

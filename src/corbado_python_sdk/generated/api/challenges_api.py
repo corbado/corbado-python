@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -44,7 +44,7 @@ class ChallengesApi:
     @validate_call
     def challenge_create(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         challenge_create_req: ChallengeCreateReq,
         _request_timeout: Union[
             None,
@@ -59,11 +59,11 @@ class ChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Challenge:
-        """challenge_create
+        """Create a challenge for a user
 
-        Create a new challenge to verify a login identifier
+        Creates a new challenge to verify a login identifier for a user by given `userID`. Challenges come in three flavors: **Email OTP**, **SMS OTP**, and **Email Magiclink**.  **OTP** stands for One-Time Password. It is a unique code sent to the user via email or SMS, which they must enter to complete the verification process. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param challenge_create_req: (required)
         :type challenge_create_req: ChallengeCreateReq
@@ -115,7 +115,7 @@ class ChallengesApi:
     @validate_call
     def challenge_create_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         challenge_create_req: ChallengeCreateReq,
         _request_timeout: Union[
             None,
@@ -130,11 +130,11 @@ class ChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Challenge]:
-        """challenge_create
+        """Create a challenge for a user
 
-        Create a new challenge to verify a login identifier
+        Creates a new challenge to verify a login identifier for a user by given `userID`. Challenges come in three flavors: **Email OTP**, **SMS OTP**, and **Email Magiclink**.  **OTP** stands for One-Time Password. It is a unique code sent to the user via email or SMS, which they must enter to complete the verification process. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param challenge_create_req: (required)
         :type challenge_create_req: ChallengeCreateReq
@@ -186,7 +186,7 @@ class ChallengesApi:
     @validate_call
     def challenge_create_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         challenge_create_req: ChallengeCreateReq,
         _request_timeout: Union[
             None,
@@ -201,11 +201,11 @@ class ChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """challenge_create
+        """Create a challenge for a user
 
-        Create a new challenge to verify a login identifier
+        Creates a new challenge to verify a login identifier for a user by given `userID`. Challenges come in three flavors: **Email OTP**, **SMS OTP**, and **Email Magiclink**.  **OTP** stands for One-Time Password. It is a unique code sent to the user via email or SMS, which they must enter to complete the verification process. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param challenge_create_req: (required)
         :type challenge_create_req: ChallengeCreateReq
@@ -333,7 +333,7 @@ class ChallengesApi:
     @validate_call
     def challenge_update(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         challenge_id: Annotated[StrictStr, Field(description="ID of challenge")],
         challenge_update_req: ChallengeUpdateReq,
         _request_timeout: Union[
@@ -349,11 +349,11 @@ class ChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Challenge:
-        """challenge_update
+        """Update a challenge for a user
 
-        Updates a challenge (e.g. from pending to completed)
+        Updates a challenge for a user by given `userID` and `challengeID`. For example, this can be used to change the challenge status from `pending` to `completed`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param challenge_id: ID of challenge (required)
         :type challenge_id: str
@@ -408,7 +408,7 @@ class ChallengesApi:
     @validate_call
     def challenge_update_with_http_info(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         challenge_id: Annotated[StrictStr, Field(description="ID of challenge")],
         challenge_update_req: ChallengeUpdateReq,
         _request_timeout: Union[
@@ -424,11 +424,11 @@ class ChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Challenge]:
-        """challenge_update
+        """Update a challenge for a user
 
-        Updates a challenge (e.g. from pending to completed)
+        Updates a challenge for a user by given `userID` and `challengeID`. For example, this can be used to change the challenge status from `pending` to `completed`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param challenge_id: ID of challenge (required)
         :type challenge_id: str
@@ -483,7 +483,7 @@ class ChallengesApi:
     @validate_call
     def challenge_update_without_preload_content(
         self,
-        user_id: Annotated[StrictStr, Field(description="ID of user")],
+        user_id: Annotated[StrictStr, Field(description="Unique identifier of the user. Format: `usr-<number>`. ")],
         challenge_id: Annotated[StrictStr, Field(description="ID of challenge")],
         challenge_update_req: ChallengeUpdateReq,
         _request_timeout: Union[
@@ -499,11 +499,11 @@ class ChallengesApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """challenge_update
+        """Update a challenge for a user
 
-        Updates a challenge (e.g. from pending to completed)
+        Updates a challenge for a user by given `userID` and `challengeID`. For example, this can be used to change the challenge status from `pending` to `completed`. 
 
-        :param user_id: ID of user (required)
+        :param user_id: Unique identifier of the user. Format: `usr-<number>`.  (required)
         :type user_id: str
         :param challenge_id: ID of challenge (required)
         :type challenge_id: str

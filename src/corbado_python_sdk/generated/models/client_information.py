@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -21,6 +21,8 @@ import json
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from corbado_python_sdk.generated.models.java_script_high_entropy import JavaScriptHighEntropy
+from corbado_python_sdk.generated.models.native_meta import NativeMeta
+from corbado_python_sdk.generated.models.parsed_device_info import ParsedDeviceInfo
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -38,7 +40,9 @@ class ClientInformation(BaseModel):
     user_verifying_platform_authenticator_available: StrictBool = Field(alias="userVerifyingPlatformAuthenticatorAvailable")
     conditional_mediation_available: StrictBool = Field(alias="conditionalMediationAvailable")
     private_mode: Optional[StrictBool] = Field(default=None, alias="privateMode")
-    __properties: ClassVar[List[str]] = ["remoteAddress", "userAgent", "clientEnvHandle", "javascriptFingerprint", "javaScriptHighEntropy", "bluetoothAvailable", "passwordManagerAvailable", "userVerifyingPlatformAuthenticatorAvailable", "conditionalMediationAvailable", "privateMode"]
+    parsed_device_info: ParsedDeviceInfo = Field(alias="parsedDeviceInfo")
+    native_meta: Optional[NativeMeta] = Field(default=None, alias="nativeMeta")
+    __properties: ClassVar[List[str]] = ["remoteAddress", "userAgent", "clientEnvHandle", "javascriptFingerprint", "javaScriptHighEntropy", "bluetoothAvailable", "passwordManagerAvailable", "userVerifyingPlatformAuthenticatorAvailable", "conditionalMediationAvailable", "privateMode", "parsedDeviceInfo", "nativeMeta"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,6 +86,12 @@ class ClientInformation(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of java_script_high_entropy
         if self.java_script_high_entropy:
             _dict['javaScriptHighEntropy'] = self.java_script_high_entropy.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of parsed_device_info
+        if self.parsed_device_info:
+            _dict['parsedDeviceInfo'] = self.parsed_device_info.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of native_meta
+        if self.native_meta:
+            _dict['nativeMeta'] = self.native_meta.to_dict()
         return _dict
 
     @classmethod
@@ -103,7 +113,9 @@ class ClientInformation(BaseModel):
             "passwordManagerAvailable": obj.get("passwordManagerAvailable"),
             "userVerifyingPlatformAuthenticatorAvailable": obj.get("userVerifyingPlatformAuthenticatorAvailable"),
             "conditionalMediationAvailable": obj.get("conditionalMediationAvailable"),
-            "privateMode": obj.get("privateMode")
+            "privateMode": obj.get("privateMode"),
+            "parsedDeviceInfo": ParsedDeviceInfo.from_dict(obj["parsedDeviceInfo"]) if obj.get("parsedDeviceInfo") is not None else None,
+            "nativeMeta": NativeMeta.from_dict(obj["nativeMeta"]) if obj.get("nativeMeta") is not None else None
         })
         return _obj
 

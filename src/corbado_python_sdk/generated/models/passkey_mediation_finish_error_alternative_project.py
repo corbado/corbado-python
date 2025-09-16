@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -18,19 +18,25 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt
+from pydantic import BaseModel, ConfigDict, Field, StrictStr, field_validator
 from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class Paging(BaseModel):
+class PasskeyMediationFinishErrorAlternativeProject(BaseModel):
     """
-    Paging
+    PasskeyMediationFinishErrorAlternativeProject
     """ # noqa: E501
-    page: StrictInt = Field(description="current page returned in response")
-    total_pages: StrictInt = Field(description="total number of pages available", alias="totalPages")
-    total_items: StrictInt = Field(description="total number of items available", alias="totalItems")
-    __properties: ClassVar[List[str]] = ["page", "totalPages", "totalItems"]
+    type: StrictStr
+    alternative_project_name: StrictStr = Field(alias="alternativeProjectName")
+    __properties: ClassVar[List[str]] = ["type", "alternativeProjectName"]
+
+    @field_validator('type')
+    def type_validate_enum(cls, value):
+        """Validates the enum"""
+        if value not in set(['alternativeProjectID']):
+            raise ValueError("must be one of enum values ('alternativeProjectID')")
+        return value
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -50,7 +56,7 @@ class Paging(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of Paging from a JSON string"""
+        """Create an instance of PasskeyMediationFinishErrorAlternativeProject from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +81,7 @@ class Paging(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of Paging from a dict"""
+        """Create an instance of PasskeyMediationFinishErrorAlternativeProject from a dict"""
         if obj is None:
             return None
 
@@ -83,9 +89,8 @@ class Paging(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "page": obj.get("page") if obj.get("page") is not None else 1,
-            "totalPages": obj.get("totalPages"),
-            "totalItems": obj.get("totalItems")
+            "type": obj.get("type"),
+            "alternativeProjectName": obj.get("alternativeProjectName")
         })
         return _obj
 

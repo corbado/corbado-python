@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -19,7 +19,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, Field, StrictBool, StrictStr
-from typing import Any, ClassVar, Dict, List
+from typing import Any, ClassVar, Dict, List, Optional
 from corbado_python_sdk.generated.models.decision_tag import DecisionTag
 from typing import Optional, Set
 from typing_extensions import Self
@@ -31,7 +31,8 @@ class DecisionInsights(BaseModel):
     tag: DecisionTag
     is_cda_candidate: StrictBool = Field(alias="isCDACandidate")
     experiments: List[StrictStr]
-    __properties: ClassVar[List[str]] = ["tag", "isCDACandidate", "experiments"]
+    prefer_immediately_available: Optional[StrictBool] = Field(default=None, alias="preferImmediatelyAvailable")
+    __properties: ClassVar[List[str]] = ["tag", "isCDACandidate", "experiments", "preferImmediatelyAvailable"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -86,7 +87,8 @@ class DecisionInsights(BaseModel):
         _obj = cls.model_validate({
             "tag": obj.get("tag"),
             "isCDACandidate": obj.get("isCDACandidate"),
-            "experiments": obj.get("experiments")
+            "experiments": obj.get("experiments"),
+            "preferImmediatelyAvailable": obj.get("preferImmediatelyAvailable")
         })
         return _obj
 

@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -31,7 +31,7 @@ class ConnectTokenCreateReq(BaseModel):
     """ # noqa: E501
     type: ConnectTokenType
     data: ConnectTokenData
-    max_lifetime_in_seconds: Optional[StrictInt] = Field(default=None, alias="maxLifetimeInSeconds")
+    max_lifetime_in_seconds: Optional[StrictInt] = Field(default=None, description="Maximum lifetime of the connectToken in seconds.", alias="maxLifetimeInSeconds")
     __properties: ClassVar[List[str]] = ["type", "data", "maxLifetimeInSeconds"]
 
     model_config = ConfigDict(

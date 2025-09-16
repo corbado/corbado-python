@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -19,10 +19,11 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
 from typing_extensions import Annotated
-from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
+from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 from corbado_python_sdk.generated.models.webhook_endpoint import WebhookEndpoint
 from corbado_python_sdk.generated.models.webhook_endpoint_create_req import WebhookEndpointCreateReq
 from corbado_python_sdk.generated.models.webhook_endpoint_list import WebhookEndpointList
+from corbado_python_sdk.generated.models.webhook_endpoint_update_req import WebhookEndpointUpdateReq
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -332,7 +333,7 @@ class WebhookEndpointsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GenericRsp:
+    ) -> UserDelete200Response:
         """webhook_endpoint_delete
 
         Deletes an existing webhook endpoint
@@ -370,7 +371,7 @@ class WebhookEndpointsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -399,7 +400,7 @@ class WebhookEndpointsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GenericRsp]:
+    ) -> ApiResponse[UserDelete200Response]:
         """webhook_endpoint_delete
 
         Deletes an existing webhook endpoint
@@ -437,7 +438,7 @@ class WebhookEndpointsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -504,7 +505,7 @@ class WebhookEndpointsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GenericRsp",
+            '200': "UserDelete200Response",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -808,6 +809,295 @@ class WebhookEndpointsApi:
         return self.api_client.param_serialize(
             method='GET',
             resource_path='/webhookEndpoints',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def webhook_endpoint_update(
+        self,
+        webhook_endpoint_id: Annotated[StrictStr, Field(description="ID of a webhook endpoint")],
+        webhook_endpoint_update_req: WebhookEndpointUpdateReq,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> WebhookEndpoint:
+        """webhook_endpoint_update
+
+        Updates an existing webhook endpoint
+
+        :param webhook_endpoint_id: ID of a webhook endpoint (required)
+        :type webhook_endpoint_id: str
+        :param webhook_endpoint_update_req: (required)
+        :type webhook_endpoint_update_req: WebhookEndpointUpdateReq
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._webhook_endpoint_update_serialize(
+            webhook_endpoint_id=webhook_endpoint_id,
+            webhook_endpoint_update_req=webhook_endpoint_update_req,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WebhookEndpoint",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def webhook_endpoint_update_with_http_info(
+        self,
+        webhook_endpoint_id: Annotated[StrictStr, Field(description="ID of a webhook endpoint")],
+        webhook_endpoint_update_req: WebhookEndpointUpdateReq,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[WebhookEndpoint]:
+        """webhook_endpoint_update
+
+        Updates an existing webhook endpoint
+
+        :param webhook_endpoint_id: ID of a webhook endpoint (required)
+        :type webhook_endpoint_id: str
+        :param webhook_endpoint_update_req: (required)
+        :type webhook_endpoint_update_req: WebhookEndpointUpdateReq
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._webhook_endpoint_update_serialize(
+            webhook_endpoint_id=webhook_endpoint_id,
+            webhook_endpoint_update_req=webhook_endpoint_update_req,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WebhookEndpoint",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def webhook_endpoint_update_without_preload_content(
+        self,
+        webhook_endpoint_id: Annotated[StrictStr, Field(description="ID of a webhook endpoint")],
+        webhook_endpoint_update_req: WebhookEndpointUpdateReq,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """webhook_endpoint_update
+
+        Updates an existing webhook endpoint
+
+        :param webhook_endpoint_id: ID of a webhook endpoint (required)
+        :type webhook_endpoint_id: str
+        :param webhook_endpoint_update_req: (required)
+        :type webhook_endpoint_update_req: WebhookEndpointUpdateReq
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._webhook_endpoint_update_serialize(
+            webhook_endpoint_id=webhook_endpoint_id,
+            webhook_endpoint_update_req=webhook_endpoint_update_req,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "WebhookEndpoint",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _webhook_endpoint_update_serialize(
+        self,
+        webhook_endpoint_id,
+        webhook_endpoint_update_req,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[
+            str, Union[str, bytes, List[str], List[bytes], List[Tuple[str, bytes]]]
+        ] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if webhook_endpoint_id is not None:
+            _path_params['webhookEndpointID'] = webhook_endpoint_id
+        # process the query parameters
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if webhook_endpoint_update_req is not None:
+            _body_params = webhook_endpoint_update_req
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+            'basicAuth'
+        ]
+
+        return self.api_client.param_serialize(
+            method='PUT',
+            resource_path='/webhookEndpoints/{webhookEndpointID}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

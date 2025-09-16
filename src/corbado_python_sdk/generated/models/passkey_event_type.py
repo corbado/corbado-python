@@ -3,7 +3,7 @@
 """
     Corbado Backend API
 
-     # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
+    # Introduction This documentation gives an overview of all Corbado Backend API calls to implement passwordless authentication with Passkeys. 
 
     The version of the OpenAPI document: 2.0.0
     Contact: support@corbado.com
@@ -37,6 +37,7 @@ class PasskeyEventType(str, Enum):
     APPEND_MINUS_CREDENTIAL_MINUS_EXISTS = 'append-credential-exists'
     APPEND_MINUS_EXPLICIT_MINUS_ABORT = 'append-explicit-abort'
     APPEND_MINUS_ERROR = 'append-error'
+    LOGIN_MINUS_NO_MINUS_CREDENTIALS = 'login-no-credentials'
 
     @classmethod
     def from_json(cls, json_str: str) -> Self:
