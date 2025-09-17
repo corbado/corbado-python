@@ -24,7 +24,7 @@ from corbado_python_sdk.generated.models.connect_token import ConnectToken
 from corbado_python_sdk.generated.models.connect_token_create_req import ConnectTokenCreateReq
 from corbado_python_sdk.generated.models.connect_token_list import ConnectTokenList
 from corbado_python_sdk.generated.models.connect_token_update_req import ConnectTokenUpdateReq
-from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -334,7 +334,7 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """Delete a ConnectToken
 
         Deletes an existing ConnectToken. 
@@ -372,7 +372,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -401,7 +401,7 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """Delete a ConnectToken
 
         Deletes an existing ConnectToken. 
@@ -439,7 +439,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -506,7 +506,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -911,7 +911,7 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """Update a ConnectToken
 
         Updates an existing ConnectToken. 
@@ -952,7 +952,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -982,7 +982,7 @@ class ConnectTokensApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """Update a ConnectToken
 
         Updates an existing ConnectToken. 
@@ -1023,7 +1023,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1094,7 +1094,7 @@ class ConnectTokensApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,

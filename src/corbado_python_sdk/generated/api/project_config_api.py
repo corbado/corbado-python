@@ -17,8 +17,8 @@ from pydantic import validate_call, Field, StrictFloat, StrictStr, StrictInt
 from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.project_config_update_cname_req import ProjectConfigUpdateCnameReq
-from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -54,7 +54,7 @@ class ProjectConfigApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """Update project CNAME and generate SSL certificate
 
         Update project config CNAME and generates new SSL certificate
@@ -92,7 +92,7 @@ class ProjectConfigApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -121,7 +121,7 @@ class ProjectConfigApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """Update project CNAME and generate SSL certificate
 
         Update project config CNAME and generates new SSL certificate
@@ -159,7 +159,7 @@ class ProjectConfigApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -226,7 +226,7 @@ class ProjectConfigApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,

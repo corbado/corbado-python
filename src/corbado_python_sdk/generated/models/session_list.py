@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
-from corbado_python_sdk.generated.models.session_list_sessions_inner import SessionListSessionsInner
-from corbado_python_sdk.generated.models.user_list_paging import UserListPaging
+from corbado_python_sdk.generated.models.paging import Paging
+from corbado_python_sdk.generated.models.session import Session
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -29,8 +29,8 @@ class SessionList(BaseModel):
     """
     SessionList
     """ # noqa: E501
-    sessions: List[SessionListSessionsInner]
-    paging: UserListPaging
+    sessions: List[Session]
+    paging: Paging
     __properties: ClassVar[List[str]] = ["sessions", "paging"]
 
     model_config = ConfigDict(
@@ -94,8 +94,8 @@ class SessionList(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "sessions": [SessionListSessionsInner.from_dict(_item) for _item in obj["sessions"]] if obj.get("sessions") is not None else None,
-            "paging": UserListPaging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
+            "sessions": [Session.from_dict(_item) for _item in obj["sessions"]] if obj.get("sessions") is not None else None,
+            "paging": Paging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
         })
         return _obj
 

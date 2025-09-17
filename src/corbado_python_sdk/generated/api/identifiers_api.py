@@ -20,11 +20,11 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.identifier import Identifier
 from corbado_python_sdk.generated.models.identifier_create_req import IdentifierCreateReq
 from corbado_python_sdk.generated.models.identifier_list import IdentifierList
 from corbado_python_sdk.generated.models.identifier_update_req import IdentifierUpdateReq
-from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -350,7 +350,7 @@ class IdentifiersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """Delete a login identifier for a user
 
         Delete an existing login identifier for a user by given `userID` and `identifierID`. 
@@ -391,7 +391,7 @@ class IdentifiersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -421,7 +421,7 @@ class IdentifiersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """Delete a login identifier for a user
 
         Delete an existing login identifier for a user by given `userID` and `identifierID`. 
@@ -462,7 +462,7 @@ class IdentifiersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -533,7 +533,7 @@ class IdentifiersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,

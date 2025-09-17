@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
 from corbado_python_sdk.generated.models.connect_token import ConnectToken
-from corbado_python_sdk.generated.models.user_list_paging import UserListPaging
+from corbado_python_sdk.generated.models.paging import Paging
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +30,7 @@ class ConnectTokenList(BaseModel):
     ConnectTokenList
     """ # noqa: E501
     connect_tokens: List[ConnectToken] = Field(alias="connectTokens")
-    paging: UserListPaging
+    paging: Paging
     __properties: ClassVar[List[str]] = ["connectTokens", "paging"]
 
     model_config = ConfigDict(
@@ -95,7 +95,7 @@ class ConnectTokenList(BaseModel):
 
         _obj = cls.model_validate({
             "connectTokens": [ConnectToken.from_dict(_item) for _item in obj["connectTokens"]] if obj.get("connectTokens") is not None else None,
-            "paging": UserListPaging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
+            "paging": Paging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
         })
         return _obj
 
