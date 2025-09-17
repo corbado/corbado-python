@@ -1,5 +1,6 @@
-from pydantic import BaseModel, ConfigDict, Field, StrictStr
 from typing import Optional
+
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
 
 from corbado_python_sdk.generated.models.user import User
 from corbado_python_sdk.generated.models.user_status import UserStatus
