@@ -23,4 +23,6 @@ class UserEntity(User):
             status=user.status,
             explicitWebauthnID=user.explicit_webauthn_id,
             fullName=user.full_name,
+            updated=user.updated,
+            updatedMs=user.updated_ms,
         )
