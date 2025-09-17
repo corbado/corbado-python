@@ -18,30 +18,21 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
-from typing import Any, ClassVar, Dict, List
+from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List, Union
+from corbado_python_sdk.generated.models.request_data import RequestData
 from typing import Optional, Set
 from typing_extensions import Self
 
-class SessionListSessionsInner(BaseModel):
+class GenericRsp(BaseModel):
     """
-    SessionListSessionsInner
+    GenericRsp
     """ # noqa: E501
-    session_id: StrictStr = Field(description="Unique identifier of the session.", alias="sessionID")
-    user_id: StrictStr = Field(description="Unique identifier of the user.", alias="userID")
-    identifier_value: StrictStr = Field(description="Login identifier of the user (here email address).", alias="identifierValue")
-    created_ms: StrictInt = Field(description="Unix time of when the session was created (in milliseconds elapsed since January 1, 1970, 00:00:00 UTC).", alias="createdMs")
-    last_action_ms: StrictInt = Field(description="Unix time of when last action (e.g., refresh) on session occurred (in milliseconds elapsed since January 1, 1970, 00:00:00 UTC).", alias="lastActionMs")
-    expires_ms: StrictInt = Field(description="Unix time of when the session expires (in milliseconds elapsed since January 1, 1970, 00:00:00 UTC).", alias="expiresMs")
-    status: StrictStr
-    __properties: ClassVar[List[str]] = ["sessionID", "userID", "identifierValue", "createdMs", "lastActionMs", "expiresMs", "status"]
-
-    @field_validator('status')
-    def status_validate_enum(cls, value):
-        """Validates the enum"""
-        if value not in set(['active', 'logged_out', 'expired', 'inactivity_reached', 'revoked']):
-            raise ValueError("must be one of enum values ('active', 'logged_out', 'expired', 'inactivity_reached', 'revoked')")
-        return value
+    http_status_code: StrictInt = Field(description="HTTP status code of operation", alias="httpStatusCode")
+    message: StrictStr
+    request_data: RequestData = Field(alias="requestData")
+    runtime: Union[StrictFloat, StrictInt] = Field(description="Runtime in seconds for this request")
+    __properties: ClassVar[List[str]] = ["httpStatusCode", "message", "requestData", "runtime"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -61,7 +52,7 @@ class SessionListSessionsInner(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of SessionListSessionsInner from a JSON string"""
+        """Create an instance of GenericRsp from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -82,11 +73,14 @@ class SessionListSessionsInner(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of request_data
+        if self.request_data:
+            _dict['requestData'] = self.request_data.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of SessionListSessionsInner from a dict"""
+        """Create an instance of GenericRsp from a dict"""
         if obj is None:
             return None
 
@@ -94,13 +88,10 @@ class SessionListSessionsInner(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "sessionID": obj.get("sessionID"),
-            "userID": obj.get("userID"),
-            "identifierValue": obj.get("identifierValue"),
-            "createdMs": obj.get("createdMs"),
-            "lastActionMs": obj.get("lastActionMs"),
-            "expiresMs": obj.get("expiresMs"),
-            "status": obj.get("status")
+            "httpStatusCode": obj.get("httpStatusCode"),
+            "message": obj.get("message"),
+            "requestData": RequestData.from_dict(obj["requestData"]) if obj.get("requestData") is not None else None,
+            "runtime": obj.get("runtime")
         })
         return _obj
 

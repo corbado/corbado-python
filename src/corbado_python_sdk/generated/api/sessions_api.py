@@ -20,8 +20,8 @@ from typing_extensions import Annotated
 from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.session_list import SessionList
-from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 
 from corbado_python_sdk.generated.api_client import ApiClient, RequestSerialized
 from corbado_python_sdk.generated.api_response import ApiResponse
@@ -372,7 +372,7 @@ class SessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """Revoke a session
 
         Revokes an existing session by given `sessionID`.
@@ -410,7 +410,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -439,7 +439,7 @@ class SessionsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """Revoke a session
 
         Revokes an existing session by given `sessionID`.
@@ -477,7 +477,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -544,7 +544,7 @@ class SessionsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,

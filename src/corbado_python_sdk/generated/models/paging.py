@@ -23,9 +23,9 @@ from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
-class UserListPaging(BaseModel):
+class Paging(BaseModel):
     """
-    UserListPaging
+    Paging
     """ # noqa: E501
     page: StrictInt = Field(description="current page returned in response")
     total_pages: StrictInt = Field(description="total number of pages available", alias="totalPages")
@@ -50,7 +50,7 @@ class UserListPaging(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UserListPaging from a JSON string"""
+        """Create an instance of Paging from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -75,7 +75,7 @@ class UserListPaging(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UserListPaging from a dict"""
+        """Create an instance of Paging from a dict"""
         if obj is None:
             return None
 

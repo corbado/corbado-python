@@ -19,7 +19,7 @@ from typing_extensions import Annotated
 
 from pydantic import Field, StrictStr
 from typing_extensions import Annotated
-from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.webhook_endpoint import WebhookEndpoint
 from corbado_python_sdk.generated.models.webhook_endpoint_create_req import WebhookEndpointCreateReq
 from corbado_python_sdk.generated.models.webhook_endpoint_list import WebhookEndpointList
@@ -333,7 +333,7 @@ class WebhookEndpointsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """webhook_endpoint_delete
 
         Deletes an existing webhook endpoint
@@ -371,7 +371,7 @@ class WebhookEndpointsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -400,7 +400,7 @@ class WebhookEndpointsApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """webhook_endpoint_delete
 
         Deletes an existing webhook endpoint
@@ -438,7 +438,7 @@ class WebhookEndpointsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -505,7 +505,7 @@ class WebhookEndpointsApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,

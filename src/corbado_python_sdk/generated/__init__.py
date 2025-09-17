@@ -75,6 +75,10 @@ __all__ = [
     "DecisionTag",
     "DetectionInsights",
     "DetectionTag",
+    "ErrorRsp",
+    "ErrorRspAllOfError",
+    "ErrorRspAllOfErrorValidation",
+    "GenericRsp",
     "Identifier",
     "IdentifierCreateReq",
     "IdentifierList",
@@ -83,6 +87,7 @@ __all__ = [
     "IdentifierUpdateReq",
     "JavaScriptHighEntropy",
     "NativeMeta",
+    "Paging",
     "ParsedDeviceInfo",
     "PasskeyAppendFinishReq",
     "PasskeyAppendFinishRsp",
@@ -117,21 +122,18 @@ __all__ = [
     "PasswordManager",
     "PasswordManagerList",
     "ProjectConfigUpdateCnameReq",
+    "RequestData",
+    "Session",
     "SessionList",
-    "SessionListSessionsInner",
+    "SessionStatus",
     "SocialAccount",
     "SocialAccountCreateReq",
     "SocialAccountList",
+    "SocialProviderType",
     "User",
     "UserAggregate",
     "UserCreateReq",
-    "UserDelete200Response",
     "UserList",
-    "UserListDefaultResponse",
-    "UserListDefaultResponseAllOfError",
-    "UserListDefaultResponseAllOfErrorValidationInner",
-    "UserListDefaultResponseAllOfRequestData",
-    "UserListPaging",
     "UserStatus",
     "UserUpdateReq",
     "WebhookEndpoint",
@@ -202,6 +204,10 @@ from corbado_python_sdk.generated.models.decision_insights_append import Decisio
 from corbado_python_sdk.generated.models.decision_tag import DecisionTag as DecisionTag
 from corbado_python_sdk.generated.models.detection_insights import DetectionInsights as DetectionInsights
 from corbado_python_sdk.generated.models.detection_tag import DetectionTag as DetectionTag
+from corbado_python_sdk.generated.models.error_rsp import ErrorRsp as ErrorRsp
+from corbado_python_sdk.generated.models.error_rsp_all_of_error import ErrorRspAllOfError as ErrorRspAllOfError
+from corbado_python_sdk.generated.models.error_rsp_all_of_error_validation import ErrorRspAllOfErrorValidation as ErrorRspAllOfErrorValidation
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp as GenericRsp
 from corbado_python_sdk.generated.models.identifier import Identifier as Identifier
 from corbado_python_sdk.generated.models.identifier_create_req import IdentifierCreateReq as IdentifierCreateReq
 from corbado_python_sdk.generated.models.identifier_list import IdentifierList as IdentifierList
@@ -210,6 +216,7 @@ from corbado_python_sdk.generated.models.identifier_type import IdentifierType a
 from corbado_python_sdk.generated.models.identifier_update_req import IdentifierUpdateReq as IdentifierUpdateReq
 from corbado_python_sdk.generated.models.java_script_high_entropy import JavaScriptHighEntropy as JavaScriptHighEntropy
 from corbado_python_sdk.generated.models.native_meta import NativeMeta as NativeMeta
+from corbado_python_sdk.generated.models.paging import Paging as Paging
 from corbado_python_sdk.generated.models.parsed_device_info import ParsedDeviceInfo as ParsedDeviceInfo
 from corbado_python_sdk.generated.models.passkey_append_finish_req import PasskeyAppendFinishReq as PasskeyAppendFinishReq
 from corbado_python_sdk.generated.models.passkey_append_finish_rsp import PasskeyAppendFinishRsp as PasskeyAppendFinishRsp
@@ -244,21 +251,18 @@ from corbado_python_sdk.generated.models.passkey_verify_signed_data_rsp import P
 from corbado_python_sdk.generated.models.password_manager import PasswordManager as PasswordManager
 from corbado_python_sdk.generated.models.password_manager_list import PasswordManagerList as PasswordManagerList
 from corbado_python_sdk.generated.models.project_config_update_cname_req import ProjectConfigUpdateCnameReq as ProjectConfigUpdateCnameReq
+from corbado_python_sdk.generated.models.request_data import RequestData as RequestData
+from corbado_python_sdk.generated.models.session import Session as Session
 from corbado_python_sdk.generated.models.session_list import SessionList as SessionList
-from corbado_python_sdk.generated.models.session_list_sessions_inner import SessionListSessionsInner as SessionListSessionsInner
+from corbado_python_sdk.generated.models.session_status import SessionStatus as SessionStatus
 from corbado_python_sdk.generated.models.social_account import SocialAccount as SocialAccount
 from corbado_python_sdk.generated.models.social_account_create_req import SocialAccountCreateReq as SocialAccountCreateReq
 from corbado_python_sdk.generated.models.social_account_list import SocialAccountList as SocialAccountList
+from corbado_python_sdk.generated.models.social_provider_type import SocialProviderType as SocialProviderType
 from corbado_python_sdk.generated.models.user import User as User
 from corbado_python_sdk.generated.models.user_aggregate import UserAggregate as UserAggregate
 from corbado_python_sdk.generated.models.user_create_req import UserCreateReq as UserCreateReq
-from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response as UserDelete200Response
 from corbado_python_sdk.generated.models.user_list import UserList as UserList
-from corbado_python_sdk.generated.models.user_list_default_response import UserListDefaultResponse as UserListDefaultResponse
-from corbado_python_sdk.generated.models.user_list_default_response_all_of_error import UserListDefaultResponseAllOfError as UserListDefaultResponseAllOfError
-from corbado_python_sdk.generated.models.user_list_default_response_all_of_error_validation_inner import UserListDefaultResponseAllOfErrorValidationInner as UserListDefaultResponseAllOfErrorValidationInner
-from corbado_python_sdk.generated.models.user_list_default_response_all_of_request_data import UserListDefaultResponseAllOfRequestData as UserListDefaultResponseAllOfRequestData
-from corbado_python_sdk.generated.models.user_list_paging import UserListPaging as UserListPaging
 from corbado_python_sdk.generated.models.user_status import UserStatus as UserStatus
 from corbado_python_sdk.generated.models.user_update_req import UserUpdateReq as UserUpdateReq
 from corbado_python_sdk.generated.models.webhook_endpoint import WebhookEndpoint as WebhookEndpoint

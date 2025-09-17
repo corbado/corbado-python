@@ -18,21 +18,24 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Union
-from corbado_python_sdk.generated.models.user_list_default_response_all_of_request_data import UserListDefaultResponseAllOfRequestData
+from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
+from typing import Any, ClassVar, Dict, List
+from corbado_python_sdk.generated.models.session_status import SessionStatus
 from typing import Optional, Set
 from typing_extensions import Self
 
-class UserDelete200Response(BaseModel):
+class Session(BaseModel):
     """
-    UserDelete200Response
+    Session
     """ # noqa: E501
-    http_status_code: StrictInt = Field(description="HTTP status code of operation", alias="httpStatusCode")
-    message: StrictStr
-    request_data: UserListDefaultResponseAllOfRequestData = Field(alias="requestData")
-    runtime: Union[StrictFloat, StrictInt] = Field(description="Runtime in seconds for this request")
-    __properties: ClassVar[List[str]] = ["httpStatusCode", "message", "requestData", "runtime"]
+    session_id: StrictStr = Field(description="Unique identifier of the session.", alias="sessionID")
+    user_id: StrictStr = Field(description="Unique identifier of the user.", alias="userID")
+    identifier_value: StrictStr = Field(description="Login identifier of the user (here email address).", alias="identifierValue")
+    created_ms: StrictInt = Field(description="Unix time of when the session was created (in milliseconds elapsed since January 1, 1970, 00:00:00 UTC).", alias="createdMs")
+    last_action_ms: StrictInt = Field(description="Unix time of when last action (e.g., refresh) on session occurred (in milliseconds elapsed since January 1, 1970, 00:00:00 UTC).", alias="lastActionMs")
+    expires_ms: StrictInt = Field(description="Unix time of when the session expires (in milliseconds elapsed since January 1, 1970, 00:00:00 UTC).", alias="expiresMs")
+    status: SessionStatus
+    __properties: ClassVar[List[str]] = ["sessionID", "userID", "identifierValue", "createdMs", "lastActionMs", "expiresMs", "status"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -52,7 +55,7 @@ class UserDelete200Response(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UserDelete200Response from a JSON string"""
+        """Create an instance of Session from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -73,14 +76,11 @@ class UserDelete200Response(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of request_data
-        if self.request_data:
-            _dict['requestData'] = self.request_data.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UserDelete200Response from a dict"""
+        """Create an instance of Session from a dict"""
         if obj is None:
             return None
 
@@ -88,10 +88,13 @@ class UserDelete200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "httpStatusCode": obj.get("httpStatusCode"),
-            "message": obj.get("message"),
-            "requestData": UserListDefaultResponseAllOfRequestData.from_dict(obj["requestData"]) if obj.get("requestData") is not None else None,
-            "runtime": obj.get("runtime")
+            "sessionID": obj.get("sessionID"),
+            "userID": obj.get("userID"),
+            "identifierValue": obj.get("identifierValue"),
+            "createdMs": obj.get("createdMs"),
+            "lastActionMs": obj.get("lastActionMs"),
+            "expiresMs": obj.get("expiresMs"),
+            "status": obj.get("status")
         })
         return _obj
 

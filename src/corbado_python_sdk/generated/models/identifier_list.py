@@ -21,7 +21,7 @@ import json
 from pydantic import BaseModel, ConfigDict
 from typing import Any, ClassVar, Dict, List
 from corbado_python_sdk.generated.models.identifier import Identifier
-from corbado_python_sdk.generated.models.user_list_paging import UserListPaging
+from corbado_python_sdk.generated.models.paging import Paging
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +30,7 @@ class IdentifierList(BaseModel):
     IdentifierList
     """ # noqa: E501
     identifiers: List[Identifier]
-    paging: UserListPaging
+    paging: Paging
     __properties: ClassVar[List[str]] = ["identifiers", "paging"]
 
     model_config = ConfigDict(
@@ -95,7 +95,7 @@ class IdentifierList(BaseModel):
 
         _obj = cls.model_validate({
             "identifiers": [Identifier.from_dict(_item) for _item in obj["identifiers"]] if obj.get("identifiers") is not None else None,
-            "paging": UserListPaging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
+            "paging": Paging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
         })
         return _obj
 

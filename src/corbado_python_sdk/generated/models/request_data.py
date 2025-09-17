@@ -18,24 +18,18 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional, Union
-from corbado_python_sdk.generated.models.user_list_default_response_all_of_error import UserListDefaultResponseAllOfError
-from corbado_python_sdk.generated.models.user_list_default_response_all_of_request_data import UserListDefaultResponseAllOfRequestData
+from pydantic import BaseModel, ConfigDict, Field, StrictStr
+from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
 
-class UserListDefaultResponse(BaseModel):
+class RequestData(BaseModel):
     """
-    UserListDefaultResponse
+    Data about the request itself, can be used for debugging
     """ # noqa: E501
-    http_status_code: StrictInt = Field(description="HTTP status code of operation", alias="httpStatusCode")
-    message: StrictStr
-    request_data: UserListDefaultResponseAllOfRequestData = Field(alias="requestData")
-    runtime: Union[StrictFloat, StrictInt] = Field(description="Runtime in seconds for this request")
-    data: Optional[Dict[str, Any]] = None
-    error: UserListDefaultResponseAllOfError
-    __properties: ClassVar[List[str]] = ["httpStatusCode", "message", "requestData", "runtime", "data", "error"]
+    request_id: StrictStr = Field(description="Unique ID of request, you can provide your own while making the request, if not the ID will be randomly generated on server side", alias="requestID")
+    link: Optional[StrictStr] = Field(default=None, description="Link to dashboard with details about request")
+    __properties: ClassVar[List[str]] = ["requestID", "link"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -55,7 +49,7 @@ class UserListDefaultResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of UserListDefaultResponse from a JSON string"""
+        """Create an instance of RequestData from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -76,17 +70,11 @@ class UserListDefaultResponse(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
-        # override the default output from pydantic by calling `to_dict()` of request_data
-        if self.request_data:
-            _dict['requestData'] = self.request_data.to_dict()
-        # override the default output from pydantic by calling `to_dict()` of error
-        if self.error:
-            _dict['error'] = self.error.to_dict()
         return _dict
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of UserListDefaultResponse from a dict"""
+        """Create an instance of RequestData from a dict"""
         if obj is None:
             return None
 
@@ -94,12 +82,8 @@ class UserListDefaultResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "httpStatusCode": obj.get("httpStatusCode"),
-            "message": obj.get("message"),
-            "requestData": UserListDefaultResponseAllOfRequestData.from_dict(obj["requestData"]) if obj.get("requestData") is not None else None,
-            "runtime": obj.get("runtime"),
-            "data": obj.get("data"),
-            "error": UserListDefaultResponseAllOfError.from_dict(obj["error"]) if obj.get("error") is not None else None
+            "requestID": obj.get("requestID"),
+            "link": obj.get("link")
         })
         return _obj
 

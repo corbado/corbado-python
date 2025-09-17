@@ -20,8 +20,8 @@ import json
 
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Any, ClassVar, Dict, List
+from corbado_python_sdk.generated.models.paging import Paging
 from corbado_python_sdk.generated.models.passkey_challenge import PasskeyChallenge
-from corbado_python_sdk.generated.models.user_list_paging import UserListPaging
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -30,7 +30,7 @@ class PasskeyChallengeList(BaseModel):
     PasskeyChallengeList
     """ # noqa: E501
     passkey_challenges: List[PasskeyChallenge] = Field(alias="passkeyChallenges")
-    paging: UserListPaging
+    paging: Paging
     __properties: ClassVar[List[str]] = ["passkeyChallenges", "paging"]
 
     model_config = ConfigDict(
@@ -95,7 +95,7 @@ class PasskeyChallengeList(BaseModel):
 
         _obj = cls.model_validate({
             "passkeyChallenges": [PasskeyChallenge.from_dict(_item) for _item in obj["passkeyChallenges"]] if obj.get("passkeyChallenges") is not None else None,
-            "paging": UserListPaging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
+            "paging": Paging.from_dict(obj["paging"]) if obj.get("paging") is not None else None
         })
         return _obj
 

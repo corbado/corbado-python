@@ -21,12 +21,12 @@ from pydantic import Field, StrictInt, StrictStr
 from typing import List, Optional
 from typing_extensions import Annotated
 from corbado_python_sdk.generated.models.credential_list import CredentialList
+from corbado_python_sdk.generated.models.generic_rsp import GenericRsp
 from corbado_python_sdk.generated.models.social_account import SocialAccount
 from corbado_python_sdk.generated.models.social_account_create_req import SocialAccountCreateReq
 from corbado_python_sdk.generated.models.social_account_list import SocialAccountList
 from corbado_python_sdk.generated.models.user import User
 from corbado_python_sdk.generated.models.user_create_req import UserCreateReq
-from corbado_python_sdk.generated.models.user_delete200_response import UserDelete200Response
 from corbado_python_sdk.generated.models.user_list import UserList
 from corbado_python_sdk.generated.models.user_update_req import UserUpdateReq
 
@@ -65,7 +65,7 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """Delete a passkey for a user
 
         Deletes an existing passkey for a user by given `userID` and `credentialID`. 
@@ -106,7 +106,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -136,7 +136,7 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """Delete a passkey for a user
 
         Deletes an existing passkey for a user by given `userID` and `credentialID`. 
@@ -177,7 +177,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -248,7 +248,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1548,7 +1548,7 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> UserDelete200Response:
+    ) -> GenericRsp:
         """Delete a user
 
         Deletes a user by given `userID`.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
@@ -1586,7 +1586,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1615,7 +1615,7 @@ class UsersApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[UserDelete200Response]:
+    ) -> ApiResponse[GenericRsp]:
         """Delete a user
 
         Deletes a user by given `userID`.  You can also manage users in the [Developer Panel](https://app.corbado.com/users). 
@@ -1653,7 +1653,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1720,7 +1720,7 @@ class UsersApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "UserDelete200Response",
+            '200': "GenericRsp",
         }
         response_data = self.api_client.call_api(
             *_param,
